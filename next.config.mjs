@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	env: {
+		URL_API: process.env.URL_API
+	},
 
-export default nextConfig;
+	async redirects() {
+		return [
+			{
+				source: '/',
+				destination: '/auth',
+				permanent: true
+			}
+		]
+	}
+}
+
+export default nextConfig

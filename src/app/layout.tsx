@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import './globals.css'
 import { SITE_NAME } from '@/constants/seo.constants'
+import { Providers } from './providers'
+import { Toaster } from 'sonner'
 
 const zen = Noto_Sans({
 	subsets: ['cyrillic', 'latin'],
@@ -26,7 +28,17 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={zen.className}>{children}</body>
+			<body className={zen.className}>
+				<Providers>
+					{children}
+
+					<Toaster
+						theme='dark'
+						position='bottom-right'
+						duration={1500}
+					/>
+				</Providers>
+			</body>
 		</html>
 	)
 }
