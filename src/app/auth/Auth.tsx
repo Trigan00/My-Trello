@@ -6,8 +6,7 @@ import {
 	Avatar,
 	Box,
 	Button,
-	Container,
-	CssBaseline,
+	Grid,
 	Link,
 	TextField,
 	Typography
@@ -19,6 +18,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+import NextLink from 'next/link'
+import { errorCatch } from '@/api/error'
 
 export function Auth() {
 	const { push } = useRouter()
@@ -28,7 +29,7 @@ export function Auth() {
 		reset,
 		formState: { errors }
 	} = useForm<IAuthForm>({})
-
+	const [isLoginForm, setIsLoginForm] = useState(true)
 	const { mutate } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
@@ -38,84 +39,114 @@ export function Auth() {
 			reset()
 			push(DASHBOARD_PAGES.HOME)
 		},
-		onError: (error: any) => toast.error(error.response.data.message)
+		onError: (error: any) => toast.error(errorCatch(error))
 	})
-	const [isLoginForm, setIsLoginForm] = useState(false)
 
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
 		mutate(data)
 	}
 
 	return (
-		<Container maxWidth='xs'>
-			<CssBaseline />
-			<Box
-				sx={{
-					marginTop: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center'
-				}}
+		<Box
+			sx={{
+				my: 8,
+				mx: 4,
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center'
+			}}
+		>
+			<Avatar sx={{ m: 1, bgcolor: '#e10655' }}>
+				<LockOutlinedIcon />
+			</Avatar>
+			<Typography
+				component='h1'
+				variant='h5'
 			>
-				<Avatar sx={{ m: 1, bgcolor: '#e10655' }}>
-					<LockOutlinedIcon />
-				</Avatar>
-				<Typography
-					component='h1'
-					variant='h5'
-				>
-					{isLoginForm ? 'Sign in' : 'Sign Up'}
-				</Typography>
-				<Box
-					component='form'
-					onSubmit={handleSubmit(onSubmit)}
-					noValidate
-					sx={{ mt: 1 }}
-				>
-					<TextField
-						{...register('email', {
-							required: 'This is required.',
-							pattern: /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/
-						})}
-						error={!!errors.email}
-						label='email'
-						helperText={errors.email?.message}
-						variant='outlined'
-						margin='normal'
-						size='small'
-						fullWidth
-						required
-					/>
-					<TextField
-						{...register('password', { required: 'This is required.' })}
-						error={!!errors.password}
-						label='password'
-						helperText={errors.password?.message}
-						variant='outlined'
-						margin='normal'
-						size='small'
-						fullWidth
-						required
-					/>
-					<Button
-						type='submit'
-						variant='contained'
-						fullWidth
-					>
-						{isLoginForm ? 'Sign in' : 'Sign Up'}
-					</Button>
+				{isLoginForm ? 'Войти' : 'Регистрация'}
+			</Typography>
+			<Box
+				component='form'
+				onSubmit={handleSubmit(onSubmit)}
+				noValidate
+				sx={{ mt: 1, maxWidth: '505px' }}
+			>
+				<TextField
+					{...register('email', {
+						required: 'Не может быть пустым',
+						pattern: {
+							value: /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/,
+							message: 'Пожалуйста, введите действующий Email-адрес.'
+						}
+					})}
+					error={!!errors.email}
+					label='Email'
+					helperText={errors.email?.message}
+					variant='outlined'
+					margin='normal'
+					size='small'
+					fullWidth
+					required
+				/>
+				<TextField
+					{...register('password', {
+						required: 'Не может быть пустым',
+						minLength: {
+							value: 8,
+							message: 'В пароле должно быть не менее 8 символов.'
+						},
+						pattern: {
+							value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+							message:
+								'Пароль должен содержать по крайней мере одну цифру, одну строчную и одну заглавную букву'
+						}
+					})}
+					type='password'
+					error={!!errors.password}
+					label='Пароль'
+					helperText={errors.password?.message}
+					variant='outlined'
+					margin='normal'
+					size='small'
+					fullWidth
+					required
+				/>
 
-					<Link
-						variant='body2'
-						onClick={() => setIsLoginForm(prev => !prev)}
-						sx={{ cursor: 'pointer' }}
+				<Button
+					type='submit'
+					variant='contained'
+					fullWidth
+				>
+					{isLoginForm ? 'Войти' : 'Зарегистроваться'}
+				</Button>
+
+				<Grid container>
+					<Grid
+						item
+						xs
 					>
-						{isLoginForm
-							? "Don't have an account? Sign Up"
-							: 'Already have an account? Sign in'}
-					</Link>
-				</Box>
+						{isLoginForm && (
+							<NextLink
+								href='/auth/recovery'
+								className='Link'
+							>
+								Забыли пароль?
+							</NextLink>
+						)}
+					</Grid>
+					<Grid item>
+						<Link
+							variant='body2'
+							onClick={() => setIsLoginForm(prev => !prev)}
+							sx={{ cursor: 'pointer' }}
+						>
+							{isLoginForm
+								? 'Еще нет аккаунта? Зарегистроваться'
+								: 'Уже есть аккаунт? Тогда войдите'}
+						</Link>
+					</Grid>
+				</Grid>
 			</Box>
-		</Container>
+		</Box>
 	)
 }

@@ -1,17 +1,17 @@
 import type { Metadata } from 'next'
-import { Noto_Sans } from 'next/font/google'
+// import { Noto_Sans } from 'next/font/google'
 import './globals.css'
 import { SITE_NAME } from '@/constants/seo.constants'
 import { Providers } from './providers'
 import { Toaster } from 'sonner'
 
-const zen = Noto_Sans({
-	subsets: ['cyrillic', 'latin'],
-	weight: ['300', '400', '500', '600', '700'],
-	display: 'swap',
-	variable: '--font-zen',
-	style: ['normal']
-})
+// const zen = Noto_Sans({
+// 	subsets: ['cyrillic', 'latin'],
+// 	weight: ['300', '400', '500', '600', '700'],
+// 	display: 'swap',
+// 	variable: '--font-zen',
+// 	style: ['normal']
+// })
 
 export const metadata: Metadata = {
 	title: {
@@ -27,15 +27,16 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en'>
-			<body className={zen.className}>
+		<html lang='ru'>
+			<body /*className={zen.className} */>
 				<Providers>
 					{children}
 
 					<Toaster
-						theme='dark'
-						position='bottom-right'
-						duration={1500}
+						position='top-right'
+						duration={3000}
+						expand={true}
+						richColors
 					/>
 				</Providers>
 			</body>

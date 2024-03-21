@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { authRouter } = require('./routes')
 const cors = require('cors')
+require('dotenv').config()
 const authMiddleware = require('./middleware/auth.middleware')
 
 const PORT = process.env.PORT || 4200
