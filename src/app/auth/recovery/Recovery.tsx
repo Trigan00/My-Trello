@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link'
 import React from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
 	Button,
 	CssBaseline,
@@ -21,10 +21,10 @@ import { errorCatch } from '@/api/error'
 export default function Recovery() {
 	const searchParams = useSearchParams()
 	const token = searchParams.get('code')
+	const { push } = useRouter()
 	const {
 		register,
 		handleSubmit,
-		reset,
 		watch,
 		formState: { errors }
 	} = useForm<IAuthRecoveryForm>({})
@@ -36,6 +36,7 @@ export default function Recovery() {
 			toast.success(
 				token ? 'Пароль успешно изменен' : 'На почту отправлено письмо'
 			)
+			push('/auth')
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})
@@ -60,7 +61,7 @@ export default function Recovery() {
 			>
 				<Typography
 					component='h1'
-					variant='h4'
+					variant='h5'
 				>
 					{token ? 'Восстановить пароль' : 'Забыли пароль?'}
 				</Typography>
@@ -86,6 +87,7 @@ export default function Recovery() {
 											'Пароль должен содержать по крайней мере одну цифру, одну строчную и одну заглавную букву'
 									}
 								})}
+								type='password'
 								error={!!errors.password}
 								label='Введите новый пароль'
 								helperText={errors.password?.message}
@@ -103,6 +105,7 @@ export default function Recovery() {
 											value === watch('password') || 'Пароли не совпадают'
 									}
 								})}
+								type='password'
 								error={!!errors.confirm_password}
 								label='Подтвердите новый пароль'
 								helperText={errors.confirm_password?.message}
