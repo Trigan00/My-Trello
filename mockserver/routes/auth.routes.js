@@ -1,11 +1,13 @@
 const Router = require('express')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const { forgetPasswordMailer } = require('../mailService')
 const router = new Router()
 
-const generateToken = id => {
+const generateToken = (id, email, expiresTime) => {
 	// return jwt.sign({ userId: id }, process.env.jwtSecret)
-	return jwt.sign({ userId: id }, 'process.env.jwtSecret', {
-		expiresIn: '24h'
+	return jwt.sign({ userId: id, email }, process.env.jwtSecret, {
+		expiresIn: expiresTime
 	})
 }
 
@@ -32,7 +34,7 @@ router.post('/register', async (req, res) => {
 
 		console.log('register: ' + JSON.stringify(users))
 		return res.status(201).json({
-			accessToken: generateToken(newUser.id),
+			accessToken: generateToken(newUser.id, newUser.email, '24h'),
 			user: {
 				id: newUser.id,
 				email: newUser.email
@@ -72,11 +74,69 @@ router.post('/login', async (req, res) => {
 
 		console.log('login: ' + JSON.stringify(users))
 		return res.status(200).json({
-			accessToken: generateToken(newUser.id),
+			accessToken: generateToken(user.id, user.email, '24h'),
 			user: {
 				id: newUser.id,
 				email: newUser.email
 			}
+		})
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
+router.put('/forget', async (req, res) => {
+	try {
+		const { email } = req.body
+		const user = users.find(val => val.email === email)
+		if (!user) {
+			return res.status(400).json({
+				status: 'failure',
+				message: 'Пользователь не найден' // login
+			})
+		}
+
+		const token = generateToken(user.id, user.email, '15min')
+
+		forgetPasswordMailer(
+			email,
+			`${process.env.CLIENT_URL}/auth/recovery?code=${token}`
+		)
+
+		return res.status(201).json({
+			status: 'success',
+			message: 'Письмо отправлено на почту'
+		})
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
+router.put('/update', async (req, res) => {
+	try {
+		const { password, token } = req.body
+
+		if (!token) {
+			return res.status(401).json({ message: 'Время и Стекло' })
+		}
+
+		const decoded = jwt.verify(token, process.env.jwtSecret)
+		if (!decoded) res.status(401).json({ message: 'Время и Стекло' })
+
+		index = users.findIndex(u => u.email === decoded.email)
+		users[index].password = password
+
+		return res.status(201).json({
+			status: 'success',
+			message: 'Пароль пользователя успешно изменен'
 		})
 	} catch (error) {
 		console.log(error)

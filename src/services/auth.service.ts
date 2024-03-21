@@ -1,4 +1,4 @@
-import { IAuthForm, IAuthResponse } from '@/types/auth.types'
+import { IAuthForm, IAuthRecoveryForm, IAuthResponse } from '@/types/auth.types'
 
 import { axiosClassic } from '@/api/interceptors'
 
@@ -29,6 +29,20 @@ export const authService = {
 
 		if (response.data) removeFromStorage()
 
+		return response
+	},
+
+	async recovery(
+		type: 'forget' | 'update',
+		data: IAuthRecoveryForm,
+		token: string | null
+	) {
+		const response = await axiosClassic.put<IAuthResponse>(
+			`/auth/${type}`,
+			type === 'forget'
+				? { email: data.email }
+				: { password: data.password, token }
+		)
 		return response
 	}
 }
