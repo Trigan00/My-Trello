@@ -147,4 +147,16 @@ router.put('/update', async (req, res) => {
 	}
 })
 
+router.post('/logout', async (req, res) => {
+	try {
+		return res.status(201).json(true)
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
 module.exports = router

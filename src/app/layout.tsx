@@ -1,17 +1,9 @@
 import type { Metadata } from 'next'
-// import { Noto_Sans } from 'next/font/google'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import './globals.css'
 import { SITE_NAME } from '@/constants/seo.constants'
 import { Providers } from './providers'
 import { Toaster } from 'sonner'
-
-// const zen = Noto_Sans({
-// 	subsets: ['cyrillic', 'latin'],
-// 	weight: ['300', '400', '500', '600', '700'],
-// 	display: 'swap',
-// 	variable: '--font-zen',
-// 	style: ['normal']
-// })
 
 export const metadata: Metadata = {
 	title: {
@@ -28,16 +20,18 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='ru'>
-			<body /*className={zen.className} */>
+			<body>
 				<Providers>
-					{children}
+					<AppRouterCacheProvider>
+						{children}
 
-					<Toaster
-						position='top-right'
-						duration={3000}
-						expand={true}
-						richColors
-					/>
+						<Toaster
+							position='top-right'
+							duration={3000}
+							expand={true}
+							richColors
+						/>
+					</AppRouterCacheProvider>
 				</Providers>
 			</body>
 		</html>
