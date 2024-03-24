@@ -17,6 +17,7 @@ import { useMutation } from '@tanstack/react-query'
 import { authService } from '@/services/auth.service'
 
 const settings = ['Профиль', 'Аккаунт ', 'Выйти']
+export const headerHeight: number = 70
 
 export function Header() {
 	const router = useRouter()
@@ -38,9 +39,13 @@ export function Header() {
 
 	return (
 		<AppBar
-			position='static'
+			position='static' //absolute
 			color='transparent'
-			sx={{ boxShadow: 'none', borderBottom: '1px solid rgb(229, 234, 242);' }}
+			sx={{
+				height: headerHeight,
+				boxShadow: 'none',
+				borderBottom: '1px solid rgb(229, 234, 242);'
+			}}
 		>
 			<Toolbar disableGutters>
 				<Box

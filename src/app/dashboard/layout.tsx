@@ -15,7 +15,16 @@ export default function AuthLayout({
 				sx={{ display: 'flex' }}
 			>
 				<SideBar />
-				{children}
+				<Box
+					sx={{
+						p: 4
+						// height: '100vh',
+						// overflow: 'auto',
+						// boxSizing: 'border-box'
+					}}
+				>
+					{children}
+				</Box>
 			</Box>
 		</>
 	)

@@ -1,8 +1,21 @@
 'use client'
 
-import { Box, Button, Typography } from '@mui/material'
+import {
+	Box,
+	Button,
+	Divider,
+	IconButton,
+	List,
+	Toolbar,
+	Typography
+} from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Accordion, AccordionDetails, AccordionSummary } from './MyAccordion'
+import { useState } from 'react'
+import { Drawer } from './MyDrawer'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { secondaryListItems } from './listItems'
 
 const pages = ['Мои задачи', 'Моя статистика']
 const workSpaces = ['Work space 1', 'Work space 2', 'Work space 3']
@@ -11,107 +24,33 @@ const workSpacePages = ['Доски', 'Календарь', 'Статистик�
 const textColor = '#0B0D0E'
 
 export default function SideBar() {
+	const [open, setOpen] = useState(true)
+	const toggleDrawer = () => {
+		setOpen(prev => !prev)
+	}
+
 	return (
-		<Box
-			sx={{
-				maxWidth: '270px',
-				width: '100%',
-				height: 'calc(100vh - 70px)',
-				minHeight: '100%',
-				borderRight: '1px solid rgb(229, 234, 242)',
-				p: 2,
-				boxSizing: 'border-box'
-			}}
+		<Drawer
+			variant='permanent'
+			open={open}
 		>
-			<Box sx={{ mb: '100px' }}>
-				{pages.map(page => (
-					<Button
-						key={page}
-						size='small'
-						fullWidth
-						sx={{
-							textTransform: 'inherit',
-							justifyContent: 'flex-start',
-							px: 2
-						}}
-					>
-						<Typography
-							sx={{
-								color: textColor,
-								fontWeight: '500'
-							}}
-						>
-							{page}
-						</Typography>
-					</Button>
-				))}
-			</Box>
-			<Typography
+			<Toolbar
 				sx={{
-					mb: 1,
-					textAlign: 'center',
-					fontSize: '0.9rem',
-					textTransform: 'uppercase',
-					fontWeight: '700',
-					color: textColor
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'flex-end',
+					px: [1]
 				}}
 			>
-				Рабочие пространства
-			</Typography>
-			<Box>
-				{workSpaces.map(ws => (
-					<Accordion
-						key={ws}
-						variant='outlined'
-						sx={{
-							border: 'none',
-							margin: '0 !important'
-						}}
-					>
-						<AccordionSummary
-							expandIcon={<ExpandMoreIcon color='primary' />}
-							aria-controls='panel1-content'
-							id='panel1-header'
-							sx={{
-								border: 'none !important'
-							}}
-						>
-							<Typography
-								sx={{
-									fontSize: '0.875rem',
-									color: textColor,
-									fontWeight: '500'
-								}}
-							>
-								{ws}
-							</Typography>
-						</AccordionSummary>
-						<AccordionDetails sx={{ mt: '-15px' }}>
-							{workSpacePages.map(wsp => (
-								<Button
-									key={wsp}
-									size='small'
-									fullWidth
-									sx={{
-										textTransform: 'inherit',
-										justifyContent: 'flex-start',
-										pl: 3
-									}}
-								>
-									<Typography
-										sx={{
-											color: textColor,
-											fontSize: '0.85rem'
-										}}
-									>
-										{wsp}
-									</Typography>
-								</Button>
-							))}
-						</AccordionDetails>
-					</Accordion>
-				))}
-			</Box>
-		</Box>
+				<IconButton onClick={toggleDrawer}>
+					{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+				</IconButton>
+			</Toolbar>
+			<List component='nav'>
+				{/* {mainListItems} */}
+				{/* <Divider sx={{ my: 1 }} /> */}
+				{secondaryListItems}
+			</List>
+		</Drawer>
 	)
 }
