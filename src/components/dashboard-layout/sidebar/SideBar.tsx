@@ -1,55 +1,42 @@
 'use client'
 
-import {
-	Box,
-	Button,
-	Divider,
-	IconButton,
-	List,
-	Toolbar,
-	Typography
-} from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Accordion, AccordionDetails, AccordionSummary } from './MyAccordion'
-import { useState } from 'react'
+import { Button, List, Toolbar } from '@mui/material'
 import { Drawer } from './MyDrawer'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import { secondaryListItems } from './listItems'
+import { mainListItems } from './listItems'
+import { headerHeight } from '../header/Header'
+import AddIcon from '@mui/icons-material/Add'
 
-const pages = ['Мои задачи', 'Моя статистика']
-const workSpaces = ['Work space 1', 'Work space 2', 'Work space 3']
-const workSpacePages = ['Доски', 'Календарь', 'Статистика', 'Настройки']
-
-const textColor = '#0B0D0E'
-
-export default function SideBar() {
-	const [open, setOpen] = useState(true)
-	const toggleDrawer = () => {
-		setOpen(prev => !prev)
-	}
-
+export default function SideBar({ open }: { open: boolean }) {
 	return (
 		<Drawer
 			variant='permanent'
 			open={open}
+			sx={{
+				mt: `${headerHeight}px`
+				// background: COLORS.transparent #TODO не работает
+			}}
 		>
-			<Toolbar
+			<Button
+				variant='contained'
 				sx={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'flex-end',
-					px: [1]
+					width: '220px',
+					color: 'white',
+					textTransform: 'inherit',
+					borderRadius: '10px',
+					p: '11px 12px',
+					fontSize: '14px',
+					fontWeight: '400',
+					margin: '30px auto'
 				}}
 			>
-				<IconButton onClick={toggleDrawer}>
-					{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-				</IconButton>
-			</Toolbar>
-			<List component='nav'>
-				{/* {mainListItems} */}
-				{/* <Divider sx={{ my: 1 }} /> */}
-				{secondaryListItems}
+				<AddIcon fontSize='small' />
+				Рабочие пространства
+			</Button>
+			<List
+				sx={{ p: ' 0 15px' }}
+				component='nav'
+			>
+				{mainListItems}
 			</List>
 		</Drawer>
 	)

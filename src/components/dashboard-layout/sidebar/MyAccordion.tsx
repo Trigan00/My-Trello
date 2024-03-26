@@ -3,6 +3,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import { COLORS } from '@/constants/color.constants'
 
 export const Accordion = styled((props: AccordionProps) => (
 	<MuiAccordion
@@ -23,7 +24,7 @@ export const Accordion = styled((props: AccordionProps) => (
 
 export const AccordionSummary = styled((props: AccordionSummaryProps) => (
 	<MuiAccordionSummary
-		expandIcon={<ExpandMoreIcon />}
+		expandIcon={<ExpandMoreIcon sx={{ color: COLORS.textBlack }} />}
 		{...props}
 		sx={{ margin: 0 }}
 	/>

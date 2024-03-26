@@ -133,6 +133,9 @@ export default function Recovery() {
 					type='submit'
 					fullWidth
 					variant='contained'
+					sx={{
+						color: 'white'
+					}}
 				>
 					Сбросить пароль
 				</Button>

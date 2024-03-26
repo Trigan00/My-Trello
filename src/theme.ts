@@ -1,7 +1,8 @@
 import { createTheme } from '@mui/material'
-import { Noto_Sans } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
+import { COLORS } from './constants/color.constants'
 
-const zen = Noto_Sans({
+const zen = Montserrat({
 	subsets: ['cyrillic', 'latin'],
 	weight: ['300', '400', '500', '600', '700'],
 	display: 'swap',
@@ -10,6 +11,27 @@ const zen = Noto_Sans({
 })
 
 const theme = createTheme({
+	palette: {
+		primary: {
+			main: COLORS.primary
+		}
+	},
+	components: {
+		// MuiButton: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			padding: 0
+		// 		}
+		// 	}
+		// },
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					padding: 0
+				}
+			}
+		}
+	},
 	typography: {
 		fontFamily: zen.style.fontFamily
 	}

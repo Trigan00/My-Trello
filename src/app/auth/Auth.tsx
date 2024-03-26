@@ -116,6 +116,9 @@ export function Auth() {
 					type='submit'
 					variant='contained'
 					fullWidth
+					sx={{
+						color: 'white'
+					}}
 				>
 					{isLoginForm ? 'Войти' : 'Зарегистроваться'}
 				</Button>
