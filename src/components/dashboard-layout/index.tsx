@@ -23,7 +23,10 @@ export default function DashboardLayoutWrapper({
 				component='main'
 				sx={{ display: 'flex' }}
 			>
-				<SideBar open={open} />
+				<SideBar
+					open={open}
+					toggleDrawer={toggleDrawer}
+				/>
 				<Box
 					sx={{
 						boxSizing: 'border-box',

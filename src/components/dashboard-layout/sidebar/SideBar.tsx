@@ -1,20 +1,20 @@
 'use client'
 
-import { Button, List, Toolbar } from '@mui/material'
-import { Drawer } from './MyDrawer'
+import { Button, List, useMediaQuery } from '@mui/material'
+import { MyDrawer } from './MyDrawer'
 import { mainListItems } from './listItems'
-import { headerHeight } from '../header/Header'
 import AddIcon from '@mui/icons-material/Add'
 
-export default function SideBar({ open }: { open: boolean }) {
+interface ISideBar {
+	open: boolean
+	toggleDrawer: () => void
+}
+
+export default function SideBar({ open, toggleDrawer }: ISideBar) {
 	return (
-		<Drawer
-			variant='permanent'
+		<MyDrawer
 			open={open}
-			sx={{
-				mt: `${headerHeight}px`
-				// background: COLORS.transparent #TODO не работает
-			}}
+			onClose={toggleDrawer}
 		>
 			<Button
 				variant='contained'
@@ -38,6 +38,6 @@ export default function SideBar({ open }: { open: boolean }) {
 			>
 				{mainListItems}
 			</List>
-		</Drawer>
+		</MyDrawer>
 	)
 }
