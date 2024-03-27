@@ -1,8 +1,9 @@
 import { AccordionProps, AccordionSummaryProps, styled } from '@mui/material'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import { COLORS } from '@/constants/color.constants'
 
 export const Accordion = styled((props: AccordionProps) => (
 	<MuiAccordion
@@ -23,15 +24,15 @@ export const Accordion = styled((props: AccordionProps) => (
 
 export const AccordionSummary = styled((props: AccordionSummaryProps) => (
 	<MuiAccordionSummary
-		expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+		expandIcon={<ExpandMoreIcon sx={{ color: COLORS.textBlack }} />}
 		{...props}
+		sx={{ margin: 0 }}
 	/>
 ))(({ theme }) => ({
 	backgroundColor:
 		theme.palette.mode === 'dark'
 			? 'rgba(255, 255, 255, .05)'
 			: 'rgba(0, 0, 0, 0)',
-	// flexDirection: 'row-reverse',
 	'& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
 		transform: 'rotate(180deg)'
 	}
