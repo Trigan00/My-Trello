@@ -11,10 +11,11 @@ const DrawerDesktop = styled(MuiDrawer, {
 	shouldForwardProp: prop => prop !== 'open'
 })(({ theme, open }) => ({
 	'& .MuiDrawer-paper': {
-		// height: `calc(100vh - ${headerHeight}px)`,
+		height: `calc(100vh - ${headerHeight}px)`,
 		position: 'relative',
 		whiteSpace: 'nowrap',
 		overflowX: 'hidden',
+		overflowY: 'auto',
 		width: drawerWidth,
 		borderRight: `1px solid ${COLORS.border};`,
 		transition: theme.transitions.create('width', {
