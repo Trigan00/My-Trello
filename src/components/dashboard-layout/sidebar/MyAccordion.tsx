@@ -14,6 +14,7 @@ export const Accordion = styled((props: AccordionProps) => (
 	/>
 ))(({ theme }) => ({
 	border: `1px solid ${theme.palette.divider}`,
+	background: 'rgba(0, 0, 0, 0)', //COLORS.transparent
 	'&:not(:last-child)': {
 		borderBottom: 0
 	},

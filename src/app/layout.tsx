@@ -27,6 +27,7 @@ export default function RootLayout({
 				></meta>
 			</head>
 			<body>
+				{/* style={{ background: 'red' }} */}
 				<Providers>
 					<AppRouterCacheProvider>
 						{children}

@@ -18,6 +18,7 @@ const DrawerDesktop = styled(MuiDrawer, {
 		overflowY: 'auto',
 		width: drawerWidth,
 		borderRight: `1px solid ${COLORS.border};`,
+		background: COLORS.transparent,
 		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.enteringScreen
