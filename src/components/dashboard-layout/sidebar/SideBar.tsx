@@ -1,8 +1,6 @@
-'use client'
-
-import { Button, List, useMediaQuery } from '@mui/material'
+import { Button, List } from '@mui/material'
 import { MyDrawer } from './MyDrawer'
-import { mainListItems } from './listItems'
+import { MainListItems } from './listItems'
 import AddIcon from '@mui/icons-material/Add'
 
 interface ISideBar {
@@ -36,7 +34,7 @@ export default function SideBar({ open, toggleDrawer }: ISideBar) {
 				sx={{ p: ' 0 15px' }}
 				component='nav'
 			>
-				{mainListItems}
+				<MainListItems />
 			</List>
 		</MyDrawer>
 	)
