@@ -76,14 +76,7 @@ export function MainListItems() {
 								key={wsp.link}
 								sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
 								onClick={() =>
-									push(
-										DASHBOARD_PAGES.HOME +
-											'/' +
-											ws.title +
-											'-' +
-											ws.id +
-											wsp.link
-									)
+									push(DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link)
 								}
 							>
 								<ListItemIcon sx={{ minWidth: '0' }}>
