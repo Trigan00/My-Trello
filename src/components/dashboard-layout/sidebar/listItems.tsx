@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 
 const workSpaces = [
-	{ id: 0, title: 'Пространство 1' },
-	{ id: 1, title: 'Пространство 2' },
-	{ id: 2, title: 'Пространство 3' }
+	{ id: 0, title: 'Пространство 1', englishLink: 'Prostranstvo1' },
+	{ id: 1, title: 'Пространство 2', englishLink: 'Prostranstvo2' },
+	{ id: 2, title: 'Пространство 3', englishLink: 'Prostranstvo3' }
 ]
 const workSpacePages = [
 	{ title: 'Доски', link: '/boards', icon: '/svg/boards.svg' },
@@ -21,11 +21,10 @@ const workSpacePages = [
 		icon: '/svg/statistics.svg'
 	},
 	{
-		title: 'Участники',
-		link: '/members',
-		icon: '/svg/members.svg'
+		title: 'Настройки',
+		link: '/settings',
+		icon: '/svg/settings.svg'
 	}
-	// { title: 'Настройки', link: 'settings' }
 ]
 
 export function MainListItems() {

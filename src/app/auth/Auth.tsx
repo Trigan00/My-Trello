@@ -34,10 +34,10 @@ export function Auth() {
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
 			authService.main(isLoginForm ? 'login' : 'register', data),
-		onSuccess() {
-			toast.success(`Successfully ${isLoginForm ? 'login' : 'registered'}!`)
+		onSuccess(res) {
+			!isLoginForm && toast.success('На почту отправлено письмо!')
 			reset()
-			push(DASHBOARD_PAGES.HOME)
+			isLoginForm && push(DASHBOARD_PAGES.HOME)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})
