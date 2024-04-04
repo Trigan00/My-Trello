@@ -17,13 +17,20 @@ const theme = createTheme({
 		}
 	},
 	components: {
-		// MuiButton: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			padding: 0
-		// 		}
-		// 	}
-		// },
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: '10px'
+				}
+			}
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					borderRadius: '10px'
+				}
+			}
+		},
 		MuiIconButton: {
 			styleOverrides: {
 				root: {

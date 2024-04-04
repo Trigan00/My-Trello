@@ -5,7 +5,8 @@ import {
 	headerHeight
 } from '@/components/dashboard-layout/header/Header'
 import SideBar from '@/components/dashboard-layout/sidebar/SideBar'
-import { Box } from '@mui/material'
+import { DIMENSIONS } from '@/constants/dimension.constants'
+import { Box, useMediaQuery } from '@mui/material'
 import { useState } from 'react'
 
 export default function DashboardLayoutWrapper({
@@ -13,7 +14,8 @@ export default function DashboardLayoutWrapper({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const [open, setOpen] = useState(true)
+	const matches = useMediaQuery(`(max-width:${DIMENSIONS.mobile})`)
+	const [open, setOpen] = useState(!matches)
 	const toggleDrawer = () => setOpen(prev => !prev)
 
 	return (
