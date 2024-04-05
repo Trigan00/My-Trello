@@ -14,6 +14,7 @@ const style = {
 	boxShadow: 24,
 	p: '30px'
 }
+
 interface MyModalProps {
 	isModal: boolean
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,6 +39,14 @@ export default function MyModal({
 			onClose={onCloseHandler}
 			aria-labelledby='modal-modal-title'
 			aria-describedby='modal-modal-description'
+			componentsProps={{
+				backdrop: {
+					sx: {
+						backgroundColor: 'rgba(0, 0, 0, 0.3)',
+						backdropFilter: 'blur(5px)'
+					}
+				}
+			}}
 		>
 			<Box sx={style}>{children}</Box>
 		</Modal>

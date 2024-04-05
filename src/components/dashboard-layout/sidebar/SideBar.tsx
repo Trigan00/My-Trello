@@ -19,7 +19,7 @@ export default function SideBar({ open, toggleDrawer }: ISideBar) {
 				sx={{ p: ' 0 15px' }}
 				component='nav'
 			>
-				<MainListItems />
+				<MainListItems onClose={toggleDrawer} />
 			</List>
 		</MyDrawer>
 	)

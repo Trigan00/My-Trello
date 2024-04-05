@@ -1,8 +1,9 @@
-import { styled, useMediaQuery } from '@mui/material'
+import { styled } from '@mui/material'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import Drawer from '@mui/material/Drawer'
 import { COLORS } from '@/constants/color.constants'
 import { headerHeight } from '../header/Header'
+import { useMedia } from '@/hooks/useMedia'
 import { DIMENSIONS } from '@/constants/dimension.constants'
 
 export const drawerWidth: number = 250
@@ -43,7 +44,7 @@ interface IDrawerDesktop extends DrawerProps {
 }
 
 export function MyDrawer({ children, ...rest }: IDrawerDesktop) {
-	const matches = useMediaQuery(`(max-width:${DIMENSIONS.mobile})`)
+	const matches = useMedia(DIMENSIONS.MD)
 
 	return (
 		<>

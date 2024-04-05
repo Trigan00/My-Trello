@@ -17,6 +17,7 @@ import { authService } from '@/services/auth.service'
 import { SITE_NAME } from '@/constants/seo.constants'
 import Image from 'next/image'
 import { COLORS } from '@/constants/color.constants'
+import NextLink from 'next/link'
 
 const settings = ['Профиль', 'Аккаунт ', 'Выйти']
 export const headerHeight: number = 74
@@ -91,7 +92,8 @@ export function Header({ toggleDrawer }: IHeader) {
 				</Box>
 				<Box sx={{ flexGrow: 1, display: 'flex' }}>
 					<Button
-						onClick={() => {}}
+						component={NextLink}
+						href='/services'
 						sx={{
 							ml: '40px',
 							display: 'block',
@@ -105,10 +107,13 @@ export function Header({ toggleDrawer }: IHeader) {
 						Сервисы
 					</Button>
 					<Button
-						onClick={() => {}}
+						component={NextLink}
+						href='/rate'
 						sx={{
 							ml: '40px',
-							display: 'block',
+							// display: {
+							// 	md: 'none'
+							// },
 							fontSize: '14px',
 							fontWeight: '400',
 							color: COLORS.textBlack,

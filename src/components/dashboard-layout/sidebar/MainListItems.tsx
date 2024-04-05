@@ -8,6 +8,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
+import { useMedia } from '@/hooks/useMedia'
+import { DIMENSIONS } from '@/constants/dimension.constants'
+import NextLink from 'next/link'
 
 const workSpacePages = [
 	{ title: 'Доски', link: '/boards', icon: '/svg/boards.svg' },
@@ -23,9 +26,19 @@ const workSpacePages = [
 	}
 ]
 
-export function MainListItems() {
+interface IMainListItems {
+	onClose: () => void
+}
+
+export function MainListItems({ onClose }: IMainListItems) {
 	const { push } = useRouter()
 	const { items } = useWorkspaces()
+	const matches = useMedia(DIMENSIONS.MD)
+
+	const onClickHandler = () => {
+		// push(DASHBOARD_PAGES.HOME + '/' + id + link)
+		matches && onClose()
+	}
 
 	return (
 		<React.Fragment>
@@ -88,9 +101,9 @@ export function MainListItems() {
 								<ListItemButton
 									key={wsp.link}
 									sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
-									onClick={() =>
-										push(DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link)
-									}
+									onClick={onClickHandler}
+									component={NextLink}
+									href={DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link}
 								>
 									<ListItemIcon sx={{ minWidth: '0' }}>
 										<Image
