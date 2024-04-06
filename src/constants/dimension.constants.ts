@@ -1,3 +1,7 @@
 export enum DIMENSIONS {
-	mobile = '600px'
+	XS = 'xs',
+	SM = 'sm',
+	MD = 'md',
+	LG = 'lg',
+	XL = 'xl'
 }

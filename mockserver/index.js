@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { authRouter, workspacesRouter } = require('./routes')
+const { authRouter, workspacesRouter, boardsRouter } = require('./routes')
 const cors = require('cors')
 require('dotenv').config()
 const authMiddleware = require('./middleware/auth.middleware')
@@ -23,6 +23,7 @@ app.use(
 
 app.use('/api/auth', authRouter)
 app.use('/api/workspaces', authMiddleware.decodeToken, workspacesRouter)
+app.use('/api/boards', authMiddleware.decodeToken, boardsRouter)
 
 app.get('/', (req, res) => {
 	res.status(200).json('Server is working')

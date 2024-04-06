@@ -15,5 +15,5 @@ export function useWorkspaces() {
 		setItems(data?.data)
 	}, [data?.data])
 
-	return { items, setItems, isLoading }
+	return { items, isLoading }
 }
