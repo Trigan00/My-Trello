@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import NextLink from 'next/link'
 import { errorCatch } from '@/api/error'
+import { Loader } from '@/components/UI/Loader/Loader'
 
 export function Auth() {
 	const { push } = useRouter()
@@ -30,7 +31,7 @@ export function Auth() {
 		formState: { errors }
 	} = useForm<IAuthForm>({})
 	const [isLoginForm, setIsLoginForm] = useState(true)
-	const { mutate } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
 			authService.main(isLoginForm ? 'login' : 'register', data),
@@ -112,16 +113,20 @@ export function Auth() {
 					required
 				/>
 
-				<Button
-					type='submit'
-					variant='contained'
-					fullWidth
-					sx={{
-						color: 'white'
-					}}
-				>
-					{isLoginForm ? 'Войти' : 'Зарегистроваться'}
-				</Button>
+				{isPending ? (
+					<Loader />
+				) : (
+					<Button
+						type='submit'
+						variant='contained'
+						fullWidth
+						sx={{
+							color: 'white'
+						}}
+					>
+						{isLoginForm ? 'Войти' : 'Зарегистроваться'}
+					</Button>
+				)}
 
 				<Grid container>
 					<Grid

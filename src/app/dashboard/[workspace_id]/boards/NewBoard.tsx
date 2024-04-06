@@ -47,6 +47,10 @@ export function NewBoard() {
 				</Typography>
 				<TextField
 					{...register('title', {
+						maxLength: {
+							value: 80,
+							message: 'Лимит знаков: 80'
+						},
 						required: 'Не может быть пустым'
 					})}
 					error={!!errors.title}

@@ -11,6 +11,7 @@ import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
 import { useMedia } from '@/hooks/useMedia'
 import { DIMENSIONS } from '@/constants/dimension.constants'
 import NextLink from 'next/link'
+import shortenText from '@/helpers/shortenText'
 
 const workSpacePages = [
 	{ title: 'Доски', link: '/boards', icon: '/svg/boards.svg' },
@@ -85,7 +86,7 @@ export function MainListItems({ onClose }: IMainListItems) {
 								fontWeight={500}
 								color={COLORS.textBlack}
 							>
-								{ws.title}
+								{shortenText(ws.title, 20)}
 							</Typography>
 						</AccordionSummary>
 						{/* </ListItem> */}

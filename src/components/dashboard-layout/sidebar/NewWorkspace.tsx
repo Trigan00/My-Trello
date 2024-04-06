@@ -49,6 +49,10 @@ export function NewWorkspace() {
 				</Typography>
 				<TextField
 					{...register('name', {
+						maxLength: {
+							value: 80,
+							message: 'Лимит знаков: 80'
+						},
 						required: 'Не может быть пустым'
 					})}
 					error={!!errors.name}

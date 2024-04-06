@@ -19,7 +19,7 @@ import Image from 'next/image'
 import { COLORS } from '@/constants/color.constants'
 import NextLink from 'next/link'
 
-const settings = ['Профиль', 'Аккаунт ', 'Выйти']
+const settings = ['Профиль', 'Сервисы', 'Выйти']
 export const headerHeight: number = 74
 
 interface IHeader {
@@ -96,7 +96,7 @@ export function Header({ toggleDrawer }: IHeader) {
 						href='/services'
 						sx={{
 							ml: '40px',
-							display: 'block',
+							display: { xs: 'none', md: 'block' },
 							fontSize: '14px',
 							fontWeight: '400',
 							color: COLORS.textBlack,
@@ -111,9 +111,7 @@ export function Header({ toggleDrawer }: IHeader) {
 						href='/rate'
 						sx={{
 							ml: '40px',
-							// display: {
-							// 	md: 'none'
-							// },
+							display: { xs: 'none', md: 'block' },
 							fontSize: '14px',
 							fontWeight: '400',
 							color: COLORS.textBlack,
