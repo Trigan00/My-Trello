@@ -80,6 +80,7 @@ export function Auth() {
 							message: 'Пожалуйста, введите действующий Email-адрес.'
 						}
 					})}
+					type='email'
 					error={!!errors.email}
 					label='Email'
 					helperText={errors.email?.message}
@@ -89,6 +90,21 @@ export function Auth() {
 					fullWidth
 					required
 				/>
+				{!isLoginForm && (
+					<TextField
+						{...register('username', {
+							required: 'Не может быть пустым'
+						})}
+						error={!!errors.username}
+						label='Имя пользователя'
+						helperText={errors.username?.message}
+						variant='outlined'
+						margin='normal'
+						size='small'
+						fullWidth
+						required
+					/>
+				)}
 				<TextField
 					{...register('password', {
 						required: 'Не может быть пустым',

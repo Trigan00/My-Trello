@@ -16,7 +16,7 @@ const users = []
 // /api/auth/register
 router.post('/register', async (req, res) => {
 	try {
-		const { email, password } = req.body
+		const { email, password, username } = req.body
 		const candidate = users.find(user => user.email === email)
 
 		if (candidate) {
@@ -27,6 +27,7 @@ router.post('/register', async (req, res) => {
 
 		newUser = {
 			id: users.length,
+			username,
 			email,
 			password
 		}

@@ -1,6 +1,7 @@
 export interface IAuthForm {
 	email: string
 	password: string
+	username?: string
 }
 
 export interface IAuthRecoveryForm extends IAuthForm {
@@ -9,8 +10,8 @@ export interface IAuthRecoveryForm extends IAuthForm {
 
 export interface IUser {
 	id: number
-	name?: string
 	email: string
+	username?: string
 }
 
 export interface IAuthResponse {
