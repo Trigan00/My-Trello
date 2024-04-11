@@ -130,7 +130,7 @@ export function Auth() {
 				/>
 
 				{isPending ? (
-					<Loader />
+					<Loader /> //#TODO во время загрузки уменьшается окно
 				) : (
 					<Button
 						type='submit'
