@@ -1,5 +1,5 @@
 import { axiosWithAuth } from '@/api/interceptors'
-import { IUser } from '@/types/auth.types'
+import { IUser, ROLES } from '@/types/auth.types'
 import { IWorkspace } from '@/types/workspace.types'
 
 class WorkspaceService {
@@ -47,6 +47,14 @@ class WorkspaceService {
 
 	async deleteWorkspace(id: number) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)
+		return response
+	}
+
+	async updateRole(id: number, data: { user_id: number; role: ROLES }) {
+		const response = await axiosWithAuth.patch(
+			`${this.BASE_URL}/update-role/${id}`,
+			data
+		)
 		return response
 	}
 }

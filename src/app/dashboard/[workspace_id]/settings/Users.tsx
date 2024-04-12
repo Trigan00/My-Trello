@@ -7,7 +7,6 @@ import { useWorkspaceUsers } from '@/hooks/workspace-hooks/useWorkspaceUsers'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import {
 	Box,
-	Button,
 	Divider,
 	IconButton,
 	Skeleton,
@@ -16,62 +15,13 @@ import {
 	TableCell,
 	TableHead,
 	TableRow,
-	Typography,
-	styled
+	Typography
 } from '@mui/material'
 import copy from 'copy-to-clipboard'
 import { toast } from 'sonner'
-import DeleteUserModal from './DeleteUserModal'
-import { useState } from 'react'
-import { IUser } from '@/types/auth.types'
 import React from 'react'
 import { useInviteLink } from '@/hooks/workspace-hooks/useInviteLink'
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	'&:nth-of-type(odd)': {
-		backgroundColor: theme.palette.action.hover
-	},
-	// hide last border
-	'&:last-child td, &:last-child th': {
-		border: 0
-	}
-}))
-
-function MyTableRow({ row, i }: { row: IUser; i: number }) {
-	const [isDelete, setIsDelete] = useState(false)
-
-	return (
-		<React.Fragment>
-			<StyledTableRow key={row.id}>
-				<TableCell>{i + 1}</TableCell>
-				<TableCell>{row.username}</TableCell>
-				<TableCell>{row.email}</TableCell>
-				<TableCell>{row.role}</TableCell>
-				<TableCell align='right'>
-					{/* <IconButton
-		aria-label='delete'
-		color='error'
-	>
-		<DeleteOutlineIcon />
-	</IconButton> */}
-					<Button
-						size='small'
-						color='error'
-						onClick={() => setIsDelete(true)}
-					>
-						Удалить
-					</Button>
-				</TableCell>
-			</StyledTableRow>
-			<DeleteUserModal
-				id={row.id}
-				isModal={isDelete}
-				setIsModal={setIsDelete}
-				username={row.username}
-			/>
-		</React.Fragment>
-	)
-}
+import MyTableRow from './MyTableRow'
 
 interface UsersI {
 	workspace_id: number
@@ -121,6 +71,7 @@ export function Users({ workspace_id }: UsersI) {
 						<TableBody>
 							{users.map((row, i) => (
 								<MyTableRow
+									workspace_id={workspace_id}
 									key={row.id}
 									row={row}
 									i={i}

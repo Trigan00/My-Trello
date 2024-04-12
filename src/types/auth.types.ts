@@ -13,7 +13,7 @@ export interface IAuthResponse {
 	user: IUser
 }
 
-enum roles {
+export enum ROLES {
 	ADMIN = 'admin',
 	EMPLOYEE = 'employee',
 	OBSERVER = 'observer'
@@ -23,5 +23,5 @@ export interface IUser {
 	id: number
 	email: string
 	username: string
-	role: roles
+	role: ROLES
 }

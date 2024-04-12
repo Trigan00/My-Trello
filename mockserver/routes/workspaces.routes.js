@@ -123,4 +123,21 @@ router.delete('/:id', async (req, res) => {
 	}
 })
 
+router.patch('/update-role/:id', async (req, res) => {
+	try {
+		const ws_id = req.params.id
+		const { user_id, role } = req.body
+		const user = workspaceUsers.find(value => value.id == user_id)
+		user.role = role
+		console.log(workspaceUsers)
+		return res.status(201).json(true)
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
 module.exports = router
