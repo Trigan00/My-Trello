@@ -18,6 +18,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 	}
 
 	if (!accessToken) {
+		cookies.delete(EnumTokens.ACCESS_TOKEN)
 		return NextResponse.redirect(new URL('/auth', url))
 	}
 
