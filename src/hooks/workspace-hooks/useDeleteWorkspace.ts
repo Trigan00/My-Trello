@@ -12,11 +12,11 @@ export function useDeleteWorkspace() {
 	const { mutate: deleteWorkspace, isPending: isDeletePending } = useMutation({
 		mutationKey: ['delete workspace'],
 		mutationFn: (id: number) => workspaceService.deleteWorkspace(id),
-		onSuccess() {
+		onSuccess(res) {
 			queryClient.invalidateQueries({
 				queryKey: ['workspaces']
 			})
-			toast.success('Рабочее пространство удалено')
+			toast.success(res.data.message)
 			push(DASHBOARD_PAGES.HOME)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))

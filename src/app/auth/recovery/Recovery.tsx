@@ -25,7 +25,11 @@ export default function Recovery() {
 	const { mutate } = useMutation({
 		mutationKey: ['auth_recovery'],
 		mutationFn: (data: IAuthRecoveryForm) =>
-			authService.recovery(token ? 'update' : 'forget', data, token),
+			authService.recovery(
+				token ? 'resetpassword' : 'forgotpassword',
+				data,
+				token
+			),
 		onSuccess() {
 			toast.success(
 				token ? 'Пароль успешно изменен' : 'На почту отправлено письмо'

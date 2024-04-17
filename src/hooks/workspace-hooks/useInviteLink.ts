@@ -8,7 +8,7 @@ export function useInviteLink(workspace_id: number) {
 		queryFn: () => workspaceService.getInviteLink(workspace_id)
 	})
 
-	const [item, setItem] = useState<{ inviteLink: string } | undefined>(
+	const [item, setItem] = useState<{ invite_token: string } | undefined>(
 		data?.data
 	)
 

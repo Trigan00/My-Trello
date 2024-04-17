@@ -32,7 +32,7 @@ export function Users({ workspace_id }: UsersI) {
 	const { item: link } = useInviteLink(workspace_id)
 
 	const copyHandler = () => {
-		copy(link?.inviteLink || '')
+		copy(link?.invite_token || '')
 		toast.info('Скопировано в буфер обмена!')
 	}
 
@@ -112,7 +112,7 @@ export function Users({ workspace_id }: UsersI) {
 									padding: '0 16px'
 								}}
 								readOnly
-								value={link.inviteLink}
+								value={link.invite_token}
 							/>
 							<IconButton
 								sx={{ p: 1 }}

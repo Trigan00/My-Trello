@@ -34,9 +34,9 @@ export function Auth() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
-			authService.main(isLoginForm ? 'login' : 'register', data),
+			authService.main(isLoginForm ? 'signin' : 'signup', data),
 		onSuccess(res) {
-			!isLoginForm && toast.success('На почту отправлено письмо!')
+			!isLoginForm && toast.success(res.data.message)
 			reset()
 			isLoginForm && push(DASHBOARD_PAGES.HOME)
 		},

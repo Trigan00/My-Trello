@@ -1,18 +1,3 @@
-export interface IAuthForm {
-	email: string
-	password: string
-	username?: string
-}
-
-export interface IAuthRecoveryForm extends IAuthForm {
-	confirm_password: string
-}
-
-export interface IAuthResponse {
-	accessToken: string
-	user: IUser
-}
-
 export enum ROLES {
 	ADMIN = 'admin',
 	EMPLOYEE = 'employee',
@@ -24,4 +9,24 @@ export interface IUser {
 	email: string
 	username: string
 	role: ROLES
+}
+
+export interface IAuthForm {
+	email: string
+	password: string
+	username?: string
+}
+
+export interface IAuthRecoveryForm extends IAuthForm {
+	confirm_password: string
+}
+
+export interface IAuthResponse {
+	access: string
+	user: IUser
+	message: string
+}
+
+export interface IGetMembersResponse {
+	users: IUser[]
 }

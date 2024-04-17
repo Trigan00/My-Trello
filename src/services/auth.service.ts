@@ -5,28 +5,28 @@ import { axiosClassic } from '@/api/interceptors'
 import { removeFromStorage, saveTokenStorage } from './auth-token.service'
 
 export const authService = {
-	async main(type: 'login' | 'register', data: IAuthForm) {
+	async main(type: 'signin' | 'signup', data: IAuthForm) {
 		const response = await axiosClassic.post<IAuthResponse>(
-			`/auth/${type}`,
+			`/auth/${type}/`,
 			data
 		)
-		if (response.data.accessToken && type === 'login')
-			saveTokenStorage(response.data.accessToken)
+		if (response.data.access && type === 'signin')
+			saveTokenStorage(response.data.access)
 		return response
 	},
 
 	async getNewTokens() {
 		const response = await axiosClassic.post<IAuthResponse>(
-			'/auth/login/access-token'
+			'/auth/token/refresh/'
 		)
 
-		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+		if (response.data.access) saveTokenStorage(response.data.access)
 
 		return response
 	},
 
 	async logout() {
-		const response = await axiosClassic.post<boolean>('/auth/logout')
+		const response = await axiosClassic.post<boolean>('/auth/logout/')
 
 		if (response.data) removeFromStorage()
 
@@ -34,13 +34,13 @@ export const authService = {
 	},
 
 	async recovery(
-		type: 'forget' | 'update',
+		type: 'forgotpassword' | 'resetpassword',
 		data: IAuthRecoveryForm,
 		token: string | null
 	) {
-		const response = await axiosClassic.put<IAuthResponse>(
-			`/auth/${type}`,
-			type === 'forget'
+		const response = await axiosClassic.post<true>(
+			`/auth/${type}/`,
+			type === 'forgotpassword'
 				? { email: data.email }
 				: { password: data.password, token }
 		)

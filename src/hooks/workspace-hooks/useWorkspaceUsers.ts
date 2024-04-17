@@ -9,10 +9,10 @@ export function useWorkspaceUsers(workspace_id: number) {
 		queryFn: () => workspaceService.getWorkspaceUsers(workspace_id)
 	})
 
-	const [users, setUsers] = useState<IUser[] | undefined>(data?.data)
+	const [users, setUsers] = useState<IUser[] | undefined>(data?.data.users)
 
 	useEffect(() => {
-		setUsers(data?.data)
+		setUsers(data?.data.users)
 	}, [data?.data])
 
 	return { users, isLoading }

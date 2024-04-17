@@ -32,12 +32,10 @@ interface IMainListItems {
 }
 
 export function MainListItems({ onClose }: IMainListItems) {
-	const { push } = useRouter()
 	const { items } = useWorkspaces()
 	const matches = useMedia(DIMENSIONS.MD)
 
 	const onClickHandler = () => {
-		// push(DASHBOARD_PAGES.HOME + '/' + id + link)
 		matches && onClose()
 	}
 
@@ -86,7 +84,7 @@ export function MainListItems({ onClose }: IMainListItems) {
 								fontWeight={500}
 								color={COLORS.textBlack}
 							>
-								{shortenText(ws.title, 20)}
+								{shortenText(ws.name, 20)}
 							</Typography>
 						</AccordionSummary>
 						{/* </ListItem> */}

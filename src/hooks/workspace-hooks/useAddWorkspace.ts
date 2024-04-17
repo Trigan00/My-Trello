@@ -12,7 +12,7 @@ export function useAddWorkspace(onSuccessFunc: () => void) {
 		mutationFn: (data: IAddWorkspace) =>
 			workspaceService.addWorkspace(data.name),
 		onSuccess(res) {
-			toast.success('Новое рабочее пространство создано')
+			toast.success(res.data.message)
 			queryClient.invalidateQueries({
 				queryKey: ['workspaces']
 			})

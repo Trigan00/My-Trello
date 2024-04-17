@@ -15,20 +15,22 @@ interface DeleteModalProps {
 	isModal: boolean
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
 	username: string
-	id: number
+	ws_id: number
+	user_id: number
 }
 
 export default function DeleteUserModal({
 	isModal,
 	setIsModal,
 	username,
-	id
+	ws_id,
+	user_id
 }: DeleteModalProps) {
 	const [deleteIsActive, setDeleteIsActive] = useState(false)
 	const { deleteWorkspaceUser, isDeleteUserPending } = useDeleteWorkspaceUser()
 
 	const onDelete = async () => {
-		deleteWorkspaceUser(id)
+		deleteWorkspaceUser({ user_id, ws_id })
 		setIsModal(false)
 	}
 

@@ -8,13 +8,13 @@ export function useUpdateWorkspace() {
 
 	const { mutate: updateWorkspace, isPending } = useMutation({
 		mutationKey: ['update workspace'],
-		mutationFn: ({ id, title }: { id: number; title: string }) =>
-			workspaceService.updateWorkspaceName(id, { title }),
-		onSuccess() {
+		mutationFn: ({ id, name }: { id: number; name: string }) =>
+			workspaceService.updateWorkspaceName(id, { name }),
+		onSuccess(res) {
 			queryClient.invalidateQueries({
 				queryKey: ['workspaces']
 			})
-			toast.success('Название обновлено')
+			toast.success(res.data.message)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})

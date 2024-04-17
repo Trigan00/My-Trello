@@ -39,7 +39,7 @@ export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 	const handleRoleChange = (event: SelectChangeEvent) => {
 		const newRole = event.target.value as ROLES
 		setRole(newRole)
-		updateRole({ id: workspace_id, role: newRole, user_id: row.id })
+		updateRole({ ws_id: workspace_id, role: newRole, user_id: row.id })
 	}
 
 	return (
@@ -85,7 +85,8 @@ export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 				</TableCell>
 			</StyledTableRow>
 			<DeleteUserModal
-				id={row.id}
+				ws_id={workspace_id}
+				user_id={row.id}
 				isModal={isDelete}
 				setIsModal={setIsDelete}
 				username={row.username}

@@ -10,15 +10,16 @@ export function useUpdateRole() {
 	const { mutate: updateRole, isPending } = useMutation({
 		mutationKey: ['update role'],
 		mutationFn: ({
-			id,
+			ws_id,
 			user_id,
 			role
 		}: {
-			id: number
+			ws_id: number
 			user_id: number
 			role: ROLES
-		}) => workspaceService.updateRole(id, { user_id, role }),
-		onSuccess() {
+		}) => workspaceService.updateRole(user_id, { ws_id, role }),
+		onSuccess(res) {
+			toast.success(res.data.message)
 			queryClient.invalidateQueries({
 				queryKey: ['workspace users']
 			})

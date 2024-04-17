@@ -24,12 +24,12 @@ export function NameChanger({ workspace_id }: NameChangerI) {
 	} = useForm<{ name: string }>({})
 
 	const changeName: SubmitHandler<{ name: string }> = data => {
-		updateWorkspace({ id: workspace_id, title: data.name })
+		updateWorkspace({ id: workspace_id, name: data.name })
 	}
 
 	return (
 		<>
-			<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.title} />
+			<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
 			<MyCard
 				variant='shadowed'
 				sx={{ mt: 4 }}
