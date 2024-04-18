@@ -37,7 +37,7 @@ export function Auth() {
 			authService.main(isLoginForm ? 'signin' : 'signup', data),
 		onSuccess(res) {
 			!isLoginForm && toast.success(res.data.message)
-			reset()
+			// reset()
 			isLoginForm && push(DASHBOARD_PAGES.HOME)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))

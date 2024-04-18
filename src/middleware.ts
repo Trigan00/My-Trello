@@ -4,12 +4,12 @@ import { EnumTokens } from './services/auth-token.service'
 
 export async function middleware(request: NextRequest, response: NextResponse) {
 	const { url, cookies } = request
-	// const refreshToken = cookies.get(EnumTokens.REFRESH_TOKEN)?.value
-	const accessToken = cookies.get(EnumTokens.ACCESS_TOKEN)?.value
-
+	const refreshToken = cookies.get(EnumTokens.REFRESH_TOKEN)?.value
+	// const accessToken = cookies.get(EnumTokens.ACCESS_TOKEN)?.value
+	console.log(refreshToken)
 	const isAuthPage = url.includes('/auth')
 
-	if (isAuthPage && accessToken) {
+	if (isAuthPage && refreshToken) {
 		return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
 	}
 
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 		return NextResponse.next()
 	}
 
-	if (!accessToken) {
+	if (!refreshToken) {
 		cookies.delete(EnumTokens.ACCESS_TOKEN)
 		return NextResponse.redirect(new URL('/auth', url))
 	}
