@@ -16,13 +16,16 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import NextLink from 'next/link'
 import { errorCatch } from '@/api/error'
 import { Loader } from '@/components/UI/Loader/Loader'
+import { EnumTokens } from '@/services/auth-token.service'
 
 export function Auth() {
+	const searchParams = useSearchParams()
+	const invite_token = searchParams.get(EnumTokens.INVITE_TOKEN)
 	const { push } = useRouter()
 	const {
 		register,
@@ -34,7 +37,7 @@ export function Auth() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
-			authService.main(isLoginForm ? 'signin' : 'signup', data),
+			authService.main(isLoginForm ? 'signin' : 'signup', data, invite_token),
 		onSuccess(res) {
 			!isLoginForm && toast.success(res.data.message)
 			// reset()

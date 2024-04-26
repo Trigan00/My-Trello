@@ -1,11 +1,15 @@
 import type { Metadata } from 'next'
-// import Recovery from './Recovery'
-import RecoveryWrapper from './RecoveryWrapper'
+import Recovery from './Recovery'
+import MySuspense from '@/components/MySuspense'
 
 export const metadata: Metadata = {
 	title: 'Password recovery'
 }
 
 export default function AuthPage() {
-	return <RecoveryWrapper />
+	return (
+		<MySuspense>
+			<Recovery />
+		</MySuspense>
+	)
 }

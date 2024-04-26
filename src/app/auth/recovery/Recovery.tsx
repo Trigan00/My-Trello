@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 export default function Recovery() {
 	const searchParams = useSearchParams()
-	const token = searchParams.get('code')
+	const token = searchParams.get('token')
 	const { push } = useRouter()
 	const {
 		register,

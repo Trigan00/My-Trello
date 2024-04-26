@@ -11,7 +11,9 @@ const generateToken = (id, email, expiresTime) => {
 	})
 }
 
-const users = []
+const users = [
+	{ id: 0, username: 'Ayaz', email: 'test@mail.ru', password: 'Test123!' }
+]
 
 // /api/auth/register
 router.post('/signup', async (req, res) => {
@@ -78,8 +80,8 @@ router.post('/signin', async (req, res) => {
 		return res.status(200).json({
 			access: generateToken(user.id, user.email, '24h'),
 			user: {
-				id: newUser.id,
-				email: newUser.email
+				id: user.id,
+				email: user.email
 			}
 		})
 	} catch (error) {
