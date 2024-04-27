@@ -15,12 +15,12 @@ class TaskService {
 		return response
 	}
 
-	async updateTask(id: string, data: TypeTaskFormState) {
+	async updateTask(id: number, data: TypeTaskFormState) {
 		const response = await axiosWithAuth.patch(`${this.BASE_URL}/${id}`, data)
 		return response
 	}
 
-	async deleteTask(id: string) {
+	async deleteTask(id: number) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)
 		return response
 	}

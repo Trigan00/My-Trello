@@ -15,14 +15,13 @@ interface IKanbanCard {
 }
 
 export function KanbanCard({ item, setItems }: IKanbanCard) {
-	const { register, control, watch } = useForm<TypeTaskFormState>({
-		defaultValues: {
-			name: item.name,
-			status: item.status
-		}
-	})
+	// const { register, control, watch } = useForm<TypeTaskFormState>({
+	// 	defaultValues: {
+	// 		name: item.name
+	// 	}
+	// })
 
-	useTaskDebounce({ watch, itemId: item.id.toString() })
+	// useTaskDebounce({ watch, itemId: item.id })
 
 	return (
 		<Box

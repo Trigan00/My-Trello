@@ -1,6 +1,7 @@
 'use client'
 
 import { DragDropContext } from '@hello-pangea/dnd'
+import { DndContext } from '@dnd-kit/core'
 
 import { useTaskDnd } from '@/hooks/task-hooks/useTaskDnd'
 import { useTasks } from '@/hooks/task-hooks/useTasks'
@@ -15,7 +16,7 @@ interface KanbanI {
 
 export function Kanban({}: KanbanI) {
 	const { items, setItems } = useTasks()
-	const { onDragEnd } = useTaskDnd()
+	const { onDragEnd } = useTaskDnd({ items, setItems })
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
@@ -27,8 +28,8 @@ export function Kanban({}: KanbanI) {
 			>
 				{COLUMNS.map(column => (
 					<KanbanColumn
-						key={column.value}
-						value={column.value}
+						key={column.id}
+						column_id={column.id}
 						label={column.label}
 						items={items}
 						setItems={setItems}

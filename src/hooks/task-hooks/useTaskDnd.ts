@@ -3,35 +3,38 @@ import { DropResult } from '@hello-pangea/dnd'
 // import { FILTERS } from '../columns.data'
 
 import { useUpdateTask } from './useUpdateTask'
+import { TaskI } from '@/types/task.types'
+import { Dispatch, SetStateAction } from 'react'
 
-export function useTaskDnd() {
+interface useTaskDndI {
+	items: TaskI[] | undefined
+	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
+}
+
+export function useTaskDnd({ items, setItems }: useTaskDndI) {
 	const { updateTask } = useUpdateTask()
 
 	const onDragEnd = (result: DropResult) => {
 		if (!result.destination) return
 
 		const destinationColumnId = result.destination.droppableId
-
 		if (destinationColumnId === result.source.droppableId) return
 
-		if (destinationColumnId === 'completed') {
-			updateTask({
-				id: result.draggableId,
-				data: {
-					status: 3
-				}
-			})
-
-			return
-		}
-
-		// const newCreatedAt = FILTERS[destinationColumnId].format()
+		const tempItem = items?.find(
+			value => value.id === Number(result.draggableId)
+		) as TaskI
+		tempItem.column_id = Number(destinationColumnId)
+		const tempItems = items?.filter(
+			value => value.id !== Number(result.draggableId)
+		)
+		tempItems?.push(tempItem as TaskI)
+		setItems(tempItems)
 
 		updateTask({
-			id: result.draggableId,
+			id: Number(result.draggableId),
 			data: {
 				// createdAt: newCreatedAt,
-				status: Number(destinationColumnId)
+				column_id: Number(destinationColumnId)
 			}
 		})
 	}

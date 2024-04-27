@@ -4,24 +4,24 @@ import { UseFormWatch } from 'react-hook-form'
 
 import { TypeTaskFormState } from '@/types/task.types'
 
-import { useCreateTask } from './useCreateTask'
+// import { useCreateTask } from './useCreateTask'
 import { useUpdateTask } from './useUpdateTask'
 
 interface IUseTaskDebounce {
 	watch: UseFormWatch<TypeTaskFormState>
-	itemId: string
+	itemId: number
 }
 
 export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
-	const { createTask } = useCreateTask()
+	// const { createTask } = useCreateTask()
 	const { updateTask } = useUpdateTask()
 
-	const debouncedCreateTask = useCallback(
-		debounce((formData: TypeTaskFormState) => {
-			createTask(formData)
-		}, 444),
-		[]
-	)
+	// const debouncedCreateTask = useCallback(
+	// 	debounce((formData: TypeTaskFormState) => {
+	// 		createTask(formData)
+	// 	}, 444),
+	// 	[]
+	// )
 
 	// Теперь debouncedUpdateTask будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateTask = useCallback(
@@ -33,17 +33,20 @@ export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
 
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
-			if (itemId) {
-				debouncedUpdateTask({
-					...formData
-				})
-			} else {
-				debouncedCreateTask(formData)
-			}
+			debouncedUpdateTask({
+				...formData
+			})
+			// if (itemId) {
+			// 	debouncedUpdateTask({
+			// 		...formData
+			// 	})
+			// } else {
+			// 	debouncedCreateTask(formData)
+			// }
 		})
 
 		return () => {
 			unsubscribe()
 		}
-	}, [watch(), debouncedUpdateTask, debouncedCreateTask])
+	}, [watch(), debouncedUpdateTask]) //, debouncedCreateTask
 }

@@ -4,23 +4,8 @@ import type { TaskI } from '@/types/task.types'
 import { Button } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 
-interface IKanbanAddCardInput {
-	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
-}
-
-export function KanbanAddCard({ setItems }: IKanbanAddCardInput) {
-	const addCard = () => {
-		// setItems(prev => {
-		// 	if (!prev) return
-		// 	return [
-		// 		...prev,
-		// 		{
-		// 			id: 0,
-		// 			name: ''
-		// 		}
-		// 	]
-		// })
-	}
+export function KanbanAddTask() {
+	const addCard = () => {}
 
 	return (
 		<Button

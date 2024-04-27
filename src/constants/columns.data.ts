@@ -1,18 +1,18 @@
 export const COLUMNS = [
 	{
 		label: 'Планируется',
-		value: 0
+		id: 0
 	},
 	{
 		label: 'В работе',
-		value: 1
+		id: 1
 	},
 	{
 		label: 'На проверке',
-		value: 2
+		id: 2
 	},
 	{
 		label: 'Сделано',
-		value: 3
+		id: 3
 	}
 ]

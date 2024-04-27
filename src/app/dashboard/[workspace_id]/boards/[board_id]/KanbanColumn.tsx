@@ -3,22 +3,27 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import type { TaskI } from '@/types/task.types'
 
-import { KanbanAddCard } from './KanbanAddCard'
+import { KanbanAddTask } from './KanbanAddTask'
 import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
 import { Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 
 interface IKanbanColumn {
-	value: number
+	column_id: number
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
 }
 
-export function KanbanColumn({ value, items, label, setItems }: IKanbanColumn) {
+export function KanbanColumn({
+	column_id,
+	items,
+	label,
+	setItems
+}: IKanbanColumn) {
 	return (
-		<Droppable droppableId={value.toString()}>
+		<Droppable droppableId={column_id.toString()}>
 			{provided => (
 				<div
 					ref={provided.innerRef}
@@ -44,7 +49,7 @@ export function KanbanColumn({ value, items, label, setItems }: IKanbanColumn) {
 						</Typography>
 
 						{items
-							?.filter(item => item.status === value)
+							?.filter(item => item.column_id === column_id)
 							.map((item, index) => (
 								<Draggable
 									key={item.id}
@@ -68,7 +73,7 @@ export function KanbanColumn({ value, items, label, setItems }: IKanbanColumn) {
 							))}
 
 						{provided.placeholder}
-						<KanbanAddCard setItems={setItems} />
+						<KanbanAddTask />
 					</MyCard>
 				</div>
 			)}
