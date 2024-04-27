@@ -32,12 +32,10 @@ export default function DashboardLayoutWrapper({
 				/>
 				<Box
 					sx={{
-						flexGrow: 1,
-						boxSizing: 'border-box',
-						p: 4,
+						width: '100%',
 						mt: `${headerHeight}px`,
 						height: `calc(100vh - ${headerHeight}px)`,
-						overflow: 'auto'
+						overflowX: 'hidden'
 					}}
 				>
 					{children}

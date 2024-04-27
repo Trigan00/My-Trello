@@ -32,7 +32,7 @@ export function NameChanger({ workspace_id }: NameChangerI) {
 			<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
 			<MyCard
 				variant='shadowed'
-				sx={{ mt: 4 }}
+				sx={{ mt: '20px' }}
 			>
 				<Box sx={{ p: 3 }}>
 					<Typography

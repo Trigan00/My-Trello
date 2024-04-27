@@ -6,7 +6,7 @@ import { TaskI } from '@/types/task.types'
 import { taskService } from '@/services/task.service'
 
 export function useTasks() {
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: ['tasks'],
 		queryFn: () => taskService.getTasks()
 	})
@@ -17,5 +17,5 @@ export function useTasks() {
 		setItems(data?.data)
 	}, [data?.data])
 
-	return { items, setItems }
+	return { items, setItems, isLoading }
 }

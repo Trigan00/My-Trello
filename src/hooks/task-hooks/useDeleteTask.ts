@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { taskService } from '@/services/task.service'
+import { errorCatch } from '@/api/error'
+import { toast } from 'sonner'
 
 export function useDeleteTask() {
 	const queryClient = useQueryClient()
@@ -12,6 +14,9 @@ export function useDeleteTask() {
 			queryClient.invalidateQueries({
 				queryKey: ['tasks']
 			})
+		},
+		onError(error: any) {
+			toast.error(errorCatch(error))
 		}
 	})
 

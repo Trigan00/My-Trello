@@ -1,4 +1,4 @@
-import type { TaskI, TypeTaskFormState } from '@/types/task.types'
+import type { ColumnI, TaskI, TypeTaskFormState } from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 
@@ -7,6 +7,13 @@ class TaskService {
 
 	async getTasks() {
 		const response = await axiosWithAuth.get<TaskI[]>(this.BASE_URL)
+		return response
+	}
+
+	async getColumns(id: number) {
+		const response = await axiosWithAuth.get<ColumnI[]>(
+			`${this.BASE_URL}/columns/${id}`
+		)
 		return response
 	}
 

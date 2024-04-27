@@ -7,8 +7,15 @@ interface IHeading {
 export function Heading({ title }: IHeading) {
 	return (
 		<Box>
-			<Typography variant='h6'>
-				{title ? title : <Skeleton width={200} />}
+			<Typography sx={{ fontWeight: '600', fontSize: '18px' }}>
+				{title ? (
+					title
+				) : (
+					<Skeleton
+						width={200}
+						height={35}
+					/>
+				)}
 			</Typography>
 		</Box>
 	)

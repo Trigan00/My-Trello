@@ -7,6 +7,11 @@ export interface AddBoardI {
 	title: string
 }
 
+export interface ColumnI {
+	label: string
+	id: number
+}
+
 export interface TaskI {
 	id: number
 	name: string

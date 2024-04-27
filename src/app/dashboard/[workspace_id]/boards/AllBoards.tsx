@@ -42,7 +42,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 	const { items: Workspaces } = useWorkspaces()
 
 	return (
-		<>
+		<Box sx={{ p: 4 }}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -100,6 +100,6 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 					))}
 				</Box>
 			)}
-		</>
+		</Box>
 	)
 }

@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import type { TaskI, TypeTaskFormState } from '@/types/task.types'
 
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
-import { useTaskDebounce } from '@/hooks/task-hooks/useTaskDebounce'
+// import { useTaskDebounce } from '@/hooks/task-hooks/useTaskDebounce'
 import { Box, Grid, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
@@ -27,7 +27,7 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 		<Box
 			sx={{
 				position: 'relative',
-				mt: '5px',
+				mt: '10px',
 				color: COLORS.textBlack,
 				backgroundColor: COLORS.border,
 				borderRadius: '10px',

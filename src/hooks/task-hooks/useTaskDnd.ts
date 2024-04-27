@@ -12,13 +12,23 @@ interface useTaskDndI {
 }
 
 export function useTaskDnd({ items, setItems }: useTaskDndI) {
-	const { updateTask } = useUpdateTask()
+	const { updateTask } = useUpdateTask(onError)
+
+	function onError() {
+		const arr = sessionStorage.getItem('TasksState')
+		if (arr) {
+			setItems(JSON.parse(arr) as TaskI[])
+		}
+		sessionStorage.removeItem('TasksState')
+	}
 
 	const onDragEnd = (result: DropResult) => {
 		if (!result.destination) return
 
 		const destinationColumnId = result.destination.droppableId
 		if (destinationColumnId === result.source.droppableId) return
+
+		sessionStorage.setItem('TasksState', JSON.stringify(items))
 
 		const tempItem = items?.find(
 			value => value.id === Number(result.draggableId)

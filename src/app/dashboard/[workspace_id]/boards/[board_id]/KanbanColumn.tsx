@@ -23,31 +23,38 @@ export function KanbanColumn({
 	setItems
 }: IKanbanColumn) {
 	return (
-		<Droppable droppableId={column_id.toString()}>
-			{provided => (
-				<div
-					ref={provided.innerRef}
-					{...provided.droppableProps}
-				>
-					<MyCard
-						variant='shadowed'
-						sx={{
-							p: '20px 21px',
-							width: '250px'
+		<MyCard
+			variant='shadowed'
+			sx={{
+				flexShrink: 0,
+				p: '20px 21px',
+				width: '250px',
+				height: 'fit-content'
+			}}
+		>
+			<Typography
+				fontWeight={600}
+				fontSize={'16px'}
+				sx={{
+					color: COLORS.textBlack,
+					width: '100%',
+					mb: '16px'
+				}}
+			>
+				{label}
+			</Typography>
+			<Droppable droppableId={column_id.toString()}>
+				{provided => (
+					<div
+						ref={provided.innerRef}
+						{...provided.droppableProps}
+						style={{
+							maxHeight: '600px',
+							overflowX: 'hidden',
+							overflowY: 'auto',
+							scrollbarWidth: 'thin'
 						}}
 					>
-						<Typography
-							fontWeight={600}
-							fontSize={'16px'}
-							sx={{
-								color: COLORS.textBlack,
-								width: '100%',
-								mb: '16px'
-							}}
-						>
-							{label}
-						</Typography>
-
 						{items
 							?.filter(item => item.column_id === column_id)
 							.map((item, index) => (
@@ -74,9 +81,9 @@ export function KanbanColumn({
 
 						{provided.placeholder}
 						<KanbanAddTask />
-					</MyCard>
-				</div>
-			)}
-		</Droppable>
+					</div>
+				)}
+			</Droppable>
+		</MyCard>
 	)
 }
