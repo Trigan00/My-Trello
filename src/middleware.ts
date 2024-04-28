@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { DASHBOARD_PAGES } from './config/pages-url.config'
 import { EnumTokens } from './services/auth-token.service'
 import { authService } from './services/auth.service'
-import { addUserToWS } from './services/server.service'
+import { addUserToWS, getToken } from './services/server.service'
 
 export async function middleware(request: NextRequest, response: NextResponse) {
 	const { url, cookies } = request
@@ -15,10 +15,23 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 		const invite_token =
 			request.nextUrl.searchParams.get(EnumTokens.INVITE_TOKEN) || ''
 		try {
-			const { data } = await authService.getNewTokens()
-			await addUserToWS(data.access, invite_token)
+			const tokenResponse = await getToken()
+			const tokenResponseData = await tokenResponse?.json()
+			if (tokenResponse.status == 201) {
+				const res = await addUserToWS(
+					tokenResponseData.data.access,
+					invite_token
+				)
+				return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
+			} else {
+				return NextResponse.redirect(
+					new URL(`/auth?invite_token=${invite_token}`, url) // это
+				)
+			}
 		} catch (error: any) {
-			await addUserToWS(accessToken || '', invite_token)
+			return NextResponse.redirect(
+				new URL(`/auth?invite_token=${invite_token}`, url)
+			) //и это если access не получилось получить
 		}
 	}
 
