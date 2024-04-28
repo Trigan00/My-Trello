@@ -1,7 +1,7 @@
 export enum ROLES {
-	ADMIN = 'admin',
-	EMPLOYEE = 'employee',
-	OBSERVER = 'observer'
+	ADMIN = 'админ',
+	EMPLOYEE = 'участник',
+	OBSERVER = 'персонал'
 }
 
 export interface IUser {
@@ -28,5 +28,5 @@ export interface IAuthResponse {
 }
 
 export interface IGetMembersResponse {
-	users: IUser[]
+	members: IUser[]
 }

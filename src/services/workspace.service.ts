@@ -29,14 +29,24 @@ class WorkspaceService {
 	}
 	async getWorkspaceUsers(id: number) {
 		const response = await axiosWithAuth.get<IGetMembersResponse>(
-			`${this.BASE_URL}/members/${id}/`
+			`${this.BASE_URL}/members/`,
+			{
+				params: {
+					ws_id: id
+				}
+			}
 		)
 		return response
 	}
 
 	async deleteWorkspaceUser(user_id: number, ws_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}/` //#TODO в delete нет тела
+			`${this.BASE_URL}/members/${user_id}`,
+			{
+				params: {
+					ws_id
+				}
+			}
 		)
 		return response
 	}
@@ -58,7 +68,7 @@ class WorkspaceService {
 
 	async updateRole(user_id: number, data: { ws_id: number; role: ROLES }) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}/`,
+			`${this.BASE_URL}/members/${user_id}`,
 			data
 		)
 		return response

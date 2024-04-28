@@ -12,6 +12,19 @@ import { useBoards } from '@/hooks/board-hooks/useBoards'
 import Image from 'next/image'
 import { useGetColumns } from '@/hooks/task-hooks/useGetColumns'
 import { headerHeight } from '@/components/dashboard-layout/header/Header'
+import {
+	DndContext,
+	DragOverlay,
+	DragStartEvent,
+	MouseSensor,
+	PointerSensor,
+	TouchSensor,
+	useSensor,
+	useSensors
+} from '@dnd-kit/core'
+import { TaskI } from '@/types/task.types'
+import { useState } from 'react'
+import { KanbanCard } from './KanbanCard'
 
 interface KanbanI {
 	workspace_id: number
@@ -24,6 +37,29 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)
+
+	const [activeTask, setActiveTask] = useState<TaskI | null>(null)
+
+	function onDragStart(event: DragStartEvent) {
+		if (event.active.data.current?.type === 'Task') {
+			setActiveTask(event.active.data.current.task)
+			return
+		}
+	}
+
+	const mouseSensor = useSensor(MouseSensor, {
+		activationConstraint: {
+			distance: 10
+		}
+	})
+	const touchSensor = useSensor(TouchSensor, {
+		activationConstraint: {
+			delay: 100,
+			tolerance: 5
+		}
+	})
+
+	const sensors = useSensors(mouseSensor, touchSensor)
 
 	return (
 		<Box sx={{ height: `calc(100% - ${headerHeight}px)` }}>
@@ -52,15 +88,19 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 					/>
 				</IconButton>
 			</Box>
-			<DragDropContext onDragEnd={onDragEnd}>
+			<DndContext
+				sensors={sensors}
+				onDragEnd={onDragEnd}
+				// onDragStart={onDragStart}
+			>
 				<Box
 					sx={{
 						boxSizing: 'border-box',
 						height: '100%',
 						display: 'flex',
 						p: 4,
-						gap: 2
-						// overflowX: 'auto' //без него ставиться, с ним не вращается
+						gap: 2,
+						overflowX: 'auto' //без него ставиться, с ним не вращается
 					}}
 				>
 					{isLoading &&
@@ -85,8 +125,17 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 							setItems={setItems}
 						/>
 					))}
+					{/* <DragOverlay>
+						{activeTask && (
+							<KanbanCard
+								item={activeTask}
+								setItems={setItems}
+							/>
+						)}
+					</DragOverlay> */}
+					,
 				</Box>
-			</DragDropContext>
+			</DndContext>
 		</Box>
 	)
 }

@@ -1,5 +1,11 @@
-import { Draggable, Droppable } from '@hello-pangea/dnd'
-import type { Dispatch, SetStateAction } from 'react'
+// import { Draggable, Droppable } from '@hello-pangea/dnd'
+import {
+	useEffect,
+	useRef,
+	useState,
+	type Dispatch,
+	type SetStateAction
+} from 'react'
 
 import type { TaskI } from '@/types/task.types'
 
@@ -8,6 +14,7 @@ import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
 import { Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
+import { useDroppable } from '@dnd-kit/core'
 
 interface IKanbanColumn {
 	column_id: number
@@ -22,68 +29,69 @@ export function KanbanColumn({
 	label,
 	setItems
 }: IKanbanColumn) {
+	const { isOver, setNodeRef } = useDroppable({
+		id: column_id
+	})
+	const elementRef = useRef<HTMLDivElement>(null)
+
+	// const onMouseEnterHandler = () => {
+	// 	if (elementRef.current && isOver) setHeight(elementRef.current.clientHeight)
+	// }
+	// const onMouseLeaveHandler = () => {
+	// 	if (elementRef.current && isOver) setHeight(elementRef.current.clientHeight)
+	// }
+
 	return (
-		<MyCard
-			variant='shadowed'
-			sx={{
-				flexShrink: 0,
-				p: '20px 21px',
-				width: '250px',
-				height: 'fit-content'
-			}}
+		<div
+			ref={setNodeRef}
+			style={{ height: 'fit-content' }}
 		>
-			<Typography
-				fontWeight={600}
-				fontSize={'16px'}
+			<MyCard
+				// ref={elementRef}
+				variant='shadowed'
 				sx={{
-					color: COLORS.textBlack,
-					width: '100%',
-					mb: '16px'
+					flexShrink: 0,
+					padding: '20px 21px',
+					width: '250px',
+					height: 'fit-content',
+					// backgroundColor: 'red',
+					transition: '0.2s'
 				}}
+				// onMouseOver={onMouseOverHandler}
 			>
-				{label}
-			</Typography>
-			<Droppable droppableId={column_id.toString()}>
-				{provided => (
-					<div
-						ref={provided.innerRef}
-						{...provided.droppableProps}
-						style={{
-							maxHeight: '600px',
+				<Typography
+					fontWeight={600}
+					fontSize={'16px'}
+					sx={{
+						color: COLORS.textBlack,
+						width: '100%',
+						mb: '16px'
+					}}
+				>
+					{label}
+				</Typography>
+				<div
+					style={
+						{
+							// maxHeight: '500px',
 							// overflowX: 'hidden',
 							// overflowY: 'auto',
-							scrollbarWidth: 'thin'
-						}}
-					>
-						{items
-							?.filter(item => item.column_id === column_id)
-							.map((item, index) => (
-								<Draggable
-									key={item.id}
-									draggableId={item.id.toString()}
-									index={index}
-								>
-									{provided => (
-										<div
-											ref={provided.innerRef}
-											{...provided.draggableProps}
-											{...provided.dragHandleProps}
-										>
-											<KanbanCard
-												key={item.id}
-												item={item}
-												setItems={setItems}
-											/>
-										</div>
-									)}
-								</Draggable>
-							))}
-
-						{provided.placeholder}
-					</div>
-				)}
-			</Droppable>
-			<KanbanAddTask />
-		</MyCard>
+							// scrollbarWidth: 'thin'
+						}
+					}
+				>
+					{items
+						?.filter(item => item.column_id === column_id)
+						.map((item, index) => (
+							<KanbanCard
+								key={item.id}
+								item={item}
+								setItems={setItems}
+							/>
+						))}
+				</div>
+				<KanbanAddTask />
+			</MyCard>
+		</div>
 	)
 }

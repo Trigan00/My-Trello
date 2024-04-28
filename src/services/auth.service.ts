@@ -10,10 +10,15 @@ export const authService = {
 		data: IAuthForm,
 		invite_token: string | null
 	) {
-		const response = await axiosClassic.post<IAuthResponse>(`/auth/${type}/`, {
-			...data,
-			invite_token
-		})
+		let response
+		if (invite_token) {
+			response = await axiosClassic.post<IAuthResponse>(`/auth/${type}/`, {
+				...data,
+				invite_token
+			})
+		} else {
+			response = await axiosClassic.post<IAuthResponse>(`/auth/${type}/`, data)
+		}
 		if (response.data.access && type === 'signin')
 			saveTokenStorage(response.data.access)
 		return response

@@ -5,6 +5,7 @@ import { DropResult } from '@hello-pangea/dnd'
 import { useUpdateTask } from './useUpdateTask'
 import { TaskI } from '@/types/task.types'
 import { Dispatch, SetStateAction } from 'react'
+import { DragEndEvent } from '@dnd-kit/core'
 
 interface useTaskDndI {
 	items: TaskI[] | undefined
@@ -22,29 +23,28 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 		sessionStorage.removeItem('TasksState')
 	}
 
-	const onDragEnd = (result: DropResult) => {
-		if (!result.destination) return
+	const onDragEnd = (event: DragEndEvent) => {
+		const { active, over } = event
+		if (!over) return
 
-		const destinationColumnId = result.destination.droppableId
-		if (destinationColumnId === result.source.droppableId) return
+		const activeId = active.id
+		const overId = over.id
 
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 
 		const tempItem = items?.find(
-			value => value.id === Number(result.draggableId)
+			value => value.id === Number(activeId)
 		) as TaskI
-		tempItem.column_id = Number(destinationColumnId)
-		const tempItems = items?.filter(
-			value => value.id !== Number(result.draggableId)
-		)
+		tempItem.column_id = Number(overId)
+		const tempItems = items?.filter(value => value.id !== Number(activeId))
 		tempItems?.push(tempItem as TaskI)
 		setItems(tempItems)
 
 		updateTask({
-			id: Number(result.draggableId),
+			id: Number(activeId),
 			data: {
 				// createdAt: newCreatedAt,
-				column_id: Number(destinationColumnId)
+				column_id: Number(overId)
 			}
 		})
 	}

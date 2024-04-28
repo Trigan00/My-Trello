@@ -67,7 +67,7 @@ router.patch('/:id', async (req, res) => {
 router.get('/members/:id', async (req, res) => {
 	try {
 		const id = req.params.id
-		return res.status(201).json({ users: workspaceUsers })
+		return res.status(201).json({ members: workspaceUsers })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({

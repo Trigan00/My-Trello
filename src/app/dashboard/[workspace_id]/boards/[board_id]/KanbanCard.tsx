@@ -8,6 +8,7 @@ import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { Box, Grid, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
+import { useDraggable } from '@dnd-kit/core'
 
 interface IKanbanCard {
 	item: TaskI
@@ -15,6 +16,18 @@ interface IKanbanCard {
 }
 
 export function KanbanCard({ item, setItems }: IKanbanCard) {
+	const { attributes, listeners, setNodeRef, transform } = useDraggable({
+		id: item.id,
+		data: {
+			type: 'Task',
+			task: item
+		}
+	})
+	const style = transform
+		? {
+				transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
+			}
+		: undefined
 	// const { register, control, watch } = useForm<TypeTaskFormState>({
 	// 	defaultValues: {
 	// 		name: item.name
@@ -25,8 +38,12 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 
 	return (
 		<Box
+			ref={setNodeRef}
+			style={style}
+			{...listeners}
+			{...attributes}
 			sx={{
-				position: 'relative',
+				position: 'relative !important',
 				mt: '10px',
 				color: COLORS.textBlack,
 				backgroundColor: COLORS.border,
@@ -34,9 +51,13 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 				p: '10px 12px',
 				cursor: 'pointer'
 			}}
-			onClick={() => console.log('message')}
 		>
-			<Typography sx={{ mr: '20px' }}>{item.name}</Typography>
+			<Typography
+				sx={{ mr: '20px' }}
+				onClick={() => console.log('message')}
+			>
+				{item.name}
+			</Typography>
 			<Image
 				style={{
 					position: 'absolute',

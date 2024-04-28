@@ -25,37 +25,37 @@ const tasks = [
 	{ id: 2, name: 'task 2', column_id: 1 },
 	{
 		id: 3,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
-		column_id: 2
+		name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		column_id: 0
 	},
 	{
 		id: 4,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
-		column_id: 2
+		name: 'Diam in arcu cursus euismod quis viverra nibh cras',
+		column_id: 1
 	},
 	{
 		id: 5,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
+		name: 'Consequat ac felis donec',
 		column_id: 2
 	},
 	{
 		id: 6,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
+		name: 'Adipiscing vitae proin sagittis',
 		column_id: 2
 	},
 	{
 		id: 7,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
-		column_id: 2
+		name: 'Ornare arcu odio ut sem nulla pharetra',
+		column_id: 3
 	},
 	{
 		id: 8,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
-		column_id: 2
+		name: 'Dui ut ornare lectus sit amet',
+		column_id: 0
 	},
 	{
 		id: 9,
-		name: 'Mega huge task name Lorem ipsum dolor sit',
+		name: 'Dictum sit amet justo donec enim',
 		column_id: 2
 	},
 	{

@@ -34,8 +34,8 @@ export default function DashboardLayoutWrapper({
 					sx={{
 						width: '100%',
 						mt: `${headerHeight}px`,
-						height: `calc(100vh - ${headerHeight}px)`
-						// overflowX: 'hidden'
+						height: `calc(100vh - ${headerHeight}px)`,
+						overflowX: 'hidden'
 					}}
 				>
 					{children}
