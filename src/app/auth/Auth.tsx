@@ -16,13 +16,16 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import NextLink from 'next/link'
 import { errorCatch } from '@/api/error'
 import { Loader } from '@/components/UI/Loader/Loader'
+import { EnumTokens } from '@/services/auth-token.service'
 
 export function Auth() {
+	const searchParams = useSearchParams()
+	const invite_token = searchParams.get(EnumTokens.INVITE_TOKEN)
 	const { push } = useRouter()
 	const {
 		register,
@@ -34,10 +37,10 @@ export function Auth() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
-			authService.main(isLoginForm ? 'login' : 'register', data),
+			authService.main(isLoginForm ? 'signin' : 'signup', data, invite_token),
 		onSuccess(res) {
-			!isLoginForm && toast.success('На почту отправлено письмо!')
-			reset()
+			!isLoginForm && toast.success(res.data.message)
+			// reset()
 			isLoginForm && push(DASHBOARD_PAGES.HOME)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
@@ -80,6 +83,7 @@ export function Auth() {
 							message: 'Пожалуйста, введите действующий Email-адрес.'
 						}
 					})}
+					type='email'
 					error={!!errors.email}
 					label='Email'
 					helperText={errors.email?.message}
@@ -89,6 +93,21 @@ export function Auth() {
 					fullWidth
 					required
 				/>
+				{!isLoginForm && (
+					<TextField
+						{...register('username', {
+							required: 'Не может быть пустым'
+						})}
+						error={!!errors.username}
+						label='Имя пользователя'
+						helperText={errors.username?.message}
+						variant='outlined'
+						margin='normal'
+						size='small'
+						fullWidth
+						required
+					/>
+				)}
 				<TextField
 					{...register('password', {
 						required: 'Не может быть пустым',
@@ -114,7 +133,7 @@ export function Auth() {
 				/>
 
 				{isPending ? (
-					<Loader />
+					<Loader /> //#TODO во время загрузки уменьшается окно
 				) : (
 					<Button
 						type='submit'

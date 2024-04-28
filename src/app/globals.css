@@ -17,3 +17,11 @@ body {
 .Link:hover {
 	text-decoration-color: #1976d2;
 }
+
+/* ::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar:horizontal {
+	height: 8px;
+} */

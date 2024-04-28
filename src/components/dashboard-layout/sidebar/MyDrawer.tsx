@@ -6,7 +6,7 @@ import { headerHeight } from '../header/Header'
 import { useMedia } from '@/hooks/useMedia'
 import { DIMENSIONS } from '@/constants/dimension.constants'
 
-export const drawerWidth: number = 250
+export const drawerWidth: number = 270
 
 const DrawerDesktop = styled(MuiDrawer, {
 	shouldForwardProp: prop => prop !== 'open'

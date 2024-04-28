@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 export default function Recovery() {
 	const searchParams = useSearchParams()
-	const token = searchParams.get('code')
+	const token = searchParams.get('token')
 	const { push } = useRouter()
 	const {
 		register,
@@ -25,7 +25,11 @@ export default function Recovery() {
 	const { mutate } = useMutation({
 		mutationKey: ['auth_recovery'],
 		mutationFn: (data: IAuthRecoveryForm) =>
-			authService.recovery(token ? 'update' : 'forget', data, token),
+			authService.recovery(
+				token ? 'resetpassword' : 'forgotpassword',
+				data,
+				token
+			),
 		onSuccess() {
 			toast.success(
 				token ? 'Пароль успешно изменен' : 'На почту отправлено письмо'

@@ -42,7 +42,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 	const { items: Workspaces } = useWorkspaces()
 
 	return (
-		<>
+		<Box sx={{ p: 4 }}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -54,7 +54,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 					gap: '8px'
 				}}
 			>
-				<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.title} />
+				<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
 				<NewBoard />
 			</Box>
 			{isLoading && <Loader />}
@@ -100,6 +100,6 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 					))}
 				</Box>
 			)}
-		</>
+		</Box>
 	)
 }

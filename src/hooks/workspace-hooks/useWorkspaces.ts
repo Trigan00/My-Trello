@@ -9,10 +9,12 @@ export function useWorkspaces() {
 		queryFn: () => workspaceService.getWorkspaces()
 	})
 
-	const [items, setItems] = useState<IWorkspace[] | undefined>(data?.data)
+	const [items, setItems] = useState<IWorkspace[] | undefined>(
+		data?.data.workspaces
+	)
 
 	useEffect(() => {
-		setItems(data?.data)
+		setItems(data?.data.workspaces)
 	}, [data?.data])
 
 	return { items, isLoading }

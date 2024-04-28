@@ -1,6 +1,10 @@
-export interface IWorkspace {
+export type IWorkspace = {
 	id: number
-	title: string
+	name: string
+}
+
+export interface IWorkspaces {
+	workspaces: IWorkspace[]
 }
 
 export interface IAddWorkspace {

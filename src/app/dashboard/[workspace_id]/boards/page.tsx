@@ -1,4 +1,3 @@
-import { Heading } from '@/components/UI/Heading'
 import { Metadata } from 'next'
 import { AllBoards } from './AllBoards'
 

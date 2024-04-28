@@ -11,12 +11,14 @@ const generateToken = (id, email, expiresTime) => {
 	})
 }
 
-const users = []
+const users = [
+	{ id: 0, username: 'Ayaz', email: 'test@mail.ru', password: 'Test123!' }
+]
 
 // /api/auth/register
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
 	try {
-		const { email, password } = req.body
+		const { email, password, username } = req.body
 		const candidate = users.find(user => user.email === email)
 
 		if (candidate) {
@@ -27,6 +29,7 @@ router.post('/register', async (req, res) => {
 
 		newUser = {
 			id: users.length,
+			username,
 			email,
 			password
 		}
@@ -34,11 +37,12 @@ router.post('/register', async (req, res) => {
 
 		console.log('register: ' + JSON.stringify(users))
 		return res.status(201).json({
-			accessToken: generateToken(newUser.id, newUser.email, '24h'),
+			access: generateToken(newUser.id, newUser.email, '24h'),
 			user: {
 				id: newUser.id,
 				email: newUser.email
-			}
+			},
+			message: 'Сообщение успешно отправлено на email'
 		})
 	} catch (error) {
 		console.log(error)
@@ -50,7 +54,7 @@ router.post('/register', async (req, res) => {
 })
 
 // /api/auth/login
-router.post('/login', async (req, res) => {
+router.post('/signin', async (req, res) => {
 	try {
 		const { email, password } = req.body
 		// const user = await pool.query("SELECT * FROM person WHERE email = $1", [
@@ -74,10 +78,10 @@ router.post('/login', async (req, res) => {
 
 		console.log('login: ' + JSON.stringify(users))
 		return res.status(200).json({
-			accessToken: generateToken(user.id, user.email, '24h'),
+			access: generateToken(user.id, user.email, '24h'),
 			user: {
-				id: newUser.id,
-				email: newUser.email
+				id: user.id,
+				email: user.email
 			}
 		})
 	} catch (error) {
@@ -89,7 +93,7 @@ router.post('/login', async (req, res) => {
 	}
 })
 
-router.put('/forget', async (req, res) => {
+router.post('/forgotpassword', async (req, res) => {
 	try {
 		const { email } = req.body
 		const user = users.find(val => val.email === email)
@@ -120,7 +124,7 @@ router.put('/forget', async (req, res) => {
 	}
 })
 
-router.put('/update', async (req, res) => {
+router.post('/resetpassword', async (req, res) => {
 	try {
 		const { password, token } = req.body
 
