@@ -50,8 +50,8 @@ export function KanbanColumn({
 						{...provided.droppableProps}
 						style={{
 							maxHeight: '600px',
-							overflowX: 'hidden',
-							overflowY: 'auto',
+							// overflowX: 'hidden',
+							// overflowY: 'auto',
 							scrollbarWidth: 'thin'
 						}}
 					>
@@ -80,10 +80,10 @@ export function KanbanColumn({
 							))}
 
 						{provided.placeholder}
-						<KanbanAddTask />
 					</div>
 				)}
 			</Droppable>
+			<KanbanAddTask />
 		</MyCard>
 	)
 }

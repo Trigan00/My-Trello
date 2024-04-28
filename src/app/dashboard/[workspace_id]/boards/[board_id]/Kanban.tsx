@@ -12,7 +12,6 @@ import { useBoards } from '@/hooks/board-hooks/useBoards'
 import Image from 'next/image'
 import { useGetColumns } from '@/hooks/task-hooks/useGetColumns'
 import { headerHeight } from '@/components/dashboard-layout/header/Header'
-import { useHorizontalScroll } from '@/hooks/useHorizontalScroll'
 
 interface KanbanI {
 	workspace_id: number
@@ -25,7 +24,6 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)
-	const scrollRef = useHorizontalScroll()
 
 	return (
 		<Box sx={{ height: `calc(100% - ${headerHeight}px)` }}>
@@ -56,15 +54,13 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 			</Box>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Box
-					ref={scrollRef}
 					sx={{
 						boxSizing: 'border-box',
 						height: '100%',
 						display: 'flex',
 						p: 4,
-						gap: 2,
-						overflowY: 'hidden',
-						overflowX: 'auto'
+						gap: 2
+						// overflowX: 'auto' //без него ставиться, с ним не вращается
 					}}
 				>
 					{isLoading &&
