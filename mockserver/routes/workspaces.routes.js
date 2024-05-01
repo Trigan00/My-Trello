@@ -12,9 +12,9 @@ function createData(id, username, email, role) {
 }
 
 let workspaceUsers = [
-	createData(0, 'Ayaz', 'test1@mail.ru', 'admin'),
-	createData(1, 'Niyaz', 'test2@mail.ru', 'observer'),
-	createData(2, 'Ivan', 'test3@mail.ru', 'employee')
+	createData(0, 'Ayaz', 'test1@mail.ru', 'админ'),
+	createData(1, 'Niyaz', 'test2@mail.ru', 'персонал'),
+	createData(2, 'Ivan', 'test3@mail.ru', 'участник')
 ]
 
 router.get('/', async (req, res) => {
@@ -64,7 +64,7 @@ router.patch('/:id', async (req, res) => {
 	}
 })
 
-router.get('/members/:id', async (req, res) => {
+router.get('/members', async (req, res) => {
 	try {
 		const id = req.params.id
 		return res.status(201).json({ members: workspaceUsers })

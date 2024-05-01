@@ -3,8 +3,9 @@
 import { MyCard } from '@/components/UI/MyCard'
 import { COLORS } from '@/constants/color.constants'
 import { Box, Button, Typography } from '@mui/material'
-import DeleteWorkspaceModal from './DeleteWorkspaceModal'
 import { useState } from 'react'
+import { useDeleteWorkspace } from '@/hooks/workspace-hooks/useDeleteWorkspace'
+import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 
 interface DeleteI {
 	workspace_id: number
@@ -12,6 +13,7 @@ interface DeleteI {
 
 export function Delete({ workspace_id }: DeleteI) {
 	const [isDelete, setIsDelete] = useState(false)
+	const { deleteWorkspace, isDeletePending } = useDeleteWorkspace()
 
 	return (
 		<MyCard
@@ -52,10 +54,13 @@ export function Delete({ workspace_id }: DeleteI) {
 				Удалить
 			</Button>
 
-			<DeleteWorkspaceModal
+			<DeleteModal
 				isModal={isDelete}
 				setIsModal={setIsDelete}
-				id={workspace_id}
+				deleteFunction={() => deleteWorkspace(workspace_id)}
+				isLoading={isDeletePending}
+				title='Удалить рабочее пространство?'
+				confirmation='Удалить рабочее пространство.'
 			/>
 		</MyCard>
 	)

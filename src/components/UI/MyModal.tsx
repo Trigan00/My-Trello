@@ -19,17 +19,17 @@ interface MyModalProps {
 	isModal: boolean
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
 	children: React.ReactNode
-	resetFunc?: () => void
+	onClose?: () => void
 }
 
 export default function MyModal({
 	isModal,
 	setIsModal,
 	children,
-	resetFunc
+	onClose
 }: MyModalProps) {
 	const onCloseHandler = () => {
-		resetFunc && resetFunc()
+		onClose && onClose()
 		setIsModal(false)
 	}
 

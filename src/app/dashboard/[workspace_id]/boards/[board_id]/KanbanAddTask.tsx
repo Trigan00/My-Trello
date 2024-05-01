@@ -5,17 +5,16 @@ import { Button } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 
 export function KanbanAddTask() {
-	const addCard = () => {}
+	const addTask = () => {}
 
 	return (
 		<Button
-			onClick={addCard}
+			onClick={addTask}
 			variant='text'
 			startIcon={<AddIcon sx={{ color: COLORS.textBlack }} />}
 			sx={{
 				mt: '16px',
 				width: '100%',
-				textTransform: 'inherit',
 				color: COLORS.textBlack
 			}}
 		>

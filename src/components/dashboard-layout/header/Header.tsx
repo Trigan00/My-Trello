@@ -100,7 +100,6 @@ export function Header({ toggleDrawer }: IHeader) {
 							fontSize: '14px',
 							fontWeight: '400',
 							color: COLORS.textBlack,
-							textTransform: 'inherit',
 							lineHeight: '17px'
 						}}
 					>
@@ -115,7 +114,6 @@ export function Header({ toggleDrawer }: IHeader) {
 							fontSize: '14px',
 							fontWeight: '400',
 							color: COLORS.textBlack,
-							textTransform: 'inherit',
 							lineHeight: '17px'
 						}}
 					>

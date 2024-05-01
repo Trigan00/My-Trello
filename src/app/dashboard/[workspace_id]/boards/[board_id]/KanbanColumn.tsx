@@ -12,9 +12,19 @@ import type { TaskI } from '@/types/task.types'
 import { KanbanAddTask } from './KanbanAddTask'
 import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
-import { Typography } from '@mui/material'
+import {
+	Box,
+	Button,
+	IconButton,
+	TextField,
+	Tooltip,
+	Typography
+} from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { useDroppable } from '@dnd-kit/core'
+import shortenText from '@/helpers/shortenText'
+import { ColumnSettings } from './ColumnSettings'
+import { useEditName } from '@/hooks/columns-hooks/useEditName'
 
 interface IKanbanColumn {
 	column_id: number
@@ -29,17 +39,21 @@ export function KanbanColumn({
 	label,
 	setItems
 }: IKanbanColumn) {
-	const { isOver, setNodeRef } = useDroppable({
+	const { setNodeRef, over } = useDroppable({
 		id: column_id
 	})
-	const elementRef = useRef<HTMLDivElement>(null)
+	const { editName } = useEditName(reset)
+	const [isEdit, setIsEdit] = useState(false)
+	const [name, setName] = useState('')
 
-	// const onMouseEnterHandler = () => {
-	// 	if (elementRef.current && isOver) setHeight(elementRef.current.clientHeight)
-	// }
-	// const onMouseLeaveHandler = () => {
-	// 	if (elementRef.current && isOver) setHeight(elementRef.current.clientHeight)
-	// }
+	function reset() {
+		setIsEdit(false)
+		setName('')
+	}
+
+	const saveHandler = () => {
+		editName({ id: column_id, name })
+	}
 
 	return (
 		<div
@@ -47,38 +61,90 @@ export function KanbanColumn({
 			style={{ height: 'fit-content' }}
 		>
 			<MyCard
-				// ref={elementRef}
 				variant='shadowed'
 				sx={{
 					flexShrink: 0,
 					padding: '20px 21px',
 					width: '250px',
 					height: 'fit-content',
-					// backgroundColor: 'red',
-					transition: '0.2s'
+					transition: '0.2s',
+					transform: over && over.id === column_id ? 'scale(1.05)' : 'none'
 				}}
-				// onMouseOver={onMouseOverHandler}
 			>
-				<Typography
-					fontWeight={600}
-					fontSize={'16px'}
-					sx={{
-						color: COLORS.textBlack,
-						width: '100%',
-						mb: '16px'
-					}}
-				>
-					{label}
-				</Typography>
+				{isEdit ? (
+					<Box>
+						<TextField
+							variant='outlined'
+							fullWidth
+							size='small'
+							placeholder='Название колонки'
+							value={name}
+							onChange={event => setName(event.target.value)}
+						/>
+						<Box
+							sx={{
+								mt: 1,
+								display: 'flex',
+								gap: 1
+							}}
+						>
+							<Button
+								variant='contained'
+								size='small'
+								disabled={!!!name}
+								sx={{ color: 'white' }}
+								onClick={saveHandler}
+							>
+								Сохранить
+							</Button>
+							<Button
+								size='small'
+								onClick={reset}
+							>
+								Отмена
+							</Button>
+						</Box>
+					</Box>
+				) : (
+					<Box
+						sx={{
+							position: 'relative',
+							display: 'flex',
+							justifyContent: 'space-between'
+						}}
+					>
+						<Tooltip
+							title={label}
+							placement='top-start'
+						>
+							<Typography
+								fontWeight={600}
+								fontSize={'16px'}
+								sx={{
+									color: COLORS.textBlack,
+									width: '100%',
+									mb: '16px'
+								}}
+							>
+								{shortenText(label, 18)}
+							</Typography>
+						</Tooltip>
+						<ColumnSettings
+							setIsEdit={setIsEdit}
+							column_id={column_id}
+							label={label}
+						/>
+					</Box>
+				)}
 				<div
-					style={
-						{
-							// maxHeight: '500px',
-							// overflowX: 'hidden',
-							// overflowY: 'auto',
-							// scrollbarWidth: 'thin'
-						}
-					}
+				// style={
+				// 	{
+				// 		maxHeight: '500px',
+				// 		overflowX: 'hidden',
+				// 		overflowY: 'auto',
+				// 		scrollbarWidth: 'thin'
+				// 	}
+				// }
 				>
 					{items
 						?.filter(item => item.column_id === column_id)

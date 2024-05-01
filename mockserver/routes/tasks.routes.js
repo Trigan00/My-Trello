@@ -1,26 +1,7 @@
 const Router = require('express')
 const router = new Router()
 
-const COLUMNS = [
-	{
-		label: 'Планируется',
-		id: 0
-	},
-	{
-		label: 'В работе',
-		id: 1
-	},
-	{
-		label: 'На проверке',
-		id: 2
-	},
-	{
-		label: 'Сделано',
-		id: 3
-	}
-]
-
-const tasks = [
+let tasks = [
 	{ id: 1, name: 'task 1', column_id: 0 },
 	{ id: 2, name: 'task 2', column_id: 1 },
 	{
@@ -70,18 +51,6 @@ const tasks = [
 router.get('/', async (req, res) => {
 	try {
 		return res.status(201).json(tasks)
-	} catch (error) {
-		console.log(error)
-		res.status(500).json({
-			status: 'failure',
-			message: 'Something went wrong, try again'
-		})
-	}
-})
-router.get('/columns/:id', async (req, res) => {
-	try {
-		const id = req.params.id
-		return res.status(201).json(COLUMNS)
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({

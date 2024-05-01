@@ -39,6 +39,7 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 		const tempItems = items?.filter(value => value.id !== Number(activeId))
 		tempItems?.push(tempItem as TaskI)
 		setItems(tempItems)
+		document.body.style.setProperty('cursor', '')
 
 		updateTask({
 			id: Number(activeId),

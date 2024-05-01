@@ -1,15 +1,16 @@
 import { COLORS } from '@/constants/color.constants'
-import { Box, SxProps } from '@mui/material'
+import { Box, BoxProps, SxProps } from '@mui/material'
 
-interface MyCardI {
+interface MyCardI extends BoxProps {
 	children: React.ReactNode
 	variant: 'outlined' | 'shadowed'
 	sx?: SxProps
 }
 
-export function MyCard({ children, variant, sx }: MyCardI) {
+export function MyCard({ children, variant, sx, ...props }: MyCardI) {
 	return (
 		<Box
+			{...props}
 			sx={{
 				boxShadow:
 					variant === 'shadowed'

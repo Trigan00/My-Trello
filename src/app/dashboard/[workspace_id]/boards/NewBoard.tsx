@@ -28,7 +28,6 @@ export function NewBoard() {
 				sx={{
 					width: '140px',
 					color: 'white',
-					textTransform: 'inherit',
 					p: '8px',
 					fontSize: '12px',
 					fontWeight: '400'
