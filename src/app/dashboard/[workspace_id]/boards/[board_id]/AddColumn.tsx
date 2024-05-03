@@ -47,7 +47,10 @@ export function AddColumn() {
 					</Button>
 					<Button
 						size='small'
-						onClick={() => setIsEdit(false)}
+						onClick={() => {
+							setName('')
+							setIsEdit(false)
+						}}
 					>
 						Отмена
 					</Button>
@@ -70,7 +73,7 @@ export function AddColumn() {
 				gap: 1,
 				cursor: 'pointer',
 				'&:hover': {
-					filter: 'brightness(0.6)'
+					filter: 'brightness(0.3)'
 				}
 			}}
 			onClick={() => setIsEdit(true)}

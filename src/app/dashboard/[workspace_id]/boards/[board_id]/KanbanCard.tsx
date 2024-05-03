@@ -51,7 +51,11 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 				color: COLORS.textBlack,
 				backgroundColor: COLORS.border,
 				borderRadius: '10px',
-				p: '10px 20px 10px 12px'
+				p: '10px 20px 10px 12px',
+				transition: '0.2s',
+				'&:hover': {
+					filter: 'brightness(0.9)'
+				}
 			}}
 		>
 			<Typography onClick={() => console.log('message')}>
