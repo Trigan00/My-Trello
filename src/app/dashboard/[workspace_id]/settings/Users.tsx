@@ -22,6 +22,7 @@ import { toast } from 'sonner'
 import React from 'react'
 import { useInviteLink } from '@/hooks/workspace-hooks/useInviteLink'
 import MyTableRow from './MyTableRow'
+import AutorenewIcon from '@mui/icons-material/Autorenew'
 
 interface UsersI {
 	workspace_id: number
@@ -29,7 +30,7 @@ interface UsersI {
 
 export function Users({ workspace_id }: UsersI) {
 	const { users } = useWorkspaceUsers(workspace_id)
-	const { item: link } = useInviteLink(workspace_id)
+	const { item: link, refetch_link } = useInviteLink(workspace_id)
 
 	const copyHandler = () => {
 		copy(link?.invite_token || '')
@@ -114,6 +115,12 @@ export function Users({ workspace_id }: UsersI) {
 								readOnly
 								value={link.invite_token}
 							/>
+							<IconButton
+								sx={{ p: 1 }}
+								onClick={() => refetch_link()}
+							>
+								<AutorenewIcon />
+							</IconButton>
 							<IconButton
 								sx={{ p: 1 }}
 								onClick={copyHandler}

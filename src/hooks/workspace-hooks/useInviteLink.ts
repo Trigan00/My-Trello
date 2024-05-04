@@ -3,7 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 export function useInviteLink(workspace_id: number) {
-	const { data, isLoading } = useQuery({
+	const {
+		data,
+		isLoading,
+		refetch: refetch_link
+	} = useQuery({
 		queryKey: ['invite link'],
 		queryFn: () => workspaceService.getInviteLink(workspace_id)
 	})
@@ -16,5 +20,5 @@ export function useInviteLink(workspace_id: number) {
 		setItem(data?.data)
 	}, [data?.data])
 
-	return { item, isLoading }
+	return { item, isLoading, refetch_link }
 }
