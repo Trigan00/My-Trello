@@ -14,7 +14,13 @@ function createData(id, username, email, role) {
 let workspaceUsers = [
 	createData(0, 'Ayaz', 'test1@mail.ru', 'админ'),
 	createData(1, 'Niyaz', 'test2@mail.ru', 'персонал'),
-	createData(2, 'Ivan', 'test3@mail.ru', 'участник')
+	createData(2, 'Ivan', 'test3@mail.ru', 'участник'),
+	createData(3, 'Ivan', 'test4@mail.ru', 'участник'),
+	createData(4, 'Ivan', 'test5@mail.ru', 'участник'),
+	createData(5, 'Ivan', 'test6@mail.ru', 'участник'),
+	createData(6, 'Ivan', 'test7@mail.ru', 'участник'),
+	createData(7, 'Ivan', 'test8@mail.ru', 'участник'),
+	createData(8, 'Ivan', 'test9@mail.ru', 'участник')
 ]
 
 router.get('/', async (req, res) => {

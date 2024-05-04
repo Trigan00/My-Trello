@@ -12,7 +12,7 @@ const style = {
 	bgcolor: 'background.paper',
 	borderRadius: '20px',
 	boxShadow: 24,
-	p: '30px'
+	p: { xs: 2, md: 3 }
 }
 
 interface MyModalProps {

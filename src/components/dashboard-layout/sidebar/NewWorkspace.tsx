@@ -41,7 +41,7 @@ export function NewWorkspace() {
 			<MyModal
 				isModal={isModal}
 				setIsModal={setIsModal}
-				resetFunc={reset}
+				onClose={reset}
 			>
 				<Typography sx={{ fontWeight: '600', fontSize: '20px' }}>
 					Добавить рабочее пространство

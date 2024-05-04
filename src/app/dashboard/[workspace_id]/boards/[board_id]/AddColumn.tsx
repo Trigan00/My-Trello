@@ -25,7 +25,7 @@ export function AddColumn() {
 					variant='outlined'
 					fullWidth
 					size='small'
-					placeholder='Название колонки'
+					label='Название колонки'
 					value={name}
 					onChange={event => setName(event.target.value)}
 				/>

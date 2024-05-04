@@ -4,7 +4,12 @@ import { COLORS } from '@/constants/color.constants'
 
 export function Loader() {
 	return (
-		<div style={{ display: 'flex', justifyContent: 'center' }}>
+		<div
+			style={{
+				display: 'flex',
+				justifyContent: 'center'
+			}}
+		>
 			<div
 				className='lds-ellipsis'
 				style={{ margin: '0 auto' }}

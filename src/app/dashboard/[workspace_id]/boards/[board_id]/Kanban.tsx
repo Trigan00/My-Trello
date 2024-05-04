@@ -27,6 +27,7 @@ import { useState } from 'react'
 import { KanbanCard } from './KanbanCard'
 import { AddColumn } from './AddColumn'
 import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
+import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 
 interface KanbanI {
 	workspace_id: number
@@ -39,7 +40,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)
-
+	const [isSettings, setIsSettings] = useState(false)
 	const [activeTask, setActiveTask] = useState<TaskI | null>(null)
 
 	function onDragStart(event: DragStartEvent) {
@@ -64,6 +65,9 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 
 	const sensors = useSensors(mouseSensor, touchSensor)
 
+	const workspace_title = Workspaces?.find(ws => ws.id == workspace_id)?.name
+	const board_title = Boards?.find(b => b.id == board_id)?.title
+
 	return (
 		<Box sx={{ height: `calc(100% - ${headerHeight}px)` }}>
 			<Box
@@ -78,14 +82,17 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 			>
 				<Heading
 					title={
-						Workspaces &&
-						Boards &&
-						`${Workspaces?.find(ws => ws.id == workspace_id)?.name} / ${Boards?.find(b => b.id == board_id)?.title}`
+						workspace_title &&
+						board_title &&
+						`${workspace_title} / ${board_title}`
 					}
 				/>
 				<Box sx={{ display: 'flex', gap: 2 }}>
 					<GlobalLoader />
-					<IconButton sx={{ p: 1 }}>
+					<IconButton
+						sx={{ p: 1 }}
+						onClick={() => setIsSettings(true)}
+					>
 						<Image
 							src={'/svg/settings.svg'}
 							alt={'settings'}
@@ -144,6 +151,15 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 				</DndContext>
 				<AddColumn />
 			</Box>
+			{board_title && (
+				<BoardSettingsModal
+					isModal={isSettings}
+					setIsModal={setIsSettings}
+					heading_title={board_title}
+					workspace_id={workspace_id}
+					board_id={board_id}
+				/>
+			)}
 		</Box>
 	)
 }

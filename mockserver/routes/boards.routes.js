@@ -1,7 +1,7 @@
 const Router = require('express')
 const router = new Router()
 
-const boards = [
+let boards = [
 	{ id: 0, title: 'Доска 1' },
 	{ id: 1, title: 'Доска 2' },
 	{ id: 2, title: 'Доска 3' },
@@ -35,6 +35,36 @@ router.post('/add', async (req, res) => {
 		})
 		console.log(boards)
 		return res.status(201).json(true)
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
+router.patch('/:id', async (req, res) => {
+	try {
+		const id = req.params.id
+		const { name } = req.body
+		const board = boards.find(board => board.id == id)
+		board.title = name
+		return res.status(201).json({ message: 'Название успешно изменено' })
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({
+			status: 'failure',
+			message: 'Something went wrong, try again'
+		})
+	}
+})
+
+router.delete('/:id', async (req, res) => {
+	try {
+		const id = req.params.id
+		boards = boards.filter(value => value.id != id)
+		return res.status(201).json({ message: 'Доска успешно удалена' })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({

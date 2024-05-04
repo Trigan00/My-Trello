@@ -77,7 +77,7 @@ export function KanbanColumn({
 							variant='outlined'
 							fullWidth
 							size='small'
-							placeholder='Название колонки'
+							label='Название колонки'
 							value={name}
 							onChange={event => setName(event.target.value)}
 						/>
@@ -115,14 +115,13 @@ export function KanbanColumn({
 					>
 						<Tooltip
 							title={label}
-							placement='top-start'
+							placement='top'
 						>
 							<Typography
 								fontWeight={600}
 								fontSize={'16px'}
 								sx={{
 									color: COLORS.textBlack,
-									width: '100%',
 									mb: '16px'
 								}}
 							>
