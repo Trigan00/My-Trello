@@ -66,7 +66,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const sensors = useSensors(mouseSensor, touchSensor)
 
 	const workspace_title = Workspaces?.find(ws => ws.id == workspace_id)?.name
-	const board_title = Boards?.find(b => b.id == board_id)?.title
+	const board_title = Boards?.find(b => b.id == board_id)?.name
 
 	return (
 		<Box sx={{ height: `calc(100% - ${headerHeight}px)` }}>

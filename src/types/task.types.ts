@@ -1,12 +1,3 @@
-export interface BoardI {
-	id: number
-	title: string
-}
-
-export interface AddBoardI {
-	title: string
-}
-
 export interface ColumnI {
 	label: string
 	id: number

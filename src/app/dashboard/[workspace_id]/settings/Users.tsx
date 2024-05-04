@@ -30,7 +30,7 @@ interface UsersI {
 
 export function Users({ workspace_id }: UsersI) {
 	const { users } = useWorkspaceUsers(workspace_id)
-	const { item: link, refetch_link } = useInviteLink(workspace_id)
+	const { item: link, refetch_link, isLoading } = useInviteLink(workspace_id)
 
 	const copyHandler = () => {
 		copy(link?.invite_token || '')
@@ -133,6 +133,7 @@ export function Users({ workspace_id }: UsersI) {
 							width={'100%'}
 							height={40}
 							variant='rounded'
+							sx={{ borderRadius: '15px' }}
 						/>
 					)}
 				</Box>

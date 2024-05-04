@@ -55,7 +55,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 				}}
 			>
 				<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
-				<NewBoard />
+				<NewBoard ws_id={workspace_id}/>
 			</Box>
 			{isLoading && <Loader />}
 			{!isLoading && items && (
@@ -94,7 +94,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 									color: 'white'
 								}}
 							>
-								{shortenText(board.title, 18)}
+								{shortenText(board.name, 18)}
 							</Typography>
 						</Item>
 					))}

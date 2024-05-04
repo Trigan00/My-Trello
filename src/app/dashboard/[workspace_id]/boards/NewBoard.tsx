@@ -4,20 +4,23 @@ import MyModal from '@/components/UI/MyModal'
 import { Button, TextField, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Loader } from '@/components/UI/Loader/Loader'
-import { AddBoardI } from '@/types/task.types'
 import { useAddBoard } from '@/hooks/board-hooks/useAddBoard'
 
-export function NewBoard() {
+interface NewBoardI {
+	ws_id: number
+}
+
+export function NewBoard({ ws_id }: NewBoardI) {
 	const [isModal, setIsModal] = useState(false)
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors }
-	} = useForm<AddBoardI>({})
+	} = useForm<{ name: string }>({})
 	const { addBoard, isPending } = useAddBoard(() => setIsModal(false))
-	const onSubmit: SubmitHandler<AddBoardI> = data => {
-		addBoard(data)
+	const onSubmit: SubmitHandler<{ name: string }> = data => {
+		addBoard({ name: data.name, ws_id })
 	}
 
 	return (
@@ -45,15 +48,15 @@ export function NewBoard() {
 					Добавить новую доску
 				</Typography>
 				<TextField
-					{...register('title', {
+					{...register('name', {
 						maxLength: {
 							value: 80,
 							message: 'Лимит знаков: 80'
 						},
 						required: 'Не может быть пустым'
 					})}
-					error={!!errors.title}
-					helperText={errors.title?.message}
+					error={!!errors.name}
+					helperText={errors.name?.message}
 					size='small'
 					label='Название'
 					variant='outlined'
