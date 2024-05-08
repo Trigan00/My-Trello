@@ -34,7 +34,7 @@ export function Delete({ board_id, name, workspace_id }: DeleteI) {
 		<Box sx={{ mt: 1 }}>
 			{!isDelete ? (
 				<Button
-					variant='outlined'
+					variant='text'
 					color='error'
 					size='small'
 					sx={{

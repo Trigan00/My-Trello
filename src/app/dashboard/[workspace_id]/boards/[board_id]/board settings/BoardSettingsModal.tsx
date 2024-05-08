@@ -58,6 +58,7 @@ export function BoardSettingsModal({
 			isModal={isModal}
 			setIsModal={setIsModal}
 			onClose={onClose}
+			maxWidth={550}
 		>
 			<Typography
 				sx={{
