@@ -12,12 +12,10 @@ export function useInviteLink(workspace_id: number) {
 		queryFn: () => workspaceService.getInviteLink(workspace_id)
 	})
 
-	const [item, setItem] = useState<{ invite_token: string } | undefined>(
-		data?.data
-	)
+	const [item, setItem] = useState<string | undefined>(data?.data.url)
 
 	useEffect(() => {
-		setItem(data?.data)
+		setItem(data?.data.url)
 	}, [data?.data])
 
 	return { item, isLoading, refetch_link }

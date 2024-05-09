@@ -40,6 +40,7 @@ class WorkspaceService {
 	}
 
 	async deleteWorkspaceUser(user_id: number, ws_id: number) {
+		//TODO не нужен ws_id
 		const response = await axiosWithAuth.delete<{ message: string }>(
 			`${this.BASE_URL}/members/${user_id}`,
 			{
@@ -52,7 +53,7 @@ class WorkspaceService {
 	}
 
 	async getInviteLink(id: number) {
-		const response = await axiosWithAuth.post<{ invite_token: string }>(
+		const response = await axiosWithAuth.post<{ url: string }>(
 			`${this.BASE_URL}/invite/`,
 			{ ws_id: id }
 		)
