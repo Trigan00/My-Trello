@@ -10,34 +10,46 @@ import CloseIcon from '@mui/icons-material/Close'
 import MyModal from '@/components/UI/MyModal'
 import { useDeleteWorkspaceUser } from '@/hooks/workspace-hooks/useDeleteWorkspaceUser'
 import { Loader } from '@/components/UI/Loader/Loader'
+import { useDeleteWorkspace } from '@/hooks/workspace-hooks/useDeleteWorkspace'
 
 interface DeleteModalProps {
 	isModal: boolean
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
-	username: string
-	ws_id: number
-	user_id: number
+	title: string
+	confirmation: string
+	deleteFunction: () => void
+	isLoading: boolean
+	subtitle?: string
+	resetFunc?: () => void
 }
 
-export default function DeleteUserModal({
+export default function DeleteModal({
 	isModal,
 	setIsModal,
-	username,
-	ws_id,
-	user_id
+	title,
+	subtitle,
+	confirmation,
+	deleteFunction,
+	isLoading,
+	resetFunc
 }: DeleteModalProps) {
 	const [deleteIsActive, setDeleteIsActive] = useState(false)
-	const { deleteWorkspaceUser, isDeleteUserPending } = useDeleteWorkspaceUser()
 
 	const onDelete = async () => {
-		deleteWorkspaceUser({ user_id, ws_id })
+		deleteFunction()
 		setIsModal(false)
+	}
+
+	const onClose = () => {
+		setDeleteIsActive(false)
+		resetFunc && resetFunc()
 	}
 
 	return (
 		<MyModal
 			isModal={isModal}
 			setIsModal={setIsModal}
+			onClose={onClose}
 		>
 			<Box style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<Typography
@@ -45,19 +57,21 @@ export default function DeleteUserModal({
 					variant='h6'
 					component='h2'
 				>
-					Удалить пользователя?
+					{title}
 				</Typography>
 				<CloseIcon
 					sx={{ cursor: 'pointer' }}
 					onClick={() => setIsModal(false)}
 				/>
 			</Box>
-			<Typography
-				id='transition-modal-description'
-				sx={{ mt: 2 }}
-			>
-				Пользователь &#171;{username}&#187; будет удален
-			</Typography>
+			{subtitle && (
+				<Typography
+					id='transition-modal-description'
+					sx={{ mt: 2 }}
+				>
+					{subtitle}
+				</Typography>
+			)}
 			<Typography sx={{ mt: 2 }}>
 				<FormControlLabel
 					control={
@@ -67,18 +81,21 @@ export default function DeleteUserModal({
 							inputProps={{ 'aria-label': 'controlled' }}
 						/>
 					}
-					label={'Удалить пользователя'}
+					label={confirmation}
 				/>
 			</Typography>
 			<Box sx={{ mt: '20px', float: 'right' }}>
-				{isDeleteUserPending ? (
+				{isLoading ? (
 					<Loader />
 				) : (
 					<>
 						<Button
 							size='small'
 							style={{ marginRight: '10px' }}
-							onClick={() => setIsModal(false)}
+							onClick={() => {
+								onClose()
+								setIsModal(false)
+							}}
 						>
 							Отменить
 						</Button>

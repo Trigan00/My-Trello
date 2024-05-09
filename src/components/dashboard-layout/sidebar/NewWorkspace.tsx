@@ -29,7 +29,6 @@ export function NewWorkspace() {
 				sx={{
 					width: '220px',
 					color: 'white',
-					textTransform: 'inherit',
 					p: '11px 12px',
 					fontSize: '14px',
 					fontWeight: '400',
@@ -42,7 +41,7 @@ export function NewWorkspace() {
 			<MyModal
 				isModal={isModal}
 				setIsModal={setIsModal}
-				resetFunc={reset}
+				onClose={reset}
 			>
 				<Typography sx={{ fontWeight: '600', fontSize: '20px' }}>
 					Добавить рабочее пространство
@@ -71,7 +70,6 @@ export function NewWorkspace() {
 						sx={{
 							mt: 2,
 							color: 'white',
-							textTransform: 'inherit',
 							fontWeight: '400'
 						}}
 						variant='contained'

@@ -19,7 +19,7 @@ import Image from 'next/image'
 import { COLORS } from '@/constants/color.constants'
 import NextLink from 'next/link'
 
-const settings = ['Профиль', 'Сервисы', 'Выйти']
+const settings = ['Профиль', 'Тариф', 'Выйти']
 export const headerHeight: number = 74
 
 interface IHeader {
@@ -89,38 +89,6 @@ export function Header({ toggleDrawer }: IHeader) {
 					>
 						{SITE_NAME}
 					</Typography>
-				</Box>
-				<Box sx={{ flexGrow: 1, display: 'flex' }}>
-					<Button
-						component={NextLink}
-						href='/services'
-						sx={{
-							ml: '40px',
-							display: { xs: 'none', md: 'block' },
-							fontSize: '14px',
-							fontWeight: '400',
-							color: COLORS.textBlack,
-							textTransform: 'inherit',
-							lineHeight: '17px'
-						}}
-					>
-						Сервисы
-					</Button>
-					<Button
-						component={NextLink}
-						href='/rate'
-						sx={{
-							ml: '40px',
-							display: { xs: 'none', md: 'block' },
-							fontSize: '14px',
-							fontWeight: '400',
-							color: COLORS.textBlack,
-							textTransform: 'inherit',
-							lineHeight: '17px'
-						}}
-					>
-						Ваш тариф
-					</Button>
 				</Box>
 			</Toolbar>
 			<Box>

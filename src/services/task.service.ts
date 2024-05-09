@@ -10,13 +10,6 @@ class TaskService {
 		return response
 	}
 
-	async getColumns(id: number) {
-		const response = await axiosWithAuth.get<ColumnI[]>(
-			`${this.BASE_URL}/columns/${id}`
-		)
-		return response
-	}
-
 	async createTask(data: TypeTaskFormState) {
 		const response = await axiosWithAuth.post(this.BASE_URL, data)
 		return response

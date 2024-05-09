@@ -7,29 +7,30 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	maxWidth: 450,
-	width: '100%',
+	width: '90%',
 	bgcolor: 'background.paper',
 	borderRadius: '20px',
 	boxShadow: 24,
-	p: '30px'
+	p: { xs: 2, md: 4 }
 }
 
 interface MyModalProps {
 	isModal: boolean
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
 	children: React.ReactNode
-	resetFunc?: () => void
+	onClose?: () => void
+	maxWidth?: number
 }
 
 export default function MyModal({
 	isModal,
 	setIsModal,
 	children,
-	resetFunc
+	onClose,
+	maxWidth
 }: MyModalProps) {
 	const onCloseHandler = () => {
-		resetFunc && resetFunc()
+		onClose && onClose()
 		setIsModal(false)
 	}
 
@@ -48,7 +49,7 @@ export default function MyModal({
 				}
 			}}
 		>
-			<Box sx={style}>{children}</Box>
+			<Box sx={{ ...style, maxWidth: maxWidth || 450 }}>{children}</Box>
 		</Modal>
 	)
 }

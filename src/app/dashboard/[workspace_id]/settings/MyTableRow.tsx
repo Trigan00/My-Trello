@@ -1,4 +1,3 @@
-import DeleteUserModal from './DeleteUserModal'
 import { useState } from 'react'
 import { IUser, ROLES } from '@/types/auth.types'
 import {
@@ -14,6 +13,8 @@ import {
 } from '@mui/material'
 import React from 'react'
 import { useUpdateRole } from '@/hooks/workspace-hooks/useUpdateRole'
+import { useDeleteWorkspaceUser } from '@/hooks/workspace-hooks/useDeleteWorkspaceUser'
+import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
@@ -33,6 +34,7 @@ interface MyTableRowI {
 
 export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 	const { updateRole } = useUpdateRole()
+	const { deleteWorkspaceUser, isDeleteUserPending } = useDeleteWorkspaceUser()
 	const [isDelete, setIsDelete] = useState(false)
 	const [role, setRole] = useState<ROLES>(row.role)
 
@@ -84,12 +86,16 @@ export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 					</Button>
 				</TableCell>
 			</StyledTableRow>
-			<DeleteUserModal
-				ws_id={workspace_id}
-				user_id={row.id}
+			<DeleteModal
 				isModal={isDelete}
 				setIsModal={setIsDelete}
-				username={row.username}
+				deleteFunction={() =>
+					deleteWorkspaceUser({ user_id: row.id, ws_id: workspace_id })
+				}
+				isLoading={isDeleteUserPending}
+				title='Удалить пользователя?'
+				subtitle={`Пользователь «${row.username}» будет удален.`}
+				confirmation='Удалить пользователя.'
 			/>
 		</React.Fragment>
 	)

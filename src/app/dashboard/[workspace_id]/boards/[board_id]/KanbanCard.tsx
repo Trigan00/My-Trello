@@ -9,6 +9,8 @@ import { Box, Grid, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
 import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
+import shortenText from '@/helpers/shortenText'
 
 interface IKanbanCard {
 	item: TaskI
@@ -16,18 +18,19 @@ interface IKanbanCard {
 }
 
 export function KanbanCard({ item, setItems }: IKanbanCard) {
-	const { attributes, listeners, setNodeRef, transform } = useDraggable({
-		id: item.id,
-		data: {
-			type: 'Task',
-			task: item
-		}
-	})
-	const style = transform
-		? {
-				transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
+	const { attributes, listeners, setNodeRef, transform, isDragging, over } =
+		useDraggable({
+			id: item.id,
+			data: {
+				type: 'Task',
+				task: item
 			}
-		: undefined
+		})
+	const style = {
+		transform: CSS.Transform.toString(transform),
+		opacity: isDragging ? 0 : 1,
+		cursor: 'pointer'
+	}
 	// const { register, control, watch } = useForm<TypeTaskFormState>({
 	// 	defaultValues: {
 	// 		name: item.name
@@ -43,20 +46,20 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 			{...listeners}
 			{...attributes}
 			sx={{
-				position: 'relative !important',
+				position: 'relative',
 				mt: '10px',
 				color: COLORS.textBlack,
 				backgroundColor: COLORS.border,
 				borderRadius: '10px',
-				p: '10px 12px',
-				cursor: 'pointer'
+				p: '10px 20px 10px 12px',
+				'&:hover': {
+					transition: '0.2s',
+					filter: 'brightness(0.9)'
+				}
 			}}
 		>
-			<Typography
-				sx={{ mr: '20px' }}
-				onClick={() => console.log('message')}
-			>
-				{item.name}
+			<Typography onClick={() => console.log('message')}>
+				{shortenText(item.name, 120)}
 			</Typography>
 			<Image
 				style={{

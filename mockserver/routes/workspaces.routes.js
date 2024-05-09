@@ -12,9 +12,15 @@ function createData(id, username, email, role) {
 }
 
 let workspaceUsers = [
-	createData(0, 'Ayaz', 'test1@mail.ru', 'admin'),
-	createData(1, 'Niyaz', 'test2@mail.ru', 'observer'),
-	createData(2, 'Ivan', 'test3@mail.ru', 'employee')
+	createData(0, 'Ayaz', 'test1@mail.ru', 'админ'),
+	createData(1, 'Niyaz', 'test2@mail.ru', 'персонал'),
+	createData(2, 'Ivan', 'test3@mail.ru', 'участник'),
+	createData(3, 'Ivan', 'test4@mail.ru', 'участник'),
+	createData(4, 'Ivan', 'test5@mail.ru', 'участник'),
+	createData(5, 'Ivan', 'test6@mail.ru', 'участник'),
+	createData(6, 'Ivan', 'test7@mail.ru', 'участник'),
+	createData(7, 'Ivan', 'test8@mail.ru', 'участник'),
+	createData(8, 'Ivan', 'test9@mail.ru', 'участник')
 ]
 
 router.get('/', async (req, res) => {
@@ -64,7 +70,7 @@ router.patch('/:id', async (req, res) => {
 	}
 })
 
-router.get('/members/:id', async (req, res) => {
+router.get('/members', async (req, res) => {
 	try {
 		const id = req.params.id
 		return res.status(201).json({ members: workspaceUsers })
@@ -141,4 +147,4 @@ router.patch('/members/:id', async (req, res) => {
 	}
 })
 
-module.exports = router
+module.exports = { router, workspaceUsers }

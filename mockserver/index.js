@@ -4,7 +4,8 @@ const {
 	authRouter,
 	workspacesRouter,
 	boardsRouter,
-	tasksRouter
+	tasksRouter,
+	columnsRouter
 } = require('./routes')
 const cors = require('cors')
 require('dotenv').config()
@@ -30,6 +31,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/workspaces', authMiddleware.decodeToken, workspacesRouter)
 app.use('/api/boards', authMiddleware.decodeToken, boardsRouter)
 app.use('/api/tasks', authMiddleware.decodeToken, tasksRouter)
+app.use('/api/columns', authMiddleware.decodeToken, columnsRouter)
 
 app.get('/', (req, res) => {
 	res.status(200).json('Server is working')

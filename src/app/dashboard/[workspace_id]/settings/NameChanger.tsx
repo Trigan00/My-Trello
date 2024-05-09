@@ -75,7 +75,6 @@ export function NameChanger({ workspace_id }: NameChangerI) {
 						<Button
 							sx={{
 								color: 'white',
-								textTransform: 'inherit',
 								fontWeight: '400'
 							}}
 							variant='contained'

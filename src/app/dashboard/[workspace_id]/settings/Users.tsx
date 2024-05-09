@@ -22,6 +22,7 @@ import { toast } from 'sonner'
 import React from 'react'
 import { useInviteLink } from '@/hooks/workspace-hooks/useInviteLink'
 import MyTableRow from './MyTableRow'
+import AutorenewIcon from '@mui/icons-material/Autorenew'
 
 interface UsersI {
 	workspace_id: number
@@ -29,7 +30,7 @@ interface UsersI {
 
 export function Users({ workspace_id }: UsersI) {
 	const { users } = useWorkspaceUsers(workspace_id)
-	const { item: link } = useInviteLink(workspace_id)
+	const { item: link, refetch_link, isLoading } = useInviteLink(workspace_id)
 
 	const copyHandler = () => {
 		copy(link?.invite_token || '')
@@ -46,13 +47,13 @@ export function Users({ workspace_id }: UsersI) {
 					fontSize={18}
 					fontWeight={500}
 				>
-					Пользователи
+					Участники
 				</Typography>
 				<Typography
 					color={COLORS.textGrey}
 					fontSize={14}
 				>
-					Управление пользователями
+					Управление учатсниками
 				</Typography>
 			</Box>
 			<Divider />
@@ -94,7 +95,7 @@ export function Users({ workspace_id }: UsersI) {
 				}}
 			>
 				<Typography fontSize={14}>
-					Ссылка для приглашения новых пользователей
+					Ссылка для приглашения новых учатсников
 				</Typography>
 				<Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
 					{link ? (
@@ -116,6 +117,12 @@ export function Users({ workspace_id }: UsersI) {
 							/>
 							<IconButton
 								sx={{ p: 1 }}
+								onClick={() => refetch_link()}
+							>
+								<AutorenewIcon />
+							</IconButton>
+							<IconButton
+								sx={{ p: 1 }}
 								onClick={copyHandler}
 							>
 								<ContentCopyIcon />
@@ -126,6 +133,7 @@ export function Users({ workspace_id }: UsersI) {
 							width={'100%'}
 							height={40}
 							variant='rounded'
+							sx={{ borderRadius: '15px' }}
 						/>
 					)}
 				</Box>
