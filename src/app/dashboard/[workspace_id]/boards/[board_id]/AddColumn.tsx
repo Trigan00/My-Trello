@@ -73,7 +73,7 @@ export function AddColumn() {
 				gap: 1,
 				cursor: 'pointer',
 				'&:hover': {
-					filter: 'brightness(0.3)'
+					filter: 'brightness(0.8)'
 				}
 			}}
 			onClick={() => setIsEdit(true)}

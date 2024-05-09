@@ -16,6 +16,7 @@ export function MyCard({ children, variant, sx, ...props }: MyCardI) {
 					variant === 'shadowed'
 						? '0px 0px 10px 0px rgba(0, 0, 0, 0.15)'
 						: 'none',
+				backgroundColor: 'white',
 				border: variant === 'outlined' ? `1px solid ${COLORS.border}` : 'none',
 				borderRadius: '15px',
 				...sx

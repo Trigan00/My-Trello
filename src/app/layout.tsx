@@ -26,8 +26,12 @@ export default function RootLayout({
 					content='width=device-width, initial-scale=1.0'
 				></meta>
 			</head>
-			<body>
-				{/* style={{ background: 'red' }} */}
+			<body
+			// style={{
+			// 	backgroundImage: `url(/boards/1.jpeg)`,
+			// 	backgroundSize: 'cover'
+			// }}
+			>
 				<Providers>
 					<AppRouterCacheProvider>
 						{children}
