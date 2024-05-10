@@ -28,6 +28,7 @@ import { useEditName } from '@/hooks/columns-hooks/useEditName'
 
 interface IKanbanColumn {
 	column_id: number
+	board_id: number
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
@@ -35,6 +36,7 @@ interface IKanbanColumn {
 
 export function KanbanColumn({
 	column_id,
+	board_id,
 	items,
 	label,
 	setItems
@@ -149,13 +151,16 @@ export function KanbanColumn({
 						?.filter(item => item.column_id === column_id)
 						.map((item, index) => (
 							<KanbanCard
-								key={item.id}
+								key={item.task_id}
 								item={item}
 								setItems={setItems}
 							/>
 						))}
 				</div>
-				<KanbanAddTask />
+				<KanbanAddTask
+					board_id={board_id}
+					column_id={column_id}
+				/>
 			</MyCard>
 		</div>
 	)

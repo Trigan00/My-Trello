@@ -11,10 +11,10 @@ export function useTasks() {
 		queryFn: () => taskService.getTasks()
 	})
 
-	const [items, setItems] = useState<TaskI[] | undefined>(data?.data)
+	const [items, setItems] = useState<TaskI[] | undefined>(data?.data.tasks)
 
 	useEffect(() => {
-		setItems(data?.data)
+		setItems(data?.data.tasks)
 	}, [data?.data])
 
 	return { items, setItems, isLoading }

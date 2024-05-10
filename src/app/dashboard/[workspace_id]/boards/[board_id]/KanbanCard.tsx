@@ -20,7 +20,7 @@ interface IKanbanCard {
 export function KanbanCard({ item, setItems }: IKanbanCard) {
 	const { attributes, listeners, setNodeRef, transform, isDragging, over } =
 		useDraggable({
-			id: item.id,
+			id: item.task_id,
 			data: {
 				type: 'Task',
 				task: item

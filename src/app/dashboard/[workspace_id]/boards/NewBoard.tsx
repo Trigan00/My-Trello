@@ -18,7 +18,10 @@ export function NewBoard({ ws_id }: NewBoardI) {
 		reset,
 		formState: { errors }
 	} = useForm<{ name: string }>({})
-	const { addBoard, isPending } = useAddBoard(() => setIsModal(false))
+	const { addBoard, isPending } = useAddBoard(() => {
+		reset()
+		setIsModal(false)
+	})
 	const onSubmit: SubmitHandler<{ name: string }> = data => {
 		addBoard({ name: data.name, ws_id })
 	}

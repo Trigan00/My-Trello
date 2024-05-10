@@ -16,33 +16,65 @@ import { BoardMemberI } from '@/types/board.types'
 import dayjs, { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
+import { useCreateTask } from '@/hooks/task-hooks/useCreateTask'
 
-export function KanbanAddTask() {
+interface KanbanAddTaskI {
+	board_id: number
+	column_id: number
+}
+
+export function KanbanAddTask({ board_id, column_id }: KanbanAddTaskI) {
+	const { members: board_members } = useBoardMembers(board_id)
+	const [members, setMembers] = useState<BoardMemberI[] | []>([])
+	const { createTask, isPending } = useCreateTask(() => {
+		onClose()
+		setIsModal(false)
+	})
+
 	const [isModal, setIsModal] = useState(false)
 	const [name, setName] = useState('')
-	const [description, setDescription] = useState('')
+	const [description, setDescription] = useState<string>('')
 	const [errMsg, setErrMsg] = useState('')
 
-	const [startTime, setStartTime] = useState<Dayjs | null>(dayjs(new Date()))
-	const [endTime, setEndTime] = useState<Dayjs | null>(dayjs(new Date()))
+	const [startTime, setStartTime] = useState<Dayjs | null>(null)
+	const [endTime, setEndTime] = useState<Dayjs | null>(null)
 
 	const submit = () => {
 		if (!name.trim()) return setErrMsg('Не может быть пустым')
-		setErrMsg('')
+		createTask({
+			name,
+			description: description ? description : null,
+			column_id,
+			start_time: startTime?.format() || null,
+			deadline: endTime?.format() || null
+		})
 	}
 
 	const addUser = (member: BoardMemberI | undefined) => {
-		// member && addMember({ board_id, user_id: member?.id })
+		member &&
+			setMembers(prev => {
+				const arr = [...prev]
+				arr.push({
+					id: member.id,
+					email: member.email,
+					username: member.username
+				})
+				return arr
+			})
 	}
 
 	const removeUser = (member: BoardMemberI | undefined) => {
-		// member && deleteBoardMember({ board_id, user_id: member?.id })
+		member && setMembers(prev => prev.filter(u => u.id !== member.id))
 	}
 
-	const onClose = () => {
+	function onClose() {
 		setErrMsg('')
-		setStartTime(dayjs(new Date()))
-		setEndTime(dayjs(new Date()))
+		setStartTime(null)
+		setEndTime(null)
+		setName('')
+		setDescription('')
+		setMembers([])
 	}
 
 	return (
@@ -105,12 +137,12 @@ export function KanbanAddTask() {
 					</Button>
 				</Box>
 
-				{true ? (
+				{board_members ? (
 					<MembersSelect
-						all_users={[]}
+						all_users={board_members}
 						addFunc={addUser}
 						removeFunc={removeUser}
-						members={[]}
+						members={members as BoardMemberI[]}
 					/>
 				) : (
 					<Skeleton
@@ -143,7 +175,7 @@ export function KanbanAddTask() {
 					sx={{ mt: 2 }}
 				/>
 				<Box sx={{ mt: 3, float: 'right' }}>
-					{false ? (
+					{isPending ? (
 						<Loader />
 					) : (
 						<>

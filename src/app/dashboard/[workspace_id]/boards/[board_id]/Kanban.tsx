@@ -135,6 +135,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						<KanbanColumn
 							key={column.id}
 							column_id={column.id}
+							board_id={board_id}
 							label={column.name}
 							items={items}
 							setItems={setItems}
