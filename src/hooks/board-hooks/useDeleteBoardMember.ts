@@ -9,8 +9,8 @@ export function useDeleteBoardMember() {
 	const { mutate: deleteBoardMember, isPending: isDeleteMemberPending } =
 		useMutation({
 			mutationKey: ['delete board member'],
-			mutationFn: (data: { user_id: number; board_id: number }) =>
-				boardsService.deleteMemberFromBoard(data.user_id, data.board_id),
+			mutationFn: (data: { user_id: number }) =>
+				boardsService.deleteMemberFromBoard(data.user_id),
 			onSuccess(res) {
 				queryClient.invalidateQueries({
 					queryKey: ['board members']

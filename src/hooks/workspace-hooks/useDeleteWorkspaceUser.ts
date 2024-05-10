@@ -9,8 +9,8 @@ export function useDeleteWorkspaceUser() {
 	const { mutate: deleteWorkspaceUser, isPending: isDeleteUserPending } =
 		useMutation({
 			mutationKey: ['delete workspace user'],
-			mutationFn: (data: { user_id: number; ws_id: number }) =>
-				workspaceService.deleteWorkspaceUser(data.user_id, data.ws_id),
+			mutationFn: (data: { user_id: number }) =>
+				workspaceService.deleteWorkspaceUser(data.user_id),
 			onSuccess(res) {
 				queryClient.invalidateQueries({
 					queryKey: ['workspace users']

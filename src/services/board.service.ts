@@ -63,15 +63,9 @@ class BoardsService {
 		return response
 	}
 
-	async deleteMemberFromBoard(user_id: number, board_id: number) {
-		//TODO не нужен board_id
+	async deleteMemberFromBoard(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.MEMBERS_URL}/${user_id}`,
-			{
-				params: {
-					board_id
-				}
-			}
+			`${this.MEMBERS_URL}/${user_id}`
 		)
 		return response
 	}

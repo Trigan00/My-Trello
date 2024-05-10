@@ -46,7 +46,7 @@ export function BoardSettingsModal({
 		member && addMember({ board_id, user_id: member?.id })
 
 	const removeUser = (member: BoardMemberI | undefined) =>
-		member && deleteBoardMember({ board_id, user_id: member?.id })
+		member && deleteBoardMember({ user_id: member?.id })
 
 	const onClose = () => {
 		setName(heading_title)

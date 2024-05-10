@@ -39,15 +39,9 @@ class WorkspaceService {
 		return response
 	}
 
-	async deleteWorkspaceUser(user_id: number, ws_id: number) {
-		//TODO не нужен ws_id
+	async deleteWorkspaceUser(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}`,
-			{
-				params: {
-					ws_id
-				}
-			}
+			`${this.BASE_URL}/members/${user_id}`
 		)
 		return response
 	}

@@ -89,9 +89,7 @@ export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 			<DeleteModal
 				isModal={isDelete}
 				setIsModal={setIsDelete}
-				deleteFunction={() =>
-					deleteWorkspaceUser({ user_id: row.id, ws_id: workspace_id })
-				}
+				deleteFunction={() => deleteWorkspaceUser({ user_id: row.id })}
 				isLoading={isDeleteUserPending}
 				title='Удалить пользователя?'
 				subtitle={`Пользователь «${row.username}» будет удален.`}
