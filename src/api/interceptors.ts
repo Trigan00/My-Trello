@@ -6,6 +6,7 @@ import {
 	removeFromStorage
 } from '@/services/auth-token.service'
 import { authService } from '@/services/auth.service'
+import { toast } from 'sonner'
 
 const options: CreateAxiosDefaults = {
 	baseURL: process.env.URL_API,
@@ -44,6 +45,7 @@ axiosWithAuth.interceptors.response.use(
 				await authService.getNewTokens()
 				return axiosWithAuth.request(originalRequest)
 			} catch (error) {
+				toast.error('Нет авторизации')
 				removeFromStorage()
 			}
 		}
