@@ -135,7 +135,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						<KanbanColumn
 							key={column.id}
 							column_id={column.id}
-							label={column.label}
+							label={column.name}
 							items={items}
 							setItems={setItems}
 						/>
@@ -149,7 +149,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						)}
 					</DragOverlay>
 				</DndContext>
-				<AddColumn />
+				<AddColumn board_id={board_id} />
 			</Box>
 			{board_title && (
 				<BoardSettingsModal

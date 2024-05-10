@@ -1,5 +1,5 @@
 export interface ColumnI {
-	label: string
+	name: string
 	id: number
 }
 

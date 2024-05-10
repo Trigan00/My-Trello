@@ -10,10 +10,12 @@ export function useGetColumns(board_id: number) {
 		queryFn: () => columnService.getColumns(board_id)
 	})
 
-	const [columns, setColumns] = useState<ColumnI[] | undefined>(data?.data)
+	const [columns, setColumns] = useState<ColumnI[] | undefined>(
+		data?.data.columns
+	)
 
 	useEffect(() => {
-		setColumns(data?.data)
+		setColumns(data?.data.columns)
 	}, [data?.data])
 
 	return { columns, setColumns, isLoading }
