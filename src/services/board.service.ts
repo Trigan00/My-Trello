@@ -6,11 +6,14 @@ class BoardsService {
 	private MEMBERS_URL = this.BASE_URL + '/members'
 
 	async getBoards(workspace_id: number) {
-		const response = await axiosWithAuth.get<BoardsResponse>(this.BASE_URL, {
-			params: {
-				ws_id: workspace_id
+		const response = await axiosWithAuth.get<BoardsResponse>(
+			this.BASE_URL + '/',
+			{
+				params: {
+					ws_id: workspace_id
+				}
 			}
-		})
+		)
 		return response
 	}
 
