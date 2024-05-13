@@ -45,7 +45,7 @@ class BoardsService {
 
 	async getBoardMembers(board_id: number) {
 		const response = await axiosWithAuth.get<boardMembersResponseI>(
-			this.MEMBERS_URL,
+			this.MEMBERS_URL + '/',
 			{
 				params: {
 					board_id

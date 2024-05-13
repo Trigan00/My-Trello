@@ -9,7 +9,7 @@ class TaskService {
 
 	async getTasks(board_id: number) {
 		const response = await axiosWithAuth.get<{ tasks: TaskI[] }>(
-			this.BASE_URL,
+			this.BASE_URL + '/',
 			{
 				params: {
 					board_id

@@ -5,9 +5,14 @@ import { axiosWithAuth } from '@/api/interceptors'
 class ColumnService {
 	private BASE_URL = '/tasks/columns'
 
-	async getColumns(id: number) {
+	async getColumns(board_id: number) {
 		const response = await axiosWithAuth.get<{ columns: ColumnI[] }>(
-			`${this.BASE_URL}/${id}/`
+			`${this.BASE_URL}/`,
+			{
+				params: {
+					board_id
+				}
+			}
 		)
 		return response
 	}
