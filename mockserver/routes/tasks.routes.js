@@ -3,50 +3,50 @@ let { board_members } = require('./boards.routes')
 const router = new Router()
 
 let tasks = [
-	{ task_id: 0, name: 'task 1', column_id: 0 }
-	// { task_id: 1, name: 'task 2', column_id: 1 },
-	// {
-	// 	task_id: 2,
-	// 	name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-	// 	column_id: 0
-	// }
-	// {
-	// 	task_id: 4,
-	// 	name: 'Diam in arcu cursus euismod quis viverra nibh cras',
-	// 	column_id: 1
-	// },
-	// {
-	// 	task_id: 5,
-	// 	name: 'Consequat ac felis donec',
-	// 	column_id: 2
-	// },
-	// {
-	// 	task_id: 6,
-	// 	name: 'Adipiscing vitae proin sagittis',
-	// 	column_id: 2
-	// },
-	// {
-	// 	task_id: 7,
-	// 	name: 'Ornare arcu odio ut sem nulla pharetra',
-	// 	column_id: 3
-	// },
-	// {
-	// 	task_id: 8,
-	// 	name: 'Dui ut ornare lectus sit amet',
-	// 	column_id: 0
-	// },
-	// {
-	// 	task_id: 9,
-	// 	name: 'Dictum sit amet justo donec enim',
-	// 	column_id: 2
-	// },
-	// {
-	// 	task_id: 10,
-	// 	name: 'Mega huge task name Lorem ipsum dolor sit',
-	// 	column_id: 2
-	// },
-	// { task_id: 11, name: 'task 4', column_id: 3 },
-	// { task_id: 12, name: 'task 5', column_id: 3 }
+	{ task_id: 1, name: 'task 1', column_id: 0 },
+	{ task_id: 2, name: 'task 2', column_id: 1 },
+	{
+		task_id: 3,
+		name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		column_id: 0
+	},
+	{
+		task_id: 4,
+		name: 'Diam in arcu cursus euismod quis viverra nibh cras',
+		column_id: 1
+	},
+	{
+		task_id: 5,
+		name: 'Consequat ac felis donec',
+		column_id: 2
+	},
+	{
+		task_id: 6,
+		name: 'Adipiscing vitae proin sagittis',
+		column_id: 2
+	},
+	{
+		task_id: 7,
+		name: 'Ornare arcu odio ut sem nulla pharetra',
+		column_id: 3
+	},
+	{
+		task_id: 8,
+		name: 'Dui ut ornare lectus sit amet',
+		column_id: 0
+	},
+	{
+		task_id: 9,
+		name: 'Dictum sit amet justo donec enim',
+		column_id: 2
+	},
+	{
+		task_id: 10,
+		name: 'Mega huge task name Lorem ipsum dolor sit',
+		column_id: 2
+	},
+	{ task_id: 11, name: 'task 4', column_id: 3 },
+	{ task_id: 12, name: 'task 5', column_id: 3 }
 ]
 
 function createData(id, username, email) {
@@ -100,7 +100,7 @@ router.post('/', async (req, res) => {
 	try {
 		const { name, column_id, description, start_time, deadline } = req.body
 		tasks.push({
-			task_id: tasks.length,
+			task_id: tasks.length + 1 || 1,
 			name,
 			description: description || null,
 			column_id,
