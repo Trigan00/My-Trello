@@ -1,0 +1,196 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Box, Button, Skeleton, TextField, Typography } from '@mui/material'
+import { Loader } from '@/components/UI/Loader/Loader'
+import MyModal from '@/components/UI/MyModal'
+import MembersSelect from '@/components/dashboard-layout/MembersSelect'
+import { BoardMemberI } from '@/types/board.types'
+import dayjs, { Dayjs } from 'dayjs'
+import MyDate from '@/components/dashboard-layout/MyDate'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
+import { useTaskMembers } from '@/hooks/task-hooks/useTaskMembers'
+import { useOneTask } from '@/hooks/task-hooks/useOneTask'
+import { useIsFetching } from '@tanstack/react-query'
+import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
+import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
+import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
+import { toast } from 'sonner'
+
+interface EditTaskI {
+	task_id: number
+	board_id: number
+	isModal: boolean
+	setIsModal: Dispatch<SetStateAction<boolean>>
+}
+
+export function EditTask({
+	task_id,
+	board_id,
+	isModal,
+	setIsModal
+}: EditTaskI) {
+	const isFetching = useIsFetching({ queryKey: ['task'] })
+	const { task } = useOneTask(task_id)
+	const { members: board_members } = useBoardMembers(board_id)
+	const { members } = useTaskMembers(task_id)
+
+	const [name, setName] = useState('')
+	const [description, setDescription] = useState<string>('')
+	const [errMsg, setErrMsg] = useState('')
+	const [startTime, setStartTime] = useState<Dayjs | null>(null)
+	const [endTime, setEndTime] = useState<Dayjs | null>(null)
+
+	const { updateTask, isPending } = useUpdateTask(undefined, () =>
+		toast.success('Задача успешно изменена')
+	)
+	const { addMember } = useAddMemberToTask()
+	const { deleteTaskMember } = useDeleteTaskMember()
+
+	useEffect(() => {
+		if (task) {
+			setName(task.name || '')
+			setDescription(task.description || '')
+			setStartTime(task.start_time ? dayjs(task.start_time) : null)
+			setEndTime(task.deadline ? dayjs(task.deadline) : null)
+		}
+	}, [task])
+
+	const submit = () => {
+		if (!name.trim()) return setErrMsg('Не может быть пустым')
+		updateTask({
+			id: task_id,
+			data: {
+				name,
+				description,
+				start_time: startTime?.format() || null,
+				deadline: endTime?.format() || null
+			}
+		})
+	}
+
+	const addUser = (member: BoardMemberI | undefined) =>
+		member && addMember({ task_id, user_id: member.id })
+
+	const removeUser = (member: BoardMemberI | undefined) =>
+		member && deleteTaskMember({ user_id: member.id })
+
+	return (
+		<MyModal
+			isModal={isModal}
+			setIsModal={setIsModal}
+			maxWidth={600}
+		>
+			{!isFetching ? (
+				<>
+					<Typography
+						sx={{
+							fontWeight: '600',
+							fontSize: '18px',
+							mb: 2,
+							textAlign: 'center'
+						}}
+					>
+						Редактировать задачу
+					</Typography>
+					<Box
+						display='flex'
+						// alignItems='center'
+					>
+						<Box
+							flex='1'
+							display='flex'
+							flexWrap='wrap'
+							gap={2}
+						>
+							<MyDate
+								value={startTime}
+								setValue={setStartTime}
+								label='Начало'
+							/>
+							<MyDate
+								value={endTime}
+								setValue={setEndTime}
+								label='Конец'
+							/>
+						</Box>
+						<Button
+							variant='contained'
+							sx={{ height: 'min-content', mt: 2 }}
+						>
+							<NotificationsNoneIcon sx={{ color: 'white' }} />
+						</Button>
+					</Box>
+
+					{board_members && members ? (
+						<MembersSelect
+							all_users={board_members}
+							addFunc={addUser}
+							removeFunc={removeUser}
+							members={members || []}
+						/>
+					) : (
+						<Skeleton
+							variant='rounded'
+							sx={{
+								mt: 2,
+								height: '40px',
+								width: '100%',
+								borderRadius: '15px'
+							}}
+						/>
+					)}
+					<TextField
+						value={name}
+						onChange={e => setName(e.target.value)}
+						error={!!errMsg}
+						helperText={errMsg}
+						size='small'
+						label='Название'
+						variant='outlined'
+						type='text'
+						fullWidth
+						sx={{ mt: 2 }}
+					/>
+					<TextField
+						value={description}
+						onChange={e => setDescription(e.target.value)}
+						size='small'
+						label='Описание'
+						variant='outlined'
+						type='text'
+						multiline
+						rows={5}
+						fullWidth
+						sx={{ mt: 2 }}
+					/>
+					<Box sx={{ mt: 3, float: 'right' }}>
+						{isPending ? (
+							<Loader />
+						) : (
+							<>
+								<Button
+									size='small'
+									style={{ marginRight: '10px' }}
+									onClick={() => setIsModal(false)}
+								>
+									Отменить
+								</Button>
+								<Button
+									variant='contained'
+									size='small'
+									color='primary'
+									sx={{ color: 'white' }}
+									onClick={submit}
+								>
+									Сохранить
+								</Button>
+							</>
+						)}
+					</Box>
+				</>
+			) : (
+				<Loader />
+			)}
+		</MyModal>
+	)
+}

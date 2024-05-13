@@ -103,8 +103,7 @@ router.post('/invite', async (req, res) => {
 	try {
 		const { ws_id } = req.body
 		return res.status(201).json({
-			invite_token:
-				'https://docs.google.com/document/d/1MNLERJvitk9iWIVo-J9dAIdlAOC2CXB6j2SS0cPaUvM/edit'
+			url: 'https://docs.google.com/document/d/1MNLERJvitk9iWIVo-J9dAIdlAOC2CXB6j2SS0cPaUvM/edit'
 		})
 	} catch (error) {
 		console.log(error)

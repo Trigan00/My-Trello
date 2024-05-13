@@ -1,6 +1,7 @@
 import type { FullTaskI, TaskI, TypeTaskFormState } from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
+import { BoardMemberI } from '@/types/board.types'
 
 class TaskService {
 	private BASE_URL = '/tasks'
@@ -11,18 +12,40 @@ class TaskService {
 		return response
 	}
 
+	async getOneTask(id: number) {
+		const response = await axiosWithAuth.get<FullTaskI>(
+			`${this.BASE_URL}/${id}`
+		)
+		return response
+	}
+
 	async createTask(data: FullTaskI) {
 		const response = await axiosWithAuth.post(this.BASE_URL, data)
 		return response
 	}
 
 	async updateTask(id: number, data: TypeTaskFormState) {
-		const response = await axiosWithAuth.patch(`${this.BASE_URL}/${id}`, data)
+		const response = await axiosWithAuth.patch<{ message: string }>(
+			`${this.BASE_URL}/${id}`,
+			data
+		)
 		return response
 	}
 
 	async deleteTask(id: number) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)
+		return response
+	}
+
+	async getTaskMembers(task_id: number) {
+		const response = await axiosWithAuth.get<{ members: BoardMemberI[] }>(
+			this.MEMBERS_URL,
+			{
+				params: {
+					task_id
+				}
+			}
+		)
 		return response
 	}
 

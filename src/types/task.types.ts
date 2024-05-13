@@ -9,8 +9,6 @@ export interface TaskI {
 	column_id: number
 }
 
-export type TypeTaskFormState = Partial<Omit<TaskI, 'id'>> //На бэке проверять что пришло, потому что оба параметра опциональны
-
 export interface FullTaskI {
 	name: string
 	description: string | null
@@ -18,3 +16,5 @@ export interface FullTaskI {
 	start_time: string | null
 	deadline: string | null
 }
+
+export type TypeTaskFormState = Partial<FullTaskI> //На бэке проверять что пришло, потому что все параметры опциональны

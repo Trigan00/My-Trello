@@ -8,8 +8,8 @@ import {
 } from 'react'
 
 import type { TaskI } from '@/types/task.types'
-
-import { KanbanAddTask } from './KanbanAddTask'
+import AddIcon from '@mui/icons-material/Add'
+import { KanbanTaskForm } from './KanbanTaskForm'
 import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
 import {
@@ -38,8 +38,7 @@ export function KanbanColumn({
 	column_id,
 	board_id,
 	items,
-	label,
-	setItems
+	label
 }: IKanbanColumn) {
 	const { setNodeRef, over } = useDroppable({
 		id: column_id
@@ -47,6 +46,7 @@ export function KanbanColumn({
 	const { editName } = useEditName(reset)
 	const [isEdit, setIsEdit] = useState(false)
 	const [name, setName] = useState('')
+	const [isTaskForm, setIsTaskForm] = useState(false)
 
 	function reset() {
 		setIsEdit(false)
@@ -153,14 +153,32 @@ export function KanbanColumn({
 							<KanbanCard
 								key={item.task_id}
 								item={item}
-								setItems={setItems}
+								board_id={board_id}
+								column_id={column_id}
 							/>
 						))}
 				</div>
-				<KanbanAddTask
-					board_id={board_id}
-					column_id={column_id}
-				/>
+				<Button
+					onClick={() => setIsTaskForm(true)}
+					variant='text'
+					startIcon={<AddIcon sx={{ color: COLORS.textBlack }} />}
+					color='inherit'
+					sx={{
+						mt: '16px',
+						width: '100%',
+						color: COLORS.textBlack
+					}}
+				>
+					Добавить
+				</Button>
+				{isTaskForm && (
+					<KanbanTaskForm
+						board_id={board_id}
+						column_id={column_id}
+						isModal={isTaskForm}
+						setIsModal={setIsTaskForm}
+					/>
+				)}
 			</MyCard>
 		</div>
 	)
