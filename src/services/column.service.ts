@@ -7,14 +7,14 @@ class ColumnService {
 
 	async getColumns(id: number) {
 		const response = await axiosWithAuth.get<{ columns: ColumnI[] }>(
-			`${this.BASE_URL}/${id}`
+			`${this.BASE_URL}/${id}/`
 		)
 		return response
 	}
 
 	async editName(id: number, name: string) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/${id}`,
+			`${this.BASE_URL}/${id}/`,
 			{ name }
 		)
 		return response
@@ -30,7 +30,7 @@ class ColumnService {
 
 	async deleteColumn(id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/${id}`
+			`${this.BASE_URL}/${id}/`
 		)
 		return response
 	}

@@ -36,7 +36,7 @@ interface KanbanI {
 
 export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { columns, isLoading } = useGetColumns(board_id)
-	const { items, setItems } = useTasks()
+	const { items, setItems } = useTasks(board_id)
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)

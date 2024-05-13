@@ -41,7 +41,7 @@ class WorkspaceService {
 
 	async deleteWorkspaceUser(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}`
+			`${this.BASE_URL}/members/${user_id}/`
 		)
 		return response
 	}
@@ -63,7 +63,7 @@ class WorkspaceService {
 
 	async updateRole(user_id: number, data: { ws_id: number; role: ROLES }) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}`,
+			`${this.BASE_URL}/members/${user_id}/`,
 			data
 		)
 		return response

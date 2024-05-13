@@ -16,7 +16,7 @@ class BoardsService {
 
 	async addBoard(name: string, ws_id: number) {
 		const response = await axiosWithAuth.post<{ message: string }>(
-			this.BASE_URL,
+			this.BASE_URL + '/',
 			{
 				name,
 				ws_id
@@ -27,7 +27,7 @@ class BoardsService {
 
 	async editBoardName(id: number, name: string) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/${id}`,
+			`${this.BASE_URL}/${id}/`,
 			{ name }
 		)
 		return response
@@ -35,7 +35,7 @@ class BoardsService {
 
 	async deleteBoard(id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/${id}`
+			`${this.BASE_URL}/${id}/`
 		)
 		return response
 	}
@@ -54,7 +54,7 @@ class BoardsService {
 
 	async addMemberToBoard(user_id: number, board_id: number) {
 		const response = await axiosWithAuth.post<{ message: string }>(
-			this.MEMBERS_URL,
+			this.MEMBERS_URL + '/',
 			{
 				user_id,
 				board_id
@@ -65,7 +65,7 @@ class BoardsService {
 
 	async deleteMemberFromBoard(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.MEMBERS_URL}/${user_id}`
+			`${this.MEMBERS_URL}/${user_id}/`
 		)
 		return response
 	}

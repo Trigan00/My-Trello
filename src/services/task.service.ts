@@ -7,39 +7,46 @@ class TaskService {
 	private BASE_URL = '/tasks'
 	private MEMBERS_URL = this.BASE_URL + '/members'
 
-	async getTasks() {
-		const response = await axiosWithAuth.get<{ tasks: TaskI[] }>(this.BASE_URL)
+	async getTasks(board_id: number) {
+		const response = await axiosWithAuth.get<{ tasks: TaskI[] }>(
+			this.BASE_URL,
+			{
+				params: {
+					board_id
+				}
+			}
+		)
 		return response
 	}
 
 	async getOneTask(id: number) {
 		const response = await axiosWithAuth.get<FullTaskI>(
-			`${this.BASE_URL}/${id}`
+			`${this.BASE_URL}/${id}/`
 		)
 		return response
 	}
 
 	async createTask(data: FullTaskI) {
-		const response = await axiosWithAuth.post(this.BASE_URL, data)
+		const response = await axiosWithAuth.post(this.BASE_URL + '/', data)
 		return response
 	}
 
 	async updateTask(id: number, data: TypeTaskFormState) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/${id}`,
+			`${this.BASE_URL}/${id}/`,
 			data
 		)
 		return response
 	}
 
 	async deleteTask(id: number) {
-		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)
+		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}/`)
 		return response
 	}
 
 	async getTaskMembers(task_id: number) {
 		const response = await axiosWithAuth.get<{ members: BoardMemberI[] }>(
-			this.MEMBERS_URL,
+			this.MEMBERS_URL + '/',
 			{
 				params: {
 					task_id
@@ -51,7 +58,7 @@ class TaskService {
 
 	async addMemberToTask(user_id: number, task_id: number) {
 		const response = await axiosWithAuth.post<{ message: string }>(
-			this.MEMBERS_URL,
+			this.MEMBERS_URL + '/',
 			{
 				user_id,
 				task_id
@@ -62,7 +69,7 @@ class TaskService {
 
 	async deleteMemberFromTask(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.MEMBERS_URL}/${user_id}`
+			`${this.MEMBERS_URL}/${user_id}/`
 		)
 		return response
 	}
