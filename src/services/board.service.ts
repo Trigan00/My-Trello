@@ -8,7 +8,7 @@ class BoardsService {
 	async getBoards(workspace_id: number) {
 		const response = await axiosWithAuth.get<BoardsResponse>(this.BASE_URL, {
 			params: {
-				wsid: workspace_id
+				ws_id: workspace_id
 			}
 		})
 		return response
