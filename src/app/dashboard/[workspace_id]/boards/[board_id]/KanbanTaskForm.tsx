@@ -91,33 +91,23 @@ export function KanbanTaskForm({
 			>
 				Добавить задачу
 			</Typography>
+
 			<Box
 				display='flex'
-				// alignItems='center'
+				justifyContent='space-between'
+				flexWrap='wrap'
+				gap={2}
 			>
-				<Box
-					flex='1'
-					display='flex'
-					flexWrap='wrap'
-					gap={2}
-				>
-					<MyDate
-						value={startTime}
-						setValue={setStartTime}
-						label='Начало'
-					/>
-					<MyDate
-						value={endTime}
-						setValue={setEndTime}
-						label='Конец'
-					/>
-				</Box>
-				<Button
-					variant='contained'
-					sx={{ height: 'min-content', mt: 2 }}
-				>
-					<NotificationsNoneIcon sx={{ color: 'white' }} />
-				</Button>
+				<MyDate
+					value={startTime}
+					setValue={setStartTime}
+					label='Начало'
+				/>
+				<MyDate
+					value={endTime}
+					setValue={setEndTime}
+					label='Конец'
+				/>
 			</Box>
 
 			{board_members ? (

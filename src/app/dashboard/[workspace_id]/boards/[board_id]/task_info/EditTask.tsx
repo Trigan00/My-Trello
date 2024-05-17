@@ -1,5 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Box, Button, Skeleton, TextField, Typography } from '@mui/material'
+import {
+	Box,
+	Button,
+	IconButton,
+	Skeleton,
+	TextField,
+	Tooltip,
+	Typography
+} from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
 import MyModal from '@/components/UI/MyModal'
 import MembersSelect from '@/components/dashboard-layout/MembersSelect'
@@ -14,6 +22,7 @@ import { useIsFetching } from '@tanstack/react-query'
 import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
 import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
 import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
+import CheckIcon from '@mui/icons-material/Check'
 import { toast } from 'sonner'
 
 interface EditTaskI {
@@ -94,7 +103,7 @@ export function EditTask({
 					</Typography>
 					<Box
 						display='flex'
-						// alignItems='center'
+						alignItems='center'
 					>
 						<Box
 							flex='1'
@@ -106,19 +115,29 @@ export function EditTask({
 								value={startTime}
 								setValue={setStartTime}
 								label='Начало'
+								mini={true}
 							/>
 							<MyDate
 								value={endTime}
 								setValue={setEndTime}
 								label='Конец'
+								mini={true}
 							/>
 						</Box>
-						<Button
-							variant='contained'
-							sx={{ height: 'min-content', mt: 2 }}
+						<Tooltip
+							title='Проверить'
+							placement='top'
 						>
-							<NotificationsNoneIcon sx={{ color: 'white' }} />
-						</Button>
+							<IconButton
+								aria-label='check'
+								sx={{ height: 'fit-content' }}
+							>
+								<CheckIcon
+									sx={{ p: 1 }}
+									color='inherit'
+								/>
+							</IconButton>
+						</Tooltip>
 					</Box>
 
 					{board_members && members ? (

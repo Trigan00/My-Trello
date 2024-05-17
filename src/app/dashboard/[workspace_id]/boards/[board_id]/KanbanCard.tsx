@@ -6,8 +6,7 @@ import Image from 'next/image'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import shortenText from '@/helpers/shortenText'
-import { KanbanTaskForm } from './KanbanTaskForm'
-import { EditTask } from './EditTask'
+import { EditTask } from './task_info/EditTask'
 
 interface IKanbanCard {
 	item: TaskI

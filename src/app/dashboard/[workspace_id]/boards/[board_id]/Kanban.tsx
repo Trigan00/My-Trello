@@ -1,7 +1,5 @@
 'use client'
 
-import { DragDropContext } from '@hello-pangea/dnd'
-
 import { useTaskDnd } from '@/hooks/task-hooks/useTaskDnd'
 import { useTasks } from '@/hooks/task-hooks/useTasks'
 import { Box, IconButton, Skeleton } from '@mui/material'
@@ -17,7 +15,6 @@ import {
 	DragOverlay,
 	DragStartEvent,
 	MouseSensor,
-	PointerSensor,
 	TouchSensor,
 	useSensor,
 	useSensors

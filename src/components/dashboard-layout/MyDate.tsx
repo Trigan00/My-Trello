@@ -11,9 +11,15 @@ interface MyDateI {
 	label: string
 	value: dayjs.Dayjs | null
 	setValue: Dispatch<SetStateAction<dayjs.Dayjs | null>>
+	mini?: boolean
 }
 
-export default function MyDate({ value, setValue, label }: MyDateI) {
+export default function MyDate({
+	value,
+	setValue,
+	label,
+	mini = false
+}: MyDateI) {
 	return (
 		<LocalizationProvider
 			dateAdapter={AdapterDayjs}
@@ -23,10 +29,10 @@ export default function MyDate({ value, setValue, label }: MyDateI) {
 				components={['DateTimePicker']}
 				sx={{
 					minWidth: 'none',
-					width: '200px',
+					width: mini ? '200px' : '250px',
 					overflow: 'hidden',
 					'& .MuiInputBase-root': {
-						width: '200px'
+						width: mini ? '200px' : '250px'
 					}
 				}}
 			>
