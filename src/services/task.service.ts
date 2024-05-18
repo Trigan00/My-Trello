@@ -40,7 +40,9 @@ class TaskService {
 	}
 
 	async deleteTask(id: number) {
-		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}/`)
+		const response = await axiosWithAuth.delete<{ message: string }>(
+			`${this.BASE_URL}/${id}/`
+		)
 		return response
 	}
 

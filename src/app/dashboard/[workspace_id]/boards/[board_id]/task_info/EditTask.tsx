@@ -20,9 +20,12 @@ import { useOneTask } from '@/hooks/task-hooks/useOneTask'
 import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
 import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
 import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
+import DeleteIcon from '@mui/icons-material/Delete'
 import CheckIcon from '@mui/icons-material/Check'
 import { toast } from 'sonner'
 import { Comments } from './Comments'
+import DeleteModal from '@/components/dashboard-layout/DeleteModal'
+import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 
 interface EditTaskI {
 	task_id: number
@@ -46,12 +49,15 @@ export function EditTask({
 	const [errMsg, setErrMsg] = useState('')
 	const [startTime, setStartTime] = useState<Dayjs | null>(null)
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
+	const [isVerified, setIsVerified] = useState(false)
+	const [deleteModal, setDeleteModal] = useState(false)
 
 	const { updateTask, isPending } = useUpdateTask(undefined, () =>
 		toast.success('Задача успешно изменена')
 	)
 	const { addMember } = useAddMemberToTask()
 	const { deleteTaskMember } = useDeleteTaskMember()
+	const { deleteTask, isDeletePending } = useDeleteTask(() => setIsModal(false))
 
 	useEffect(() => {
 		if (task) {
@@ -59,6 +65,7 @@ export function EditTask({
 			setDescription(task.description || '')
 			setStartTime(task.start_time ? dayjs(task.start_time) : null)
 			setEndTime(task.deadline ? dayjs(task.deadline) : null)
+			setIsVerified(task.verified)
 		}
 	}, [task])
 
@@ -129,10 +136,19 @@ export function EditTask({
 							<IconButton
 								aria-label='check'
 								sx={{ height: 'fit-content' }}
+								onClick={() => {
+									updateTask({
+										id: task_id,
+										data: {
+											verified: true
+										}
+									})
+									setIsVerified(true)
+								}}
 							>
 								<CheckIcon
 									sx={{ p: 1 }}
-									color='inherit'
+									color={isVerified ? 'primary' : 'inherit'}
 								/>
 							</IconButton>
 						</Tooltip>
@@ -180,11 +196,25 @@ export function EditTask({
 						fullWidth
 						sx={{ mt: 2 }}
 					/>
-					<Box sx={{ mt: 3, display: 'flex', justifyContent: 'right' }}>
+					<Box
+						sx={{
+							mt: 3,
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center'
+						}}
+					>
+						<Button
+							onClick={() => setDeleteModal(true)}
+							color='error'
+							startIcon={<DeleteIcon color='error' />}
+						>
+							Удалить
+						</Button>
 						{isPending ? (
 							<Loader />
 						) : (
-							<>
+							<div>
 								<Button
 									size='small'
 									style={{ marginRight: '10px' }}
@@ -201,7 +231,7 @@ export function EditTask({
 								>
 									Сохранить
 								</Button>
-							</>
+							</div>
 						)}
 					</Box>
 				</>
@@ -209,6 +239,15 @@ export function EditTask({
 				<Loader />
 			)}
 			<Comments task_id={task_id} />
+			<DeleteModal
+				isModal={deleteModal}
+				setIsModal={setDeleteModal}
+				deleteFunction={() => deleteTask(task_id)}
+				isLoading={isDeletePending}
+				title='Удалить задачу?'
+				subtitle={`Задача «${name}» будет безвозвратно удалена.`}
+				confirmation='Удалить задачу.'
+			/>
 		</MyModal>
 	)
 }

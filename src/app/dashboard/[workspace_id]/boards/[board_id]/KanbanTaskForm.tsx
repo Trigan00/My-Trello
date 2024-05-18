@@ -44,7 +44,8 @@ export function KanbanTaskForm({
 			description: description ? description : null,
 			column_id,
 			start_time: startTime?.format() || null,
-			deadline: endTime?.format() || null
+			deadline: endTime?.format() || null,
+			verified: false
 		})
 	}
 
