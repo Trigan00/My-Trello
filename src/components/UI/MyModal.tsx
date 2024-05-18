@@ -8,6 +8,8 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: '90%',
+	maxHeight: '70%',
+	overflowY: 'auto',
 	bgcolor: 'background.paper',
 	borderRadius: '20px',
 	boxShadow: 24,

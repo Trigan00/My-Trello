@@ -6,24 +6,29 @@ import { taskService } from '@/services/task.service'
 import { errorCatch } from '@/api/error'
 import { toast } from 'sonner'
 
-export function useUpdateTask(onErrorHandler: () => void, key?: string) {
+export function useUpdateTask(
+	onErrorHandler?: () => void,
+	onSuccessFunc?: () => void,
+	key?: string
+) {
 	const queryClient = useQueryClient()
 
-	const { mutate: updateTask } = useMutation({
+	const { mutate: updateTask, isPending } = useMutation({
 		mutationKey: ['update task', key],
 		mutationFn: ({ id, data }: { id: number; data: TypeTaskFormState }) =>
 			taskService.updateTask(id, data),
-		onSuccess() {
+		onSuccess(res) {
 			queryClient.invalidateQueries({
 				queryKey: ['tasks']
 			})
+			onSuccessFunc && onSuccessFunc()
 			sessionStorage.removeItem('TasksState')
 		},
 		onError(error: any) {
 			toast.error(errorCatch(error))
-			onErrorHandler()
+			onErrorHandler && onErrorHandler()
 		}
 	})
 
-	return { updateTask }
+	return { updateTask, isPending }
 }

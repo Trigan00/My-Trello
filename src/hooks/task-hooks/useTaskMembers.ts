@@ -1,14 +1,15 @@
 import { errorCatch } from '@/api/error'
 import { boardsService } from '@/services/board.service'
+import { taskService } from '@/services/task.service'
 import { BoardMemberI } from '@/types/board.types'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-export function useBoardMembers(board_id: number) {
+export function useTaskMembers(task_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['board members'],
-		queryFn: () => boardsService.getBoardMembers(board_id)
+		queryKey: ['task members'],
+		queryFn: () => taskService.getTaskMembers(task_id)
 	})
 
 	const [members, setMembers] = useState<BoardMemberI[] | undefined>(

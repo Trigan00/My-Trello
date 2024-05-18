@@ -8,7 +8,8 @@ export function useAddColumn(onSuccessFunc: () => void) {
 
 	const { mutate: addColumn } = useMutation({
 		mutationKey: ['add column'],
-		mutationFn: (name: string) => columnService.addColumn(name),
+		mutationFn: (data: { name: string; board_id: number }) =>
+			columnService.addColumn(data.name, data.board_id),
 		onSuccess(res) {
 			queryClient.invalidateQueries({
 				queryKey: ['columns']

@@ -66,7 +66,6 @@ export function MyDrawer({ children, ...rest }: IDrawerDesktop) {
 					{...rest}
 					sx={{
 						mt: `${headerHeight}px`
-						// background: COLORS.transparent #TODO не работает
 					}}
 				>
 					{children}

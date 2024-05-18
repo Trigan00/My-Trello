@@ -1,7 +1,3 @@
-import { DropResult } from '@hello-pangea/dnd'
-
-// import { FILTERS } from '../columns.data'
-
 import { useUpdateTask } from './useUpdateTask'
 import { TaskI } from '@/types/task.types'
 import { Dispatch, SetStateAction } from 'react'
@@ -33,10 +29,10 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 
 		const tempItem = items?.find(
-			value => value.id === Number(activeId)
+			value => value.task_id === Number(activeId)
 		) as TaskI
 		tempItem.column_id = Number(overId)
-		const tempItems = items?.filter(value => value.id !== Number(activeId))
+		const tempItems = items?.filter(value => value.task_id !== Number(activeId))
 		tempItems?.push(tempItem as TaskI)
 		setItems(tempItems)
 		document.body.style.setProperty('cursor', '')

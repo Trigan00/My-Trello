@@ -1,33 +1,22 @@
 // import { Draggable, Droppable } from '@hello-pangea/dnd'
-import {
-	useEffect,
-	useRef,
-	useState,
-	type Dispatch,
-	type SetStateAction
-} from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import type { TaskI } from '@/types/task.types'
-
-import { KanbanAddTask } from './KanbanAddTask'
+import AddIcon from '@mui/icons-material/Add'
+import { KanbanTaskForm } from './KanbanTaskForm'
 import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
-import {
-	Box,
-	Button,
-	IconButton,
-	TextField,
-	Tooltip,
-	Typography
-} from '@mui/material'
+import { Box, Button, TextField, Tooltip, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { useDroppable } from '@dnd-kit/core'
 import shortenText from '@/helpers/shortenText'
 import { ColumnSettings } from './ColumnSettings'
 import { useEditName } from '@/hooks/columns-hooks/useEditName'
+import { EditTask } from './task_info/EditTask'
 
 interface IKanbanColumn {
 	column_id: number
+	board_id: number
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
@@ -35,9 +24,9 @@ interface IKanbanColumn {
 
 export function KanbanColumn({
 	column_id,
+	board_id,
 	items,
-	label,
-	setItems
+	label
 }: IKanbanColumn) {
 	const { setNodeRef, over } = useDroppable({
 		id: column_id
@@ -45,6 +34,14 @@ export function KanbanColumn({
 	const { editName } = useEditName(reset)
 	const [isEdit, setIsEdit] = useState(false)
 	const [name, setName] = useState('')
+	const [isTaskForm, setIsTaskForm] = useState(false)
+	const [isTaskEdit, setIsTaskEdit] = useState(false)
+	const [editTaskId, setEditTaskId] = useState<number>()
+
+	const taskEditHandler = (tasK_id: number) => {
+		setEditTaskId(tasK_id)
+		setIsTaskEdit(true)
+	}
 
 	function reset() {
 		setIsEdit(false)
@@ -147,16 +144,45 @@ export function KanbanColumn({
 				>
 					{items
 						?.filter(item => item.column_id === column_id)
-						.map((item, index) => (
+						.map(item => (
 							<KanbanCard
-								key={item.id}
+								key={item.task_id}
 								item={item}
-								setItems={setItems}
+								taskEditHandler={taskEditHandler}
 							/>
 						))}
 				</div>
-				<KanbanAddTask />
+				<Button
+					onClick={() => setIsTaskForm(true)}
+					variant='text'
+					startIcon={<AddIcon sx={{ color: COLORS.textBlack }} />}
+					color='inherit'
+					sx={{
+						mt: '16px',
+						width: '100%',
+						color: COLORS.textBlack
+					}}
+				>
+					Добавить
+				</Button>
+				{isTaskForm && (
+					<KanbanTaskForm
+						board_id={board_id}
+						column_id={column_id}
+						isModal={isTaskForm}
+						setIsModal={setIsTaskForm}
+					/>
+				)}
 			</MyCard>
+
+			{isTaskEdit && (
+				<EditTask
+					task_id={editTaskId as number}
+					board_id={board_id as number}
+					isModal={isTaskEdit}
+					setIsModal={setIsTaskEdit}
+				/>
+			)}
 		</div>
 	)
 }

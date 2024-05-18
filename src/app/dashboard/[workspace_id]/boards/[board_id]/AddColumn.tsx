@@ -5,7 +5,11 @@ import { Box, Button, TextField, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useState } from 'react'
 
-export function AddColumn() {
+interface AddColumnI {
+	board_id: number
+}
+
+export function AddColumn({ board_id }: AddColumnI) {
 	const [isEdit, setIsEdit] = useState(false)
 	const [name, setName] = useState('')
 
@@ -15,7 +19,7 @@ export function AddColumn() {
 	})
 
 	const onClickHandler = () => {
-		addColumn(name)
+		addColumn({ name, board_id })
 	}
 
 	if (isEdit) {

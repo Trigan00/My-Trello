@@ -120,4 +120,4 @@ router.delete('/members/:id', async (req, res) => {
 	}
 })
 
-module.exports = router
+module.exports = { router, board_members }

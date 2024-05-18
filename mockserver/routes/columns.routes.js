@@ -3,19 +3,19 @@ const router = new Router()
 
 let COLUMNS = [
 	{
-		label: 'Планируется',
+		name: 'Планируется',
 		id: 0
 	},
 	{
-		label: 'В работе',
+		name: 'В работе',
 		id: 1
 	},
 	{
-		label: 'На проверке',
+		name: 'На проверке',
 		id: 2
 	},
 	{
-		label: 'Сделано',
+		name: 'Сделано',
 		id: 3
 	}
 ]
@@ -23,7 +23,7 @@ let COLUMNS = [
 router.get('/:id', async (req, res) => {
 	try {
 		const id = req.params.id
-		return res.status(201).json(COLUMNS)
+		return res.status(201).json({ columns: COLUMNS })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 		const { name } = req.body
 		COLUMNS.push({
 			id: COLUMNS.length,
-			label: name
+			name: name
 		})
 		return res.status(201).json({ message: 'Колонка успешно добавлена' })
 	} catch (error) {
@@ -55,7 +55,7 @@ router.patch('/:id', async (req, res) => {
 		const id = req.params.id
 		const { name } = req.body
 		const col = COLUMNS.find(col => col.id == id)
-		col.label = name
+		col.name = name
 		return res.status(201).json({ message: 'Название успешно изменено' })
 	} catch (error) {
 		console.log(error)

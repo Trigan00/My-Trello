@@ -1,7 +1,5 @@
 'use client'
 
-import { DragDropContext } from '@hello-pangea/dnd'
-
 import { useTaskDnd } from '@/hooks/task-hooks/useTaskDnd'
 import { useTasks } from '@/hooks/task-hooks/useTasks'
 import { Box, IconButton, Skeleton } from '@mui/material'
@@ -17,7 +15,6 @@ import {
 	DragOverlay,
 	DragStartEvent,
 	MouseSensor,
-	PointerSensor,
 	TouchSensor,
 	useSensor,
 	useSensors
@@ -36,7 +33,7 @@ interface KanbanI {
 
 export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { columns, isLoading } = useGetColumns(board_id)
-	const { items, setItems } = useTasks()
+	const { items, setItems } = useTasks(board_id)
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)
@@ -118,40 +115,36 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 					onDragEnd={onDragEnd}
 					onDragStart={onDragStart}
 				>
-					{isLoading &&
-						new Array(4).fill(null).map((_, i) => (
-							<Box key={i}>
-								<Skeleton
-									variant='rounded'
-									sx={{
-										borderRadius: '15px',
-										width: '300px',
-										height: '200px'
-									}}
+					{!columns
+						? new Array(4).fill(null).map((_, i) => (
+								<Box key={i}>
+									<Skeleton
+										variant='rounded'
+										sx={{
+											borderRadius: '15px',
+											width: '300px',
+											height: '200px'
+										}}
+									/>
+								</Box>
+							))
+						: columns.map(column => (
+								<KanbanColumn
+									key={column.id}
+									column_id={column.id}
+									board_id={board_id}
+									label={column.name}
+									items={items}
+									setItems={setItems}
 								/>
-							</Box>
-						))}
-					{columns?.map(column => (
-						<KanbanColumn
-							key={column.id}
-							column_id={column.id}
-							label={column.label}
-							items={items}
-							setItems={setItems}
-						/>
-					))}
+							))}
 					<DragOverlay>
-						{activeTask && (
-							<KanbanCard
-								item={activeTask}
-								setItems={setItems}
-							/>
-						)}
+						{activeTask && <KanbanCard item={activeTask} />}
 					</DragOverlay>
 				</DndContext>
-				<AddColumn />
+				<AddColumn board_id={board_id} />
 			</Box>
-			{board_title && (
+			{board_title && isSettings && (
 				<BoardSettingsModal
 					isModal={isSettings}
 					setIsModal={setIsSettings}

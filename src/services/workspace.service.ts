@@ -39,20 +39,15 @@ class WorkspaceService {
 		return response
 	}
 
-	async deleteWorkspaceUser(user_id: number, ws_id: number) {
+	async deleteWorkspaceUser(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}`,
-			{
-				params: {
-					ws_id
-				}
-			}
+			`${this.BASE_URL}/members/${user_id}/`
 		)
 		return response
 	}
 
 	async getInviteLink(id: number) {
-		const response = await axiosWithAuth.post<{ invite_token: string }>(
+		const response = await axiosWithAuth.post<{ url: string }>(
 			`${this.BASE_URL}/invite/`,
 			{ ws_id: id }
 		)
@@ -68,7 +63,7 @@ class WorkspaceService {
 
 	async updateRole(user_id: number, data: { ws_id: number; role: ROLES }) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/members/${user_id}`,
+			`${this.BASE_URL}/members/${user_id}/`,
 			data
 		)
 		return response
