@@ -1,30 +1,18 @@
 // import { Draggable, Droppable } from '@hello-pangea/dnd'
-import {
-	useEffect,
-	useRef,
-	useState,
-	type Dispatch,
-	type SetStateAction
-} from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import type { TaskI } from '@/types/task.types'
 import AddIcon from '@mui/icons-material/Add'
 import { KanbanTaskForm } from './KanbanTaskForm'
 import { KanbanCard } from './KanbanCard'
 import { MyCard } from '@/components/UI/MyCard'
-import {
-	Box,
-	Button,
-	IconButton,
-	TextField,
-	Tooltip,
-	Typography
-} from '@mui/material'
+import { Box, Button, TextField, Tooltip, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { useDroppable } from '@dnd-kit/core'
 import shortenText from '@/helpers/shortenText'
 import { ColumnSettings } from './ColumnSettings'
 import { useEditName } from '@/hooks/columns-hooks/useEditName'
+import { EditTask } from './task_info/EditTask'
 
 interface IKanbanColumn {
 	column_id: number
@@ -47,6 +35,13 @@ export function KanbanColumn({
 	const [isEdit, setIsEdit] = useState(false)
 	const [name, setName] = useState('')
 	const [isTaskForm, setIsTaskForm] = useState(false)
+	const [isTaskEdit, setIsTaskEdit] = useState(false)
+	const [editTaskId, setEditTaskId] = useState<number>()
+
+	const taskEditHandler = (tasK_id: number) => {
+		setEditTaskId(tasK_id)
+		setIsTaskEdit(true)
+	}
 
 	function reset() {
 		setIsEdit(false)
@@ -149,12 +144,11 @@ export function KanbanColumn({
 				>
 					{items
 						?.filter(item => item.column_id === column_id)
-						.map((item, index) => (
+						.map(item => (
 							<KanbanCard
 								key={item.task_id}
 								item={item}
-								board_id={board_id}
-								column_id={column_id}
+								taskEditHandler={taskEditHandler}
 							/>
 						))}
 				</div>
@@ -180,6 +174,15 @@ export function KanbanColumn({
 					/>
 				)}
 			</MyCard>
+
+			{isTaskEdit && (
+				<EditTask
+					task_id={editTaskId as number}
+					board_id={board_id as number}
+					isModal={isTaskEdit}
+					setIsModal={setIsTaskEdit}
+				/>
+			)}
 		</div>
 	)
 }

@@ -14,7 +14,6 @@ import MembersSelect from '@/components/dashboard-layout/MembersSelect'
 import { BoardMemberI } from '@/types/board.types'
 import dayjs, { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
 import { useTaskMembers } from '@/hooks/task-hooks/useTaskMembers'
 import { useOneTask } from '@/hooks/task-hooks/useOneTask'
@@ -24,6 +23,7 @@ import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
 import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
 import CheckIcon from '@mui/icons-material/Check'
 import { toast } from 'sonner'
+import { Comments } from './Comments'
 
 interface EditTaskI {
 	task_id: number
@@ -178,11 +178,11 @@ export function EditTask({
 						variant='outlined'
 						type='text'
 						multiline
-						rows={5}
+						rows={4}
 						fullWidth
 						sx={{ mt: 2 }}
 					/>
-					<Box sx={{ mt: 3, float: 'right' }}>
+					<Box sx={{ mt: 3, display: 'flex', justifyContent: 'right' }}>
 						{isPending ? (
 							<Loader />
 						) : (
@@ -210,6 +210,7 @@ export function EditTask({
 			) : (
 				<Loader />
 			)}
+			<Comments task_id={task_id} />
 		</MyModal>
 	)
 }

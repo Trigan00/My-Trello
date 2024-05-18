@@ -1,7 +1,3 @@
-import { DropResult } from '@hello-pangea/dnd'
-
-// import { FILTERS } from '../columns.data'
-
 import { useUpdateTask } from './useUpdateTask'
 import { TaskI } from '@/types/task.types'
 import { Dispatch, SetStateAction } from 'react'

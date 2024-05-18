@@ -10,11 +10,10 @@ import { EditTask } from './task_info/EditTask'
 
 interface IKanbanCard {
 	item: TaskI
-	column_id?: number
-	board_id?: number
+	taskEditHandler?: (tasK_id: number) => void
 }
 
-export function KanbanCard({ item, column_id, board_id }: IKanbanCard) {
+export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 	const { attributes, listeners, setNodeRef, transform, isDragging } =
 		useDraggable({
 			id: item.task_id,
@@ -23,7 +22,7 @@ export function KanbanCard({ item, column_id, board_id }: IKanbanCard) {
 				task: item
 			}
 		})
-	const [isEdit, setIsEdit] = useState(false)
+	// const [isEdit, setIsEdit] = useState(false)
 
 	const style = {
 		transform: CSS.Transform.toString(transform),
@@ -43,7 +42,8 @@ export function KanbanCard({ item, column_id, board_id }: IKanbanCard) {
 			}}
 		>
 			<Typography
-				onClick={() => setIsEdit(true)}
+				// onClick={() => setIsEdit(true)}
+				onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
 				sx={{
 					color: COLORS.textBlack,
 					backgroundColor: COLORS.border,
@@ -70,14 +70,14 @@ export function KanbanCard({ item, column_id, board_id }: IKanbanCard) {
 				width={10}
 				height={16}
 			/>
-			{isEdit && (
+			{/* {isEdit && (
 				<EditTask
 					task_id={item.task_id}
 					board_id={board_id as number}
 					isModal={isEdit}
 					setIsModal={setIsEdit}
 				/>
-			)}
+			)} */}
 		</Box>
 	)
 }
