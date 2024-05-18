@@ -17,7 +17,6 @@ import MyDate from '@/components/dashboard-layout/MyDate'
 import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
 import { useTaskMembers } from '@/hooks/task-hooks/useTaskMembers'
 import { useOneTask } from '@/hooks/task-hooks/useOneTask'
-import { useIsFetching } from '@tanstack/react-query'
 import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
 import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
 import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
@@ -38,8 +37,7 @@ export function EditTask({
 	isModal,
 	setIsModal
 }: EditTaskI) {
-	const isFetching = useIsFetching({ queryKey: ['task'] })
-	const { task } = useOneTask(task_id)
+	const { task, isLoading } = useOneTask(task_id)
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
 
@@ -89,7 +87,7 @@ export function EditTask({
 			setIsModal={setIsModal}
 			maxWidth={600}
 		>
-			{!isFetching ? (
+			{!isLoading ? (
 				<>
 					<Typography
 						sx={{
