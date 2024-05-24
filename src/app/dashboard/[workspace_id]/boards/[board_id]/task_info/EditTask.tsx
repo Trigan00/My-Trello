@@ -144,9 +144,8 @@ export function EditTask({
 										id: task_id,
 										data: {
 											verified: true,
-											completedColumnId: columns.find(
-												col => col.name === 'Завершенные'
-											)?.id
+											column_id: columns.find(col => col.name === 'Завершенные')
+												?.id
 										}
 									})
 									setIsVerified(true)
