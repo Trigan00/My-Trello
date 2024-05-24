@@ -16,6 +16,7 @@ export interface FullTaskI {
 	start_time: string | null
 	deadline: string | null
 	verified: boolean
+	completedColumnId?: number
 }
 
 export type TypeTaskFormState = Partial<FullTaskI> //На бэке проверять что пришло, потому что все параметры опциональны

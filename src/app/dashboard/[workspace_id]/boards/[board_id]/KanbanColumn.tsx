@@ -1,7 +1,7 @@
 // import { Draggable, Droppable } from '@hello-pangea/dnd'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 
-import type { TaskI } from '@/types/task.types'
+import type { ColumnI, TaskI } from '@/types/task.types'
 import AddIcon from '@mui/icons-material/Add'
 import { KanbanTaskForm } from './KanbanTaskForm'
 import { KanbanCard } from './KanbanCard'
@@ -20,13 +20,15 @@ interface IKanbanColumn {
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
+	columns: ColumnI[]
 }
 
 export function KanbanColumn({
 	column_id,
 	board_id,
 	items,
-	label
+	label,
+	columns
 }: IKanbanColumn) {
 	const { setNodeRef, over } = useDroppable({
 		id: column_id
@@ -181,6 +183,7 @@ export function KanbanColumn({
 					board_id={board_id as number}
 					isModal={isTaskEdit}
 					setIsModal={setIsTaskEdit}
+					columns={columns}
 				/>
 			)}
 		</div>

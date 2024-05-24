@@ -136,6 +136,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 									label={column.name}
 									items={items}
 									setItems={setItems}
+									columns={columns}
 								/>
 							))}
 					<DragOverlay>

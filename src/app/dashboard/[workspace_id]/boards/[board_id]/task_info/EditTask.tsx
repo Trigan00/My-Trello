@@ -26,19 +26,22 @@ import { toast } from 'sonner'
 import { Comments } from './Comments'
 import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
+import { ColumnI } from '@/types/task.types'
 
 interface EditTaskI {
 	task_id: number
 	board_id: number
 	isModal: boolean
 	setIsModal: Dispatch<SetStateAction<boolean>>
+	columns: ColumnI[]
 }
 
 export function EditTask({
 	task_id,
 	board_id,
 	isModal,
-	setIsModal
+	setIsModal,
+	columns
 }: EditTaskI) {
 	const { task, isLoading } = useOneTask(task_id)
 	const { members: board_members } = useBoardMembers(board_id)
@@ -140,7 +143,10 @@ export function EditTask({
 									updateTask({
 										id: task_id,
 										data: {
-											verified: true
+											verified: true,
+											completedColumnId: columns.find(
+												col => col.name === 'Завершенные'
+											)?.id
 										}
 									})
 									setIsVerified(true)
