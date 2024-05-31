@@ -14,18 +14,40 @@ const ApexChart = dynamic(() => import('react-apexcharts'), {
 
 const Chart = styled(ApexChart)``
 
-export interface TrafficProps {
+interface TrafficProps {
 	chartSeries: number[]
 	labels: string[]
 	sx?: SxProps
 }
 
+const makeCircle = (color: string): SxProps => {
+	return {
+		position: 'relative',
+		ml: 1,
+		'&::before': {
+			content: '""',
+			position: 'absolute',
+			top: 8,
+			left: -15,
+			height: '11px',
+			width: '11px',
+			borderRadius: '50%',
+			backgroundColor: color
+		}
+	}
+}
+
 export function PieChart({
 	chartSeries,
-	labels,
-	sx
+	labels
 }: TrafficProps): React.JSX.Element {
 	const chartOptions = useChartOptions(labels)
+	const theme = useTheme()
+	const ChartColors = [
+		theme.palette.primary.main,
+		theme.palette.success.main,
+		theme.palette.error.main
+	]
 
 	return (
 		<MyCard
@@ -67,7 +89,9 @@ export function PieChart({
 								display='flex'
 								justifyContent='space-between'
 							>
-								<Typography>{label}</Typography>
+								<Typography sx={makeCircle(ChartColors[index])}>
+									{label}
+								</Typography>
 								<Typography>{item + '%'}</Typography>
 							</Box>
 						)
@@ -82,7 +106,12 @@ function useChartOptions(labels: string[]): ApexOptions {
 	const theme = useTheme()
 
 	return {
-		chart: { background: 'transparent' },
+		chart: {
+			background: 'transparent',
+			toolbar: {
+				show: false
+			}
+		},
 		colors: [
 			theme.palette.primary.main,
 			theme.palette.success.main,
@@ -98,6 +127,6 @@ function useChartOptions(labels: string[]): ApexOptions {
 		},
 		stroke: { width: 0 },
 		theme: { mode: theme.palette.mode },
-		tooltip: { fillSeriesColor: false }
+		tooltip: { fillSeriesColor: false, theme: 'light' }
 	}
 }
