@@ -38,7 +38,7 @@ export default function IncomeAreaChart() {
 			theme.palette.error.main
 		],
 		xaxis: {
-			categories: Array.from({ length: 30 }, (v, k) => k + 1),
+			categories: Array.from({ length: 5 }, (v, k) => k + 1),
 			axisBorder: {
 				show: true,
 				color: line
@@ -60,22 +60,24 @@ export default function IncomeAreaChart() {
 	const series = [
 		{
 			name: 'Всего',
-			data: Array.from(
-				{ length: 30 },
-				() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
-			)
+			data: [1, 2, null, 3, 4]
+			// data: Array.from(
+			// 	{ length: 30 },
+			// 	() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
+			// 	() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
+			// )
 		},
 		{
 			name: 'Выполнено',
 			data: Array.from(
-				{ length: 30 },
+				{ length: 5 },
 				() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
 			)
 		},
 		{
 			name: 'Просрочено',
 			data: Array.from(
-				{ length: 30 },
+				{ length: 5 },
 				() => Math.floor(Math.random() * (4 - 1 + 1)) + 1
 			)
 		}

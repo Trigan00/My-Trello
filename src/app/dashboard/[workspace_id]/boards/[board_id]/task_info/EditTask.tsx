@@ -27,6 +27,7 @@ import { Comments } from './Comments'
 import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { ColumnI } from '@/types/task.types'
+import { COLORS } from '@/constants/color.constants'
 
 interface EditTaskI {
 	task_id: number
@@ -91,6 +92,20 @@ export function EditTask({
 	const removeUser = (member: BoardMemberI | undefined) =>
 		member && deleteTaskMember({ user_id: member.id })
 
+	const changeTaskStatus = () => {
+		const columnId = columns.find(
+			col => col.name === (isVerified ? 'В работе' : 'Завершенные')
+		)?.id
+		updateTask({
+			id: task_id,
+			data: {
+				verified: !isVerified,
+				column_id: columnId
+			}
+		})
+		setIsVerified(prev => !prev)
+	}
+
 	return (
 		<MyModal
 			isModal={isModal}
@@ -138,22 +153,17 @@ export function EditTask({
 						>
 							<IconButton
 								aria-label='check'
-								sx={{ height: 'fit-content' }}
-								onClick={() => {
-									updateTask({
-										id: task_id,
-										data: {
-											verified: true,
-											column_id: columns.find(col => col.name === 'Завершенные')
-												?.id
-										}
-									})
-									setIsVerified(true)
+								sx={{
+									height: 'fit-content',
+									backgroundColor: isVerified ? COLORS.primary : 'none',
+									'&:hover': {
+										backgroundColor: COLORS.darkBlue
+									}
 								}}
+								onClick={changeTaskStatus}
 							>
 								<CheckIcon
-									sx={{ p: 1 }}
-									color={isVerified ? 'primary' : 'inherit'}
+									sx={{ p: 1, color: isVerified ? 'white' : 'inherit' }}
 								/>
 							</IconButton>
 						</Tooltip>
