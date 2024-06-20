@@ -40,7 +40,8 @@ export function Header({ toggleDrawer }: IHeader) {
 		setAnchorElUser(event.currentTarget)
 	}
 
-	const handleCloseUserMenu = () => {
+	const handleCloseUserMenu = (setting: string) => {
+		if (setting === 'Выйти') mutate()
 		setAnchorElUser(null)
 	}
 
@@ -126,15 +127,10 @@ export function Header({ toggleDrawer }: IHeader) {
 					{settings.map(setting => (
 						<MenuItem
 							key={setting}
-							onClick={handleCloseUserMenu}
+							onClick={() => handleCloseUserMenu(setting)}
 						>
 							{setting === 'Выйти' ? (
-								<Typography
-									onClick={() => mutate()}
-									textAlign='center'
-								>
-									{setting}
-								</Typography>
+								<Typography textAlign='center'>{setting}</Typography>
 							) : (
 								<Typography textAlign='center'>{setting}</Typography>
 							)}
