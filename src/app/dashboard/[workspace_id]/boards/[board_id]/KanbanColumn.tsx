@@ -13,6 +13,7 @@ import shortenText from '@/helpers/shortenText'
 import { ColumnSettings } from './ColumnSettings'
 import { useEditName } from '@/hooks/columns-hooks/useEditName'
 import { EditTask } from './task_info/EditTask'
+import { DEFAULT_COLUMNS } from '@/constants/columns.constants'
 
 interface IKanbanColumn {
 	column_id: number
@@ -127,11 +128,15 @@ export function KanbanColumn({
 								{shortenText(label, 18)}
 							</Typography>
 						</Tooltip>
-						<ColumnSettings
-							setIsEdit={setIsEdit}
-							column_id={column_id}
-							label={label}
-						/>
+						{!DEFAULT_COLUMNS.has(
+							columns.find(el => el.id === column_id)?.name || ''
+						) && (
+							<ColumnSettings
+								setIsEdit={setIsEdit}
+								column_id={column_id}
+								label={label}
+							/>
+						)}
 					</Box>
 				)}
 				<div
