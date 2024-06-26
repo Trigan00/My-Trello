@@ -1,6 +1,6 @@
 'use client'
 
-import { Typography, CardHeader, Button, Box, Pagination } from '@mui/material'
+import { Typography, CardHeader, Box, Pagination } from '@mui/material'
 import {
 	Timeline,
 	TimelineDot,
@@ -13,15 +13,9 @@ import {
 import { timelineItemClasses } from '@mui/lab/TimelineItem'
 import { MyCard } from '@/components/UI/MyCard'
 import shortenText from '@/helpers/shortenText'
-
-interface TimeLineItem {
-	id: number
-	log_info: string
-	task_name: string
-	task_id: number
-	date: string
-	type: string
-}
+import { useState } from 'react'
+import { EditTask } from '../task_info/EditTask'
+import { TimeLineItem } from '@/hooks/statistics-hooks/useLogs'
 
 interface ActionTypeI {
 	[name: string]:
@@ -47,7 +41,7 @@ const logs: TimeLineItem[] = [
 		id: 1,
 		log_info: 'Пользователь niyaz удалил задачу',
 		task_name: 'teswegwegmweokeiokwgiowegt',
-		task_id: 1,
+		task_id: 5,
 		date: '2024/06/18 16:49',
 		type: 'DELETE'
 	},
@@ -61,7 +55,20 @@ const logs: TimeLineItem[] = [
 	}
 ]
 
-export default function LogsTimeline() {
+export default function LogsTimeline({ board_id }: { board_id: number }) {
+	const [isTask, setIsTask] = useState(false)
+	const [selectedTaskId, setSelectedTaskId] = useState<number>()
+	const [page, setPage] = useState(1)
+
+	const onPageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value)
+	}
+
+	const showTask = (id: number) => {
+		setIsTask(true)
+		setSelectedTaskId(id)
+	}
+
 	return (
 		<Box sx={{ p: 4 }}>
 			<CardHeader title='Журнал событий' />
@@ -84,6 +91,7 @@ export default function LogsTimeline() {
 							key={item.id}
 							item={item}
 							lastTimeline={index === logs.length - 1}
+							showTask={showTask}
 						/>
 					))}
 				</Timeline>
@@ -97,9 +105,19 @@ export default function LogsTimeline() {
 					<Pagination
 						count={10}
 						color='primary'
+						page={page}
+						onChange={onPageChange}
 					/>
 				</Box>
 			</MyCard>
+			{isTask && (
+				<EditTask
+					board_id={board_id}
+					task_id={selectedTaskId as number}
+					isModal={isTask}
+					setIsModal={setIsTask}
+				/>
+			)}
 		</Box>
 	)
 }
@@ -107,9 +125,10 @@ export default function LogsTimeline() {
 interface OrderItemP {
 	item: TimeLineItem
 	lastTimeline: boolean
+	showTask: (id: number) => void
 }
 
-function LogsTimelineItem({ item, lastTimeline }: OrderItemP) {
+function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
 	const { log_info, task_name, task_id, date, type } = item
 	return (
 		<TimelineItem>
@@ -125,7 +144,7 @@ function LogsTimelineItem({ item, lastTimeline }: OrderItemP) {
 						sx={{ cursor: 'pointer' }}
 						color='primary'
 						component='span'
-						onClick={() => console.log('click', task_id)}
+						onClick={() => showTask(task_id)}
 					>
 						{shortenText(task_name, 20)}
 					</Typography>

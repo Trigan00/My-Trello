@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function TimeLine({ params }: { params: { board_id: number } }) {
 	return (
 		<>
-			<LogsTimeline />
+			<LogsTimeline board_id={params.board_id} />
 		</>
 	)
 }
