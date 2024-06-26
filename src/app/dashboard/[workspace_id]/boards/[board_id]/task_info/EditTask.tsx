@@ -162,9 +162,7 @@ export function EditTask({
 								}}
 								onClick={changeTaskStatus}
 							>
-								<CheckIcon
-									sx={{ p: 1, color: isVerified ? 'white' : 'inherit' }}
-								/>
+								<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
 							</IconButton>
 						</Tooltip>
 					</Box>
