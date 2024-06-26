@@ -4,7 +4,6 @@ import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import IncomeAreaChart from './IncomeAreaChart'
 import { PieChart } from './PieChart'
-import LogsTimeline from './LogsTimeline'
 
 import dayjs, { Dayjs } from 'dayjs'
 import { useState } from 'react'
@@ -54,8 +53,6 @@ export function GeneralStatistics({}: GeneralStatisticsI) {
 					/>
 				</Grid>
 			</Grid>
-
-			<LogsTimeline />
 		</Box>
 	)
 }

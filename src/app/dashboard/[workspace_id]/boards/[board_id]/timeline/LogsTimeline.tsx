@@ -1,4 +1,6 @@
-import { Typography, CardHeader, Button } from '@mui/material'
+'use client'
+
+import { Typography, CardHeader, Button, Box } from '@mui/material'
 import {
 	Timeline,
 	TimelineDot,
@@ -61,31 +63,33 @@ const logs: TimeLineItem[] = [
 
 export default function LogsTimeline() {
 	return (
-		<MyCard
-			variant='shadowed'
-			sx={{ width: 'fit-content' }}
-		>
-			<CardHeader title='Журнал событий' />
-
-			<Timeline
-				sx={{
-					m: 0,
-					p: 2,
-					[`& .${timelineItemClasses.root}:before`]: {
-						flex: 0,
-						padding: 0
-					}
-				}}
+		<Box sx={{ p: 4 }}>
+			<MyCard
+				variant='shadowed'
+				sx={{ width: 'fit-content' }}
 			>
-				{logs.map((item, index) => (
-					<LogsTimelineItem
-						key={item.id}
-						item={item}
-						lastTimeline={index === logs.length - 1}
-					/>
-				))}
-			</Timeline>
-		</MyCard>
+				<CardHeader title='Журнал событий' />
+
+				<Timeline
+					sx={{
+						m: 0,
+						p: 2,
+						[`& .${timelineItemClasses.root}:before`]: {
+							flex: 0,
+							padding: 0
+						}
+					}}
+				>
+					{logs.map((item, index) => (
+						<LogsTimelineItem
+							key={item.id}
+							item={item}
+							lastTimeline={index === logs.length - 1}
+						/>
+					))}
+				</Timeline>
+			</MyCard>
+		</Box>
 	)
 }
 
