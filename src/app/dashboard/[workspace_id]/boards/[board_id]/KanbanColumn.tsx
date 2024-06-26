@@ -21,15 +21,13 @@ interface IKanbanColumn {
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
-	columns: ColumnI[]
 }
 
 export function KanbanColumn({
 	column_id,
 	board_id,
 	items,
-	label,
-	columns
+	label
 }: IKanbanColumn) {
 	const { setNodeRef, over } = useDroppable({
 		id: column_id
@@ -128,9 +126,7 @@ export function KanbanColumn({
 								{shortenText(label, 18)}
 							</Typography>
 						</Tooltip>
-						{!DEFAULT_COLUMNS.has(
-							columns.find(el => el.id === column_id)?.name || ''
-						) && (
+						{!DEFAULT_COLUMNS.has(label) && (
 							<ColumnSettings
 								setIsEdit={setIsEdit}
 								column_id={column_id}
@@ -188,7 +184,6 @@ export function KanbanColumn({
 					board_id={board_id as number}
 					isModal={isTaskEdit}
 					setIsModal={setIsTaskEdit}
-					columns={columns}
 				/>
 			)}
 		</div>

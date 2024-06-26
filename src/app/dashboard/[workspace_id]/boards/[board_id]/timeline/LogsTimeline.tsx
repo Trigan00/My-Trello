@@ -1,6 +1,6 @@
 'use client'
 
-import { Typography, CardHeader, Button, Box } from '@mui/material'
+import { Typography, CardHeader, Button, Box, Pagination } from '@mui/material'
 import {
 	Timeline,
 	TimelineDot,
@@ -64,12 +64,11 @@ const logs: TimeLineItem[] = [
 export default function LogsTimeline() {
 	return (
 		<Box sx={{ p: 4 }}>
+			<CardHeader title='Журнал событий' />
 			<MyCard
 				variant='shadowed'
 				sx={{ width: 'fit-content' }}
 			>
-				<CardHeader title='Журнал событий' />
-
 				<Timeline
 					sx={{
 						m: 0,
@@ -88,6 +87,18 @@ export default function LogsTimeline() {
 						/>
 					))}
 				</Timeline>
+				<Box
+					sx={{
+						p: '0 5px 10px 5px',
+						display: 'flex',
+						justifyContent: 'center'
+					}}
+				>
+					<Pagination
+						count={10}
+						color='primary'
+					/>
+				</Box>
 			</MyCard>
 		</Box>
 	)
