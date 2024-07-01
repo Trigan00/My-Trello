@@ -2,7 +2,7 @@
 
 import { useTaskDnd } from '@/hooks/task-hooks/useTaskDnd'
 import { useTasks } from '@/hooks/task-hooks/useTasks'
-import { Box, IconButton, Skeleton, Stack } from '@mui/material'
+import { Box, IconButton, Skeleton, Stack, Tooltip } from '@mui/material'
 import { KanbanColumn } from './KanbanColumn'
 import { Heading } from '@/components/UI/Heading'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
@@ -26,6 +26,7 @@ import { AddColumn } from './AddColumn'
 import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import TimelineIcon from '@mui/icons-material/Timeline'
+import BarChartIcon from '@mui/icons-material/BarChart'
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -93,23 +94,44 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 					direction='row'
 				>
 					<GlobalLoader />
-					<IconButton
-						component={NextLink}
-						href={pathname + '/timeline'}
+					<Tooltip
+						title='Журнал'
+						placement='top'
 					>
-						<TimelineIcon sx={{ color: '#999999' }} />
-					</IconButton>
-					<IconButton
-						sx={{ p: 1 }}
-						onClick={() => setIsSettings(true)}
+						<IconButton
+							component={NextLink}
+							href={pathname + '/timeline'}
+						>
+							<TimelineIcon sx={{ color: '#999999' }} />
+						</IconButton>
+					</Tooltip>
+					<Tooltip
+						title='Статистика'
+						placement='top'
 					>
-						<Image
-							src={'/svg/settings.svg'}
-							alt={'settings'}
-							width={25}
-							height={25}
-						/>
-					</IconButton>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/statistics'}
+						>
+							<BarChartIcon sx={{ color: '#999999' }} />
+						</IconButton>
+					</Tooltip>
+					<Tooltip
+						title='Настройки'
+						placement='top'
+					>
+						<IconButton
+							sx={{ p: 1 }}
+							onClick={() => setIsSettings(true)}
+						>
+							<Image
+								src={'/svg/settings.svg'}
+								alt={'settings'}
+								width={25}
+								height={25}
+							/>
+						</IconButton>
+					</Tooltip>
 				</Stack>
 			</Box>
 

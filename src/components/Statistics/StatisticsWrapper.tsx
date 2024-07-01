@@ -7,10 +7,11 @@ import { GeneralStatistics } from './GeneralStatistics'
 import { MembersStatistics } from './MembersStatistics'
 
 interface StatisticsWrapperI {
-	workspace_id: number
+	id: number
+	isWorkspace: boolean
 }
 
-export function StatisticsWrapper({ workspace_id }: StatisticsWrapperI) {
+export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 	const [isGeneral, setISGeneral] = useState(true)
 	return (
 		<Box sx={{ p: 4 }}>
@@ -24,7 +25,10 @@ export function StatisticsWrapper({ workspace_id }: StatisticsWrapperI) {
 				</ButtonGroup>
 			</Box>
 			{isGeneral ? (
-				<GeneralStatistics workspace_id={workspace_id} />
+				<GeneralStatistics
+					id={id}
+					isWorkspace={isWorkspace}
+				/>
 			) : (
 				<MembersStatistics />
 			)}

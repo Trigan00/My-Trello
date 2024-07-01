@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 export default function Statistics({
 	params
 }: {
-	params: { workspace_id: number }
+	params: { board_id: number }
 }) {
 	return (
 		<StatisticsWrapper
-			id={params.workspace_id}
-			isWorkspace={true}
+			id={params.board_id}
+			isWorkspace={false}
 		/>
 	)
 }

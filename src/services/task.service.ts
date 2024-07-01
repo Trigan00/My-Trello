@@ -32,10 +32,10 @@ class TaskService {
 	}
 
 	async updateTask(id: number, data: TypeTaskFormState) {
-		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/${id}/`,
-			data
-		)
+		const response = await axiosWithAuth.patch<{
+			message: string
+			task_id: number
+		}>(`${this.BASE_URL}/${id}/`, data)
 		return response
 	}
 
