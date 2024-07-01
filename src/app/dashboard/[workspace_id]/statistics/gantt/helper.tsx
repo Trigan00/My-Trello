@@ -8,7 +8,7 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			name: 'Some Project',
 			id: 'ProjectSample',
-			progress: 25,
+			progress: 0,
 			type: 'project',
 			hideChildren: false,
 			displayOrder: 1
@@ -24,7 +24,7 @@ export function initTasks() {
 			),
 			name: 'Idea',
 			id: 'Task 0',
-			progress: 45,
+			progress: 0,
 			type: 'task',
 			project: 'ProjectSample',
 			displayOrder: 2
@@ -34,7 +34,7 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
 			name: 'Research',
 			id: 'Task 1',
-			progress: 25,
+			progress: 0,
 			dependencies: ['Task 0'],
 			type: 'task',
 			project: 'ProjectSample',
@@ -45,7 +45,7 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8, 0, 0),
 			name: 'Discussion with team',
 			id: 'Task 2',
-			progress: 10,
+			progress: 0,
 			dependencies: ['Task 1'],
 			type: 'task',
 			project: 'ProjectSample',
@@ -56,7 +56,7 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 9, 0, 0),
 			name: 'Developing',
 			id: 'Task 3',
-			progress: 2,
+			progress: 0,
 			dependencies: ['Task 2'],
 			type: 'task',
 			project: 'ProjectSample',
@@ -68,7 +68,7 @@ export function initTasks() {
 			name: 'Review',
 			id: 'Task 4',
 			type: 'task',
-			progress: 70,
+			progress: 0,
 			dependencies: ['Task 2'],
 			project: 'ProjectSample',
 			displayOrder: 6
@@ -78,7 +78,7 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			name: 'Release',
 			id: 'Task 6',
-			progress: currentDate.getMonth(),
+			progress: 0,
 			type: 'milestone',
 			dependencies: ['Task 4'],
 			project: 'ProjectSample',
@@ -89,69 +89,6 @@ export function initTasks() {
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
 			name: 'Party Time',
 			id: 'Task 9',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 10',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 11',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 12',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 13',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 14',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 15',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 16',
 			progress: 0,
 			isDisabled: true,
 			type: 'task'

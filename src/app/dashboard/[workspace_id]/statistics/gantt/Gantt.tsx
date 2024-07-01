@@ -78,14 +78,14 @@ export function GanttComponent() {
 			<Gantt
 				tasks={tasks}
 				viewMode={view}
-				onDateChange={handleTaskChange}
+				onDateChange={undefined}
 				onDelete={handleTaskDelete}
-				onProgressChange={handleProgressChange}
+				onProgressChange={undefined}
 				onDoubleClick={handleDblClick}
 				onClick={handleClick}
 				onSelect={handleSelect}
 				onExpanderClick={handleExpanderClick}
-				listCellWidth=''
+				listCellWidth='155px'
 				columnWidth={columnWidth}
 				locale='ru'
 			/>
