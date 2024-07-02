@@ -18,7 +18,6 @@ export function useUpdateTask(
 		mutationFn: ({ id, data }: { id: number; data: TypeTaskFormState }) =>
 			taskService.updateTask(id, data),
 		onSuccess(res) {
-			console.log(res)
 			queryClient.invalidateQueries({
 				queryKey: ['tasks']
 			})
