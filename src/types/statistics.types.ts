@@ -1,4 +1,4 @@
-export interface GetGeneralStatisticsI {
+export interface GetStatisticsI {
 	id: number
 	month: number
 	year: number
@@ -13,4 +13,15 @@ export type GeneralStatistics = {
 
 export interface GeneralStatisticsResI {
 	data: GeneralStatistics
+}
+
+export type MembersStatistics = Array<{
+	name: string
+	all: number
+	in: number
+	not_in: number
+}>
+
+export interface MembersStatisticsResI {
+	data: MembersStatistics
 }

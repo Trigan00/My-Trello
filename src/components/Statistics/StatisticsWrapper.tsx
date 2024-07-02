@@ -30,7 +30,10 @@ export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 					isWorkspace={isWorkspace}
 				/>
 			) : (
-				<MembersStatistics />
+				<MembersStatistics
+					id={id}
+					isWorkspace={isWorkspace}
+				/>
 			)}
 		</Box>
 	)

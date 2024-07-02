@@ -3,9 +3,10 @@ import { useTheme } from '@mui/material/styles'
 import dynamic from 'next/dynamic'
 import { MyCard } from '@/components/UI/MyCard'
 import { Typography } from '@mui/material'
+import { MembersStatistics } from '@/types/statistics.types'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-export function BarChart() {
+export function BarChart({ stat }: { stat: MembersStatistics }) {
 	const theme = useTheme()
 	const primary = theme.palette.primary.main
 	const successColor = theme.palette.success.main
@@ -58,7 +59,7 @@ export function BarChart() {
 			tickAmount: 4
 		},
 		xaxis: {
-			categories: ['Вася', 'Петя', 'Иван'],
+			categories: stat.map(el => el.name), //['Вася', 'Петя', 'Иван'],
 			axisBorder: {
 				show: false
 			}
@@ -71,15 +72,15 @@ export function BarChart() {
 	const seriescolumnchart: any = [
 		{
 			name: 'Всего',
-			data: [355, 390, 300]
+			data: stat.map(el => el.all) //[355, 390, 300]
 		},
 		{
 			name: 'Выполнено',
-			data: [280, 250, 260]
+			data: stat.map(el => el.in) //[280, 250, 260]
 		},
 		{
 			name: 'Просрочено',
-			data: [20, 30, 22]
+			data: stat.map(el => el.not_in) //[20, 30, 22]
 		}
 	]
 

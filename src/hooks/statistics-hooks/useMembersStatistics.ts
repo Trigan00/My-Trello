@@ -1,23 +1,26 @@
 import { errorCatch } from '@/api/error'
 import { statisticsService } from '@/services/statistics.service'
-import { GeneralStatistics, GetStatisticsI } from '@/types/statistics.types'
+import { MembersStatistics, GetStatisticsI } from '@/types/statistics.types'
 import { useQuery } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 
-const empty = {
-	all: [],
-	in: [],
-	not_in: []
-}
+const empty = [
+	{
+		name: '',
+		all: 0,
+		in: 0,
+		not_in: 0
+	}
+]
 
-export const useGeneralStatistics = (StatData: GetStatisticsI) => {
+export const useMembersStatistics = (StatData: GetStatisticsI) => {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['general statistics', StatData.month, StatData.year],
-		queryFn: () => statisticsService.getGeneralStatistics(StatData)
+		queryKey: ['members statistics', StatData.month, StatData.year],
+		queryFn: () => statisticsService.getMembersStatistics(StatData)
 	})
 
-	const [stat, setStat] = useState<GeneralStatistics>(empty)
+	const [stat, setStat] = useState<MembersStatistics>(empty)
 
 	useEffect(() => {
 		if (error) toast.error(errorCatch(error))
