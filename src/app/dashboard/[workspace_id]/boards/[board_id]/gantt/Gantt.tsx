@@ -7,9 +7,12 @@ import { initTasks } from './helper'
 import { Box } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
+import { EditTask } from '../task_info/EditTask'
 
-export function GanttComponent() {
+export function GanttComponent({ board_id }: { board_id: number }) {
 	const [view, setView] = useState<ViewMode>(ViewMode.Day)
+	const [isTask, setIsTask] = useState(false)
+	const [selectedTaskId, setSelectedTaskId] = useState<number>()
 
 	let columnWidth = 65
 	if (view === ViewMode.Year) {
@@ -21,7 +24,8 @@ export function GanttComponent() {
 	}
 
 	const handleClick = (task: Task) => {
-		console.log('On Click event Id:' + task.id)
+		setIsTask(true)
+		setSelectedTaskId(task.id)
 	}
 
 	return (
@@ -43,6 +47,14 @@ export function GanttComponent() {
 				todayColor={'#0000001F'}
 				barBackgroundSelectedColor={COLORS.primary}
 			/>
+			{isTask && (
+				<EditTask
+					board_id={board_id}
+					task_id={selectedTaskId as number}
+					isModal={isTask}
+					setIsModal={setIsTask}
+				/>
+			)}
 		</Box>
 	)
 }

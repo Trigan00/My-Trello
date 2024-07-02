@@ -2,13 +2,17 @@ import { Metadata } from 'next'
 import { GanttComponent } from './Gantt'
 
 export const metadata: Metadata = {
-	title: 'Statistics | Gantt'
+	title: 'Gantt'
 }
 
-export default function DashBoard() {
+export default function DashBoard({
+	params
+}: {
+	params: { board_id: number }
+}) {
 	return (
 		<div>
-			<GanttComponent />
+			<GanttComponent board_id={params.board_id} />
 		</div>
 	)
 }

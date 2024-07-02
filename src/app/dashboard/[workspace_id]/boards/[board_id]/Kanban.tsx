@@ -27,6 +27,7 @@ import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import BarChartIcon from '@mui/icons-material/BarChart'
+import WaterfallChartIcon from '@mui/icons-material/WaterfallChart'
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -94,6 +95,19 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 					direction='row'
 				>
 					<GlobalLoader />
+					<Tooltip
+						title='Диаграмма Ганта'
+						placement='top'
+					>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/gantt'}
+						>
+							<WaterfallChartIcon
+								sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
+							/>
+						</IconButton>
+					</Tooltip>
 					<Tooltip
 						title='Журнал'
 						placement='top'

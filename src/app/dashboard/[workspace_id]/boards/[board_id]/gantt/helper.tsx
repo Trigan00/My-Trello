@@ -23,7 +23,7 @@ export function initTasks() {
 				28
 			),
 			name: 'Idea',
-			id: 'Task 0',
+			id: 15,
 			progress: 0,
 			type: 'task',
 			// project: 'ProjectSample',
@@ -33,9 +33,9 @@ export function initTasks() {
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
 			name: 'Research',
-			id: 'Task 1',
+			id: 12,
 			progress: 0,
-			dependencies: ['Task 0'],
+			dependencies: [15],
 			type: 'task',
 			// project: 'ProjectSample',
 			displayOrder: 3
@@ -44,9 +44,9 @@ export function initTasks() {
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8, 0, 0),
 			name: 'Discussion with team',
-			id: 'Task 2',
+			id: 14,
 			progress: 0,
-			dependencies: ['Task 1'],
+			dependencies: [12],
 			type: 'task',
 			// project: 'ProjectSample',
 			displayOrder: 4
@@ -55,9 +55,9 @@ export function initTasks() {
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 9, 0, 0),
 			name: 'Developing',
-			id: 'Task 3',
+			id: 16,
 			progress: 0,
-			dependencies: ['Task 2'],
+			dependencies: [14],
 			type: 'task',
 			// project: 'ProjectSample',
 			displayOrder: 5
@@ -66,10 +66,10 @@ export function initTasks() {
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 10),
 			name: 'Review',
-			id: 'Task 4',
+			id: 1,
 			type: 'task',
 			progress: 0,
-			dependencies: ['Task 2'],
+			dependencies: [14],
 			// project: 'ProjectSample',
 			displayOrder: 6
 		},
@@ -77,21 +77,12 @@ export function initTasks() {
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			name: 'Release',
-			id: 'Task 6',
+			id: 3,
 			progress: 0,
 			type: 'task',
-			dependencies: ['Task 4'],
+			dependencies: [1],
 			// project: 'ProjectSample',
 			displayOrder: 7
-		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
-			name: 'Party Time',
-			id: 'Task 9',
-			progress: 0,
-			isDisabled: true,
-			type: 'task'
 		}
 	]
 	return tasks
