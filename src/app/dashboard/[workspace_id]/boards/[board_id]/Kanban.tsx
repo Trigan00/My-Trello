@@ -2,7 +2,7 @@
 
 import { useTaskDnd } from '@/hooks/task-hooks/useTaskDnd'
 import { useTasks } from '@/hooks/task-hooks/useTasks'
-import { Box, IconButton, Skeleton } from '@mui/material'
+import { Box, IconButton, Skeleton, Stack, Tooltip } from '@mui/material'
 import { KanbanColumn } from './KanbanColumn'
 import { Heading } from '@/components/UI/Heading'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
@@ -25,6 +25,10 @@ import { KanbanCard } from './KanbanCard'
 import { AddColumn } from './AddColumn'
 import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
+import TimelineIcon from '@mui/icons-material/Timeline'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import NextLink from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface KanbanI {
 	workspace_id: number
@@ -37,6 +41,7 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 	const { onDragEnd } = useTaskDnd({ items, setItems })
 	const { items: Workspaces } = useWorkspaces()
 	const { items: Boards } = useBoards(workspace_id)
+	const pathname = usePathname()
 	const [isSettings, setIsSettings] = useState(false)
 	const [activeTask, setActiveTask] = useState<TaskI | null>(null)
 
@@ -84,20 +89,50 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						`${workspace_title} / ${board_title}`
 					}
 				/>
-				<Box sx={{ display: 'flex', gap: 2 }}>
+				<Stack
+					spacing={1}
+					direction='row'
+				>
 					<GlobalLoader />
-					<IconButton
-						sx={{ p: 1 }}
-						onClick={() => setIsSettings(true)}
+					<Tooltip
+						title='Журнал'
+						placement='top'
 					>
-						<Image
-							src={'/svg/settings.svg'}
-							alt={'settings'}
-							width={25}
-							height={25}
-						/>
-					</IconButton>
-				</Box>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/timeline'}
+						>
+							<TimelineIcon sx={{ color: '#999999' }} />
+						</IconButton>
+					</Tooltip>
+					<Tooltip
+						title='Статистика'
+						placement='top'
+					>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/statistics'}
+						>
+							<BarChartIcon sx={{ color: '#999999' }} />
+						</IconButton>
+					</Tooltip>
+					<Tooltip
+						title='Настройки'
+						placement='top'
+					>
+						<IconButton
+							sx={{ p: 1 }}
+							onClick={() => setIsSettings(true)}
+						>
+							<Image
+								src={'/svg/settings.svg'}
+								alt={'settings'}
+								width={25}
+								height={25}
+							/>
+						</IconButton>
+					</Tooltip>
+				</Stack>
 			</Box>
 
 			<Box
@@ -136,7 +171,6 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 									label={column.name}
 									items={items}
 									setItems={setItems}
-									columns={columns}
 								/>
 							))}
 					<DragOverlay>

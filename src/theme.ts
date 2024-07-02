@@ -31,14 +31,14 @@ const theme = createTheme({
 					borderRadius: '10px'
 				}
 			}
-		},
-		MuiIconButton: {
-			styleOverrides: {
-				root: {
-					padding: 0
-				}
-			}
 		}
+		// MuiIconButton: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			padding: 0
+		// 		}
+		// 	}
+		// }
 	},
 	typography: {
 		fontFamily: zen.style.fontFamily

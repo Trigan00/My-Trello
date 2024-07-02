@@ -1,0 +1,13 @@
+.projectWrapper {
+	cursor: pointer;
+	outline: none;
+}
+
+.projectBackground {
+	user-select: none;
+	opacity: 1;
+}
+
+.projectTop {
+	user-select: none;
+}

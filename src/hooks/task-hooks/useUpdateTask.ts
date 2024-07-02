@@ -21,6 +21,9 @@ export function useUpdateTask(
 			queryClient.invalidateQueries({
 				queryKey: ['tasks']
 			})
+			queryClient.invalidateQueries({
+				queryKey: ['task', res.data.task_id]
+			})
 			onSuccessFunc && onSuccessFunc()
 			sessionStorage.removeItem('TasksState')
 		},

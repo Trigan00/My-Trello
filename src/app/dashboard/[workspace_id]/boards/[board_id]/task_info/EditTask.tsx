@@ -26,27 +26,26 @@ import { toast } from 'sonner'
 import { Comments } from './Comments'
 import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
-import { ColumnI } from '@/types/task.types'
 import { COLORS } from '@/constants/color.constants'
+import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
 
 interface EditTaskI {
 	task_id: number
 	board_id: number
 	isModal: boolean
 	setIsModal: Dispatch<SetStateAction<boolean>>
-	columns: ColumnI[]
 }
 
 export function EditTask({
 	task_id,
 	board_id,
 	isModal,
-	setIsModal,
-	columns
+	setIsModal
 }: EditTaskI) {
 	const { task, isLoading } = useOneTask(task_id)
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
+	const { columns } = useGetColumns(board_id)
 
 	const [name, setName] = useState('')
 	const [description, setDescription] = useState<string>('')
@@ -93,6 +92,7 @@ export function EditTask({
 		member && deleteTaskMember({ user_id: member.id })
 
 	const changeTaskStatus = () => {
+		if (!columns) return
 		const columnId = columns.find(
 			col => col.name === (isVerified ? 'В работе' : 'Завершенные')
 		)?.id
@@ -162,9 +162,7 @@ export function EditTask({
 								}}
 								onClick={changeTaskStatus}
 							>
-								<CheckIcon
-									sx={{ p: 1, color: isVerified ? 'white' : 'inherit' }}
-								/>
+								<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
 							</IconButton>
 						</Tooltip>
 					</Box>
@@ -192,6 +190,8 @@ export function EditTask({
 						onChange={e => setName(e.target.value)}
 						error={!!errMsg}
 						helperText={errMsg}
+						multiline
+						maxRows={3}
 						size='small'
 						label='Название'
 						variant='outlined'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { TaskI } from '@/types/task.types'
-import { Box, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
 import { useDraggable } from '@dnd-kit/core'
@@ -38,25 +38,38 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 			{...attributes}
 			sx={{
 				position: 'relative',
-				mt: '10px'
+				mt: '10px',
+				color: COLORS.textBlack,
+				backgroundColor: COLORS.border,
+				borderRadius: '10px',
+				'&:hover': {
+					transition: '0.2s',
+					filter: 'brightness(0.9)'
+				}
 			}}
 		>
-			<Typography
+			<TextField
 				// onClick={() => setIsEdit(true)}
+				multiline
+				value={shortenText(item.name, 120)}
 				onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
+				InputProps={{
+					readOnly: true
+				}}
 				sx={{
-					color: COLORS.textBlack,
-					backgroundColor: COLORS.border,
-					borderRadius: '10px',
-					p: '10px 20px 10px 12px',
-					'&:hover': {
-						transition: '0.2s',
-						filter: 'brightness(0.9)'
+					outline: 'none',
+					'& .MuiOutlinedInput-root': {
+						'& fieldset': {
+							border: 'none'
+						},
+						padding: '4px'
+					},
+					'& .MuiInputBase-input': {
+						padding: '8px',
+						cursor: 'pointer'
 					}
 				}}
-			>
-				{shortenText(item.name, 120)}
-			</Typography>
+			/>
 			<Image
 				style={{
 					position: 'absolute',

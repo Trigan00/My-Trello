@@ -1,4 +1,5 @@
 import { MyCard } from '@/components/UI/MyCard'
+import { GeneralStatistics } from '@/types/statistics.types'
 import { Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ApexOptions } from 'apexcharts'
@@ -25,7 +26,7 @@ const areaChartOptions: ApexOptions = {
 	}
 }
 
-export default function IncomeAreaChart() {
+export default function IncomeAreaChart({ stat }: { stat: GeneralStatistics }) {
 	const theme = useTheme()
 	const { primary, secondary } = theme.palette.text
 	const line = theme.palette.divider
@@ -38,7 +39,7 @@ export default function IncomeAreaChart() {
 			theme.palette.error.main
 		],
 		xaxis: {
-			categories: Array.from({ length: 5 }, (v, k) => k + 1),
+			categories: stat.all.reduce((acc: number) => acc + 1, 0),
 			axisBorder: {
 				show: true,
 				color: line
@@ -60,26 +61,16 @@ export default function IncomeAreaChart() {
 	const series = [
 		{
 			name: 'Всего',
-			data: [1, 2, null, 3, 4]
-			// data: Array.from(
-			// 	{ length: 30 },
-			// 	() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
-			// 	() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
-			// )
+			// data: [1, 2, null, 3, 4]
+			data: stat.all
 		},
 		{
 			name: 'Выполнено',
-			data: Array.from(
-				{ length: 5 },
-				() => Math.floor(Math.random() * (10 - 1 + 1)) + 1
-			)
+			data: stat.in
 		},
 		{
 			name: 'Просрочено',
-			data: Array.from(
-				{ length: 5 },
-				() => Math.floor(Math.random() * (4 - 1 + 1)) + 1
-			)
+			data: stat.not_in
 		}
 	]
 
