@@ -190,6 +190,8 @@ export function EditTask({
 						onChange={e => setName(e.target.value)}
 						error={!!errMsg}
 						helperText={errMsg}
+						multiline
+						maxRows={3}
 						size='small'
 						label='Название'
 						variant='outlined'

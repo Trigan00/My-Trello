@@ -23,7 +23,6 @@ export function GeneralStatistics({ id, isWorkspace }: GeneralStatisticsI) {
 		year: date.year()
 	})
 
-	console.log(stat)
 	const all = stat.all.reduce((acc: number, el) => acc + (el || 0), 0)
 	const pieOpt = [
 		(stat.in.reduce((acc: number, el) => acc + (el || 0), 0) / all) * 100,
