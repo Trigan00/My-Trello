@@ -6,6 +6,7 @@ import { BarSmall } from './bar/bar-small'
 import { Milestone } from './milestone/milestone'
 import { Project } from './project/project'
 import style from './task-list.module.css'
+import { Tooltip, Typography } from '@mui/material'
 
 export type TaskItemProps = {
 	task: BarTask
@@ -81,45 +82,63 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 	}
 
 	return (
-		<g
-			// onKeyDown={e => {
-			//   switch (e.key) {
-			//     case "Delete": {
-			//       if (isDelete) onEventStart("delete", task, e);
-			//       break;
-			//     }
-			//   }
-			//   e.stopPropagation();
-			// }}
-			onMouseEnter={e => {
-				onEventStart('mouseenter', task, e)
-			}}
-			onMouseLeave={e => {
-				onEventStart('mouseleave', task, e)
-			}}
-			onDoubleClick={e => {
-				onEventStart('dblclick', task, e)
-			}}
-			onClick={e => {
-				onEventStart('click', task, e)
-			}}
-			onFocus={() => {
-				onEventStart('select', task)
-			}}
+		<Tooltip
+			title={
+				<Typography variant='caption'>
+					{task.name}: {task.start.getDate()}.{task.start.getMonth() + 1}.
+					{task.start.getFullYear()} &#8212; {task.end.getDate()}.
+					{task.end.getMonth() + 1}.{task.end.getFullYear()}
+					{task.end.getTime() - task.start.getTime() !== 0 && (
+						<div>{`Длительность: ${~~(
+							(task.end.getTime() - task.start.getTime()) /
+							(1000 * 60 * 60 * 24)
+						)} д.`}</div>
+					)}
+				</Typography>
+			}
+			placement='top'
 		>
-			{taskItem}
-			<text
-				x={getX()}
-				y={task.y + taskHeight * 0.5}
-				className={
-					isTextInside
-						? style.barLabel
-						: style.barLabel && style.barLabelOutside
-				}
-				ref={textRef}
+			<g
+				// onKeyDown={e => {
+				//   switch (e.key) {
+				//     case "Delete": {
+				//       if (isDelete) onEventStart("delete", task, e);
+				//       break;
+				//     }
+				//   }
+				//   e.stopPropagation();
+				// }}
+				onMouseEnter={e => {
+					onEventStart('mouseenter', task, e)
+				}}
+				onMouseLeave={e => {
+					onEventStart('mouseleave', task, e)
+				}}
+				onDoubleClick={e => {
+					onEventStart('dblclick', task, e)
+				}}
+				onClick={e => {
+					onEventStart('click', task, e)
+				}}
+				onFocus={() => {
+					onEventStart('select', task)
+				}}
 			>
-				{task.name}
-			</text>
-		</g>
+				{taskItem}
+
+				<text
+					x={getX()}
+					y={task.y + taskHeight * 0.5}
+					className={
+						isTextInside
+							? style.barLabel
+							: style.barLabel && style.barLabelOutside
+					}
+					ref={textRef}
+				>
+					{task.name}
+				</text>
+			</g>
+		</Tooltip>
 	)
 }

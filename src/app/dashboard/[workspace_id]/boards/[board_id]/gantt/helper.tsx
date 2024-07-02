@@ -1,18 +1,18 @@
-import { Task } from './gantt_src'
+import { Task } from '@/components/gantt_src'
 
 export function initTasks() {
 	const currentDate = new Date()
 	const tasks: Task[] = [
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
-			name: 'Some Project',
-			id: 'ProjectSample',
-			progress: 0,
-			type: 'project',
-			hideChildren: false,
-			displayOrder: 1
-		},
+		// {
+		// 	start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+		// 	end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+		// 	name: 'Some Project',
+		// 	id: 'ProjectSample',
+		// 	progress: 0,
+		// 	type: 'project',
+		// 	hideChildren: false,
+		// 	displayOrder: 1
+		// },
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
 			end: new Date(
@@ -26,7 +26,7 @@ export function initTasks() {
 			id: 'Task 0',
 			progress: 0,
 			type: 'task',
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 2
 		},
 		{
@@ -37,7 +37,7 @@ export function initTasks() {
 			progress: 0,
 			dependencies: ['Task 0'],
 			type: 'task',
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 3
 		},
 		{
@@ -48,7 +48,7 @@ export function initTasks() {
 			progress: 0,
 			dependencies: ['Task 1'],
 			type: 'task',
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 4
 		},
 		{
@@ -59,7 +59,7 @@ export function initTasks() {
 			progress: 0,
 			dependencies: ['Task 2'],
 			type: 'task',
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 5
 		},
 		{
@@ -70,7 +70,7 @@ export function initTasks() {
 			type: 'task',
 			progress: 0,
 			dependencies: ['Task 2'],
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 6
 		},
 		{
@@ -79,9 +79,9 @@ export function initTasks() {
 			name: 'Release',
 			id: 'Task 6',
 			progress: 0,
-			type: 'milestone',
+			type: 'task',
 			dependencies: ['Task 4'],
-			project: 'ProjectSample',
+			// project: 'ProjectSample',
 			displayOrder: 7
 		},
 		{
