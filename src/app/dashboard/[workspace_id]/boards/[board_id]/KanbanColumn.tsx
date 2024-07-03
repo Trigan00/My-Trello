@@ -21,13 +21,15 @@ interface IKanbanColumn {
 	label: string
 	items: TaskI[] | undefined
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
+	isAdmin: boolean
 }
 
 export function KanbanColumn({
 	column_id,
 	board_id,
 	items,
-	label
+	label,
+	isAdmin
 }: IKanbanColumn) {
 	const { setNodeRef, over } = useDroppable({
 		id: column_id
@@ -184,6 +186,7 @@ export function KanbanColumn({
 					board_id={board_id as number}
 					isModal={isTaskEdit}
 					setIsModal={setIsTaskEdit}
+					isAdmin={isAdmin}
 				/>
 			)}
 		</div>

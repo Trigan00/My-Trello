@@ -34,13 +34,15 @@ interface EditTaskI {
 	board_id: number
 	isModal: boolean
 	setIsModal: Dispatch<SetStateAction<boolean>>
+	isAdmin: boolean
 }
 
 export function EditTask({
 	task_id,
 	board_id,
 	isModal,
-	setIsModal
+	setIsModal,
+	isAdmin
 }: EditTaskI) {
 	const { task, isLoading } = useOneTask(task_id)
 	const { members: board_members } = useBoardMembers(board_id)
@@ -147,44 +149,47 @@ export function EditTask({
 								mini={true}
 							/>
 						</Box>
-						<Tooltip
-							title='Проверить'
-							placement='top'
-						>
-							<IconButton
-								aria-label='check'
-								sx={{
-									height: 'fit-content',
-									backgroundColor: isVerified ? COLORS.primary : 'none',
-									'&:hover': {
-										backgroundColor: COLORS.darkBlue
-									}
-								}}
-								onClick={changeTaskStatus}
+						{isAdmin && (
+							<Tooltip
+								title='Проверить'
+								placement='top'
 							>
-								<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
-							</IconButton>
-						</Tooltip>
+								<IconButton
+									aria-label='check'
+									sx={{
+										height: 'fit-content',
+										backgroundColor: isVerified ? COLORS.primary : 'none',
+										'&:hover': {
+											backgroundColor: COLORS.darkBlue
+										}
+									}}
+									onClick={changeTaskStatus}
+								>
+									<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
+								</IconButton>
+							</Tooltip>
+						)}
 					</Box>
 
-					{board_members && members ? (
-						<MembersSelect
-							all_users={board_members}
-							addFunc={addUser}
-							removeFunc={removeUser}
-							members={members || []}
-						/>
-					) : (
-						<Skeleton
-							variant='rounded'
-							sx={{
-								mt: 2,
-								height: '40px',
-								width: '100%',
-								borderRadius: '15px'
-							}}
-						/>
-					)}
+					{isAdmin &&
+						(board_members && members ? (
+							<MembersSelect
+								all_users={board_members}
+								addFunc={addUser}
+								removeFunc={removeUser}
+								members={members || []}
+							/>
+						) : (
+							<Skeleton
+								variant='rounded'
+								sx={{
+									mt: 2,
+									height: '40px',
+									width: '100%',
+									borderRadius: '15px'
+								}}
+							/>
+						))}
 					<TextField
 						value={name}
 						onChange={e => setName(e.target.value)}

@@ -185,6 +185,10 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 									label={column.name}
 									items={items}
 									setItems={setItems}
+									isAdmin={
+										Workspaces?.find(ws => ws.id == workspace_id)?.is_admin ||
+										false
+									}
 								/>
 							))}
 					<DragOverlay>
