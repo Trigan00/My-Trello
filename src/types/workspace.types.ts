@@ -1,6 +1,7 @@
 export type IWorkspace = {
 	id: number
 	name: string
+	is_admin: boolean
 }
 
 export interface IWorkspaces {

@@ -5,7 +5,6 @@ import { Accordion, AccordionDetails, AccordionSummary } from './MyAccordion'
 import { Box, Skeleton, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
 import { useMedia } from '@/hooks/useMedia'
@@ -96,35 +95,39 @@ export function MainListItems({ onClose }: IMainListItems) {
 								flexDirection: 'column'
 							}}
 						>
-							{workSpacePages.map(wsp => (
-								<ListItemButton
-									key={wsp.link}
-									sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
-									onClick={onClickHandler}
-									component={NextLink}
-									href={DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link}
-								>
-									<ListItemIcon sx={{ minWidth: '0' }}>
-										<Image
-											src={wsp.icon}
-											alt={wsp.icon}
-											width={16}
-											height={16}
-										/>
-									</ListItemIcon>
-									<Typography
-										fontSize={14}
-										fontWeight={500}
-										sx={{
-											color: COLORS.textGrey,
-											fontSize: '0.85rem',
-											px: 2
-										}}
+							{workSpacePages.map(wsp => {
+								if (wsp.title === 'Настройки' && ws.is_admin === false)
+									return null
+								return (
+									<ListItemButton
+										key={wsp.link}
+										sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
+										onClick={onClickHandler}
+										component={NextLink}
+										href={DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link}
 									>
-										{wsp.title}
-									</Typography>
-								</ListItemButton>
-							))}
+										<ListItemIcon sx={{ minWidth: '0' }}>
+											<Image
+												src={wsp.icon}
+												alt={wsp.icon}
+												width={16}
+												height={16}
+											/>
+										</ListItemIcon>
+										<Typography
+											fontSize={14}
+											fontWeight={500}
+											sx={{
+												color: COLORS.textGrey,
+												fontSize: '0.85rem',
+												px: 2
+											}}
+										>
+											{wsp.title}
+										</Typography>
+									</ListItemButton>
+								)
+							})}
 						</AccordionDetails>
 					</Accordion>
 				))}
