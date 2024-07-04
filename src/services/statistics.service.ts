@@ -15,6 +15,7 @@ class StatisticsService {
 		})
 		return response
 	}
+
 	async getGeneralStatistics({ id, month, year, isWorkspace }: GetStatisticsI) {
 		const response = await axiosWithAuth.get<GeneralStatisticsResI>(
 			`/${isWorkspace ? 'workspaces' : 'boards'}/statistics/${id}/`,

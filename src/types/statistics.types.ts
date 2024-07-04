@@ -5,22 +5,16 @@ export interface GetStatisticsI {
 	isWorkspace: boolean
 }
 
-export type GeneralStatistics = {
-	all: Array<number | null>
-	in: Array<number | null>
-	not_in: Array<number | null>
-}
-
 export interface GeneralStatisticsResI {
-	data: GeneralStatistics
+	linear_series: Array<{ name: string; data: Array<number | null> }>
+	pie_series: Array<{ name: string; value: number }>
 }
 
-export type MembersStatistics = Array<{
-	name: string
-	all: number
-	in: number
-	not_in: number
-}>
+export type MembersStatistics = {
+	labels: Array<string>
+	dataset: Array<Array<number>>
+	user_names: Array<string>
+}
 
 export interface MembersStatisticsResI {
 	data: MembersStatistics

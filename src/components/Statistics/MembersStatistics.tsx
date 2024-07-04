@@ -24,29 +24,26 @@ export function MembersStatistics({ id, isWorkspace }: MembersStatisticsI) {
 
 	return (
 		<Box mt={5}>
-			{isLoading ? (
+			<LocalizationProvider
+				dateAdapter={AdapterDayjs}
+				adapterLocale={'ru'}
+			>
+				<DatePicker
+					label={'месяц и год'}
+					views={['month', 'year']}
+					value={date}
+					onChange={newValue => setDate(newValue || dayjs())}
+				/>
+			</LocalizationProvider>
+			{!stat ? (
 				<Loader />
 			) : (
-				<>
-					<LocalizationProvider
-						dateAdapter={AdapterDayjs}
-						adapterLocale={'ru'}
-					>
-						<DatePicker
-							label={'месяц и год'}
-							views={['month', 'year']}
-							value={date}
-							onChange={newValue => setDate(newValue || dayjs())}
-						/>
-					</LocalizationProvider>
-
-					<Box
-						mt={1}
-						pt={'36px'}
-					>
-						<BarChart stat={stat} />
-					</Box>
-				</>
+				<Box
+					mt={1}
+					pt={'36px'}
+				>
+					<BarChart stat={stat} />
+				</Box>
 			)}
 		</Box>
 	)

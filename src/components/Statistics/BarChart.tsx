@@ -59,7 +59,7 @@ export function BarChart({ stat }: { stat: MembersStatistics }) {
 			tickAmount: 4
 		},
 		xaxis: {
-			categories: stat.map(el => el.name), //['Вася', 'Петя', 'Иван'],
+			categories: stat.user_names, //['Вася', 'Петя', 'Иван'],
 			axisBorder: {
 				show: false
 			}
@@ -69,20 +69,9 @@ export function BarChart({ stat }: { stat: MembersStatistics }) {
 			fillSeriesColor: false
 		}
 	}
-	const seriescolumnchart: any = [
-		{
-			name: 'Всего',
-			data: stat.map(el => el.all) //[355, 390, 300]
-		},
-		{
-			name: 'Выполнено',
-			data: stat.map(el => el.in) //[280, 250, 260]
-		},
-		{
-			name: 'Просрочено',
-			data: stat.map(el => el.not_in) //[20, 30, 22]
-		}
-	]
+	const seriescolumnchart: any = stat.dataset.map(
+		(el, i) => new Object({ name: stat.labels[i], data: el })
+	)
 
 	return (
 		<MyCard
