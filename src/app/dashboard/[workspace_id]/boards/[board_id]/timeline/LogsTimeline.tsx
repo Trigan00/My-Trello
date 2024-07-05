@@ -15,7 +15,10 @@ import { MyCard } from '@/components/UI/MyCard'
 import shortenText from '@/helpers/shortenText'
 import { useState } from 'react'
 import { EditTask } from '../task_info/EditTask'
-import { TimeLineItem } from '@/hooks/board-hooks/useLogs'
+import { useLogs } from '@/hooks/board-hooks/useLogs'
+import { Loader } from '@/components/UI/Loader/Loader'
+import { TimeLineItemI } from '@/types/board.types'
+import { per_Page } from '@/services/board.service'
 
 interface ActionTypeI {
 	[name: string]:
@@ -36,29 +39,31 @@ const ACTION_TYPE: ActionTypeI = {
 	DELETE_MEMBER: 'warning'
 }
 
-const logs: TimeLineItem[] = [
-	{
-		id: 1,
-		log_info: 'Пользователь niyaz удалил задачу',
-		task_name: 'teswegwegmweokeiokwgiowegt',
-		task_id: 5,
-		date: '2024/06/18 16:49',
-		type: 'DELETE'
-	},
-	{
-		id: 2,
-		log_info: 'Пользователь niyaz создал задачу',
-		task_name: 'test2',
-		task_id: 2,
-		date: '2024/06/18 17:49',
-		type: 'CREATE'
-	}
-]
+// const logs: TimeLineItem[] = [
+// 	{
+// 		id: 1,
+// 		log_info: 'Пользователь niyaz удалил задачу',
+// 		task_name: 'teswegwegmweokeiokwgiowegt',
+// 		task_id: 5,
+// 		date: '2024/06/18 16:49',
+// 		type: 'DELETE'
+// 	},
+// 	{
+// 		id: 2,
+// 		log_info: 'Пользователь niyaz создал задачу',
+// 		task_name: 'test2',
+// 		task_id: 2,
+// 		date: '2024/06/18 17:49',
+// 		type: 'CREATE'
+// 	}
+// ]
 
 export default function LogsTimeline({ board_id }: { board_id: number }) {
+	const [page, setPage] = useState(1)
+	const { logs } = useLogs({ board_id, page })
+
 	const [isTask, setIsTask] = useState(false)
 	const [selectedTaskId, setSelectedTaskId] = useState<number>()
-	const [page, setPage] = useState(1)
 
 	const onPageChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		setPage(value)
@@ -72,44 +77,48 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 	return (
 		<Box sx={{ p: 4 }}>
 			<CardHeader title='Журнал событий' />
-			<MyCard
-				variant='shadowed'
-				sx={{ width: 'fit-content' }}
-			>
-				<Timeline
-					sx={{
-						m: 0,
-						p: 2,
-						[`& .${timelineItemClasses.root}:before`]: {
-							flex: 0,
-							padding: 0
-						}
-					}}
+			{!logs ? (
+				<Loader />
+			) : (
+				<MyCard
+					variant='shadowed'
+					sx={{ width: 'fit-content' }}
 				>
-					{logs.map((item, index) => (
-						<LogsTimelineItem
-							key={item.id}
-							item={item}
-							lastTimeline={index === logs.length - 1}
-							showTask={showTask}
+					<Timeline
+						sx={{
+							m: 0,
+							p: 2,
+							[`& .${timelineItemClasses.root}:before`]: {
+								flex: 0,
+								padding: 0
+							}
+						}}
+					>
+						{logs.logs.map((item, index) => (
+							<LogsTimelineItem
+								key={item.id}
+								item={item}
+								lastTimeline={index === logs.logs.length - 1}
+								showTask={showTask}
+							/>
+						))}
+					</Timeline>
+					<Box
+						sx={{
+							p: '0 5px 10px 5px',
+							display: 'flex',
+							justifyContent: 'center'
+						}}
+					>
+						<Pagination
+							count={Math.ceil(logs.count / per_Page) || 1}
+							color='primary'
+							page={page}
+							onChange={onPageChange}
 						/>
-					))}
-				</Timeline>
-				<Box
-					sx={{
-						p: '0 5px 10px 5px',
-						display: 'flex',
-						justifyContent: 'center'
-					}}
-				>
-					<Pagination
-						count={10}
-						color='primary'
-						page={page}
-						onChange={onPageChange}
-					/>
-				</Box>
-			</MyCard>
+					</Box>
+				</MyCard>
+			)}
 			{isTask && (
 				<EditTask
 					board_id={board_id}
@@ -123,17 +132,17 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 }
 
 interface OrderItemP {
-	item: TimeLineItem
+	item: TimeLineItemI
 	lastTimeline: boolean
 	showTask: (id: number) => void
 }
 
 function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
-	const { log_info, task_name, task_id, date, type } = item
+	const { log_info, task_name, task_id, time, action } = item
 	return (
 		<TimelineItem>
 			<TimelineSeparator>
-				<TimelineDot color={ACTION_TYPE[type]} />
+				<TimelineDot color={ACTION_TYPE[action]} />
 				{lastTimeline ? null : <TimelineConnector />}
 			</TimelineSeparator>
 
@@ -154,7 +163,7 @@ function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
 					variant='body2'
 					sx={{ color: 'text.disabled' }}
 				>
-					{date}
+					{time}
 				</Typography>
 			</TimelineContent>
 		</TimelineItem>
