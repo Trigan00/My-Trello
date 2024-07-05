@@ -81,7 +81,7 @@ class BoardsService {
 
 	async getLogs(board_id: number, page: number, per_page = per_Page) {
 		const response = await axiosWithAuth.get<TimeLineI>(
-			`/boards/logs/${board_id}/`,
+			`${this.BASE_URL}/logs/${board_id}/`,
 			{
 				params: {
 					page,

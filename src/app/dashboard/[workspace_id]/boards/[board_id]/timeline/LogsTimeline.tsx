@@ -39,25 +39,6 @@ const ACTION_TYPE: ActionTypeI = {
 	DELETE_MEMBER: 'warning'
 }
 
-// const logs: TimeLineItem[] = [
-// 	{
-// 		id: 1,
-// 		log_info: 'Пользователь niyaz удалил задачу',
-// 		task_name: 'teswegwegmweokeiokwgiowegt',
-// 		task_id: 5,
-// 		date: '2024/06/18 16:49',
-// 		type: 'DELETE'
-// 	},
-// 	{
-// 		id: 2,
-// 		log_info: 'Пользователь niyaz создал задачу',
-// 		task_name: 'test2',
-// 		task_id: 2,
-// 		date: '2024/06/18 17:49',
-// 		type: 'CREATE'
-// 	}
-// ]
-
 export default function LogsTimeline({ board_id }: { board_id: number }) {
 	const [page, setPage] = useState(1)
 	const { logs } = useLogs({ board_id, page })
@@ -69,7 +50,8 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 		setPage(value)
 	}
 
-	const showTask = (id: number) => {
+	const showTask = (id: number, isDelete: boolean) => {
+		if (isDelete) return
 		setIsTask(true)
 		setSelectedTaskId(id)
 	}
@@ -134,7 +116,7 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 interface OrderItemP {
 	item: TimeLineItemI
 	lastTimeline: boolean
-	showTask: (id: number) => void
+	showTask: (id: number, isDelete: boolean) => void
 }
 
 function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
@@ -150,10 +132,10 @@ function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
 				<Typography variant='subtitle2'>
 					{log_info}{' '}
 					<Typography
-						sx={{ cursor: 'pointer' }}
-						color='primary'
+						sx={{ cursor: action !== 'DELETE' ? 'pointer' : 'text' }}
+						color={action !== 'DELETE' ? 'primary' : 'inherit'}
 						component='span'
-						onClick={() => showTask(task_id)}
+						onClick={() => showTask(task_id, action === 'DELETE')}
 					>
 						{shortenText(task_name, 20)}
 					</Typography>

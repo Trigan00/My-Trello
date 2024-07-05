@@ -34,7 +34,8 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	}
 
 	const handleTaskChange = (task: Task) => {
-		console.log('On date change Id:' + task.id)
+		console.log('start:' + task.start)
+		console.log('end:' + task.end)
 		let newTasks = tasks.map(t => (t.id === task.id ? task : t))
 		// if (task.project) {
 		// 	const [start, end] = getStartEndDateForProject(newTasks, task.project)
