@@ -90,66 +90,71 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						`${workspace_title} / ${board_title}`
 					}
 				/>
-				{Workspaces?.find(ws => ws.id == workspace_id)?.is_admin && (
-					<Stack
-						spacing={1}
-						direction='row'
-					>
-						<GlobalLoader />
-						<Tooltip
-							title='Диаграмма Ганта'
-							placement='top'
-						>
-							<IconButton
-								component={NextLink}
-								href={pathname + '/gantt'}
-							>
-								<WaterfallChartIcon
-									sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
-								/>
-							</IconButton>
-						</Tooltip>
-						<Tooltip
-							title='Журнал'
-							placement='top'
-						>
-							<IconButton
-								component={NextLink}
-								href={pathname + '/timeline'}
-							>
-								<TimelineIcon sx={{ color: '#999999' }} />
-							</IconButton>
-						</Tooltip>
-						<Tooltip
-							title='Статистика'
-							placement='top'
-						>
-							<IconButton
-								component={NextLink}
-								href={pathname + '/statistics'}
-							>
-								<BarChartIcon sx={{ color: '#999999' }} />
-							</IconButton>
-						</Tooltip>
 
-						<Tooltip
-							title='Настройки'
-							placement='top'
+				<Stack
+					spacing={1}
+					direction='row'
+				>
+					<GlobalLoader />
+					<Tooltip
+						title='Диаграмма Ганта'
+						placement='top'
+					>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/gantt'}
 						>
-							<IconButton
-								sx={{ p: 1 }}
-								onClick={() => setIsSettings(true)}
+							<WaterfallChartIcon
+								sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
+							/>
+						</IconButton>
+					</Tooltip>
+
+					<Tooltip
+						title='Статистика'
+						placement='top'
+					>
+						<IconButton
+							component={NextLink}
+							href={pathname + '/statistics'}
+						>
+							<BarChartIcon sx={{ color: '#999999' }} />
+						</IconButton>
+					</Tooltip>
+
+					{Workspaces?.find(ws => ws.id == workspace_id)?.is_admin && (
+						<>
+							<Tooltip
+								title='Журнал'
+								placement='top'
 							>
-								<Image
-									src={'/svg/settings.svg'}
-									alt={'settings'}
-									width={25}
-									height={25}
-								/>
-							</IconButton>
-						</Tooltip>
-					</Stack>
-				)}
+								<IconButton
+									component={NextLink}
+									href={pathname + '/timeline'}
+								>
+									<TimelineIcon sx={{ color: '#999999' }} />
+								</IconButton>
+							</Tooltip>
+
+							<Tooltip
+								title='Настройки'
+								placement='top'
+							>
+								<IconButton
+									sx={{ p: 1 }}
+									onClick={() => setIsSettings(true)}
+								>
+									<Image
+										src={'/svg/settings.svg'}
+										alt={'settings'}
+										width={25}
+										height={25}
+									/>
+								</IconButton>
+							</Tooltip>
+						</>
+					)}
+				</Stack>
 			</Box>
 
 			<Box
