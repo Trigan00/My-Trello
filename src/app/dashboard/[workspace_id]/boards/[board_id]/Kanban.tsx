@@ -90,47 +90,48 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 						`${workspace_title} / ${board_title}`
 					}
 				/>
-				<Stack
-					spacing={1}
-					direction='row'
-				>
-					<GlobalLoader />
-					<Tooltip
-						title='Диаграмма Ганта'
-						placement='top'
+				{Workspaces?.find(ws => ws.id == workspace_id)?.is_admin && (
+					<Stack
+						spacing={1}
+						direction='row'
 					>
-						<IconButton
-							component={NextLink}
-							href={pathname + '/gantt'}
+						<GlobalLoader />
+						<Tooltip
+							title='Диаграмма Ганта'
+							placement='top'
 						>
-							<WaterfallChartIcon
-								sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
-							/>
-						</IconButton>
-					</Tooltip>
-					<Tooltip
-						title='Журнал'
-						placement='top'
-					>
-						<IconButton
-							component={NextLink}
-							href={pathname + '/timeline'}
+							<IconButton
+								component={NextLink}
+								href={pathname + '/gantt'}
+							>
+								<WaterfallChartIcon
+									sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
+								/>
+							</IconButton>
+						</Tooltip>
+						<Tooltip
+							title='Журнал'
+							placement='top'
 						>
-							<TimelineIcon sx={{ color: '#999999' }} />
-						</IconButton>
-					</Tooltip>
-					<Tooltip
-						title='Статистика'
-						placement='top'
-					>
-						<IconButton
-							component={NextLink}
-							href={pathname + '/statistics'}
+							<IconButton
+								component={NextLink}
+								href={pathname + '/timeline'}
+							>
+								<TimelineIcon sx={{ color: '#999999' }} />
+							</IconButton>
+						</Tooltip>
+						<Tooltip
+							title='Статистика'
+							placement='top'
 						>
-							<BarChartIcon sx={{ color: '#999999' }} />
-						</IconButton>
-					</Tooltip>
-					{Workspaces?.find(ws => ws.id == workspace_id)?.is_admin && (
+							<IconButton
+								component={NextLink}
+								href={pathname + '/statistics'}
+							>
+								<BarChartIcon sx={{ color: '#999999' }} />
+							</IconButton>
+						</Tooltip>
+
 						<Tooltip
 							title='Настройки'
 							placement='top'
@@ -147,8 +148,8 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 								/>
 							</IconButton>
 						</Tooltip>
-					)}
-				</Stack>
+					</Stack>
+				)}
 			</Box>
 
 			<Box
