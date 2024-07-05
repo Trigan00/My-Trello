@@ -15,7 +15,7 @@ import { MyCard } from '@/components/UI/MyCard'
 import shortenText from '@/helpers/shortenText'
 import { useState } from 'react'
 import { EditTask } from '../task_info/EditTask'
-import { TimeLineItem } from '@/hooks/statistics-hooks/useLogs'
+import { TimeLineItem } from '@/hooks/board-hooks/useLogs'
 
 interface ActionTypeI {
 	[name: string]:

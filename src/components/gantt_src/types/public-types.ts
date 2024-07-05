@@ -131,11 +131,11 @@ export interface StylingOption {
 		fontSize: string
 		locale: string
 		tasks: Task[]
-		selectedTaskId: string
+		selectedTaskId: number
 		/**
 		 * Sets selected task by id
 		 */
-		setSelectedTask: (taskId: string) => void
+		setSelectedTask: (taskId: number) => void
 		onExpanderClick: (task: Task) => void
 	}>
 }

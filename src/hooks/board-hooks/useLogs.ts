@@ -1,5 +1,5 @@
 import { errorCatch } from '@/api/error'
-import { statisticsService } from '@/services/statistics.service'
+import { boardsService } from '@/services/board.service'
 import { useQuery } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
@@ -13,10 +13,16 @@ export interface TimeLineItem {
 	type: string
 }
 
-export const useLogs = (page: number) => {
+export const useLogs = ({
+	board_id,
+	page
+}: {
+	board_id: number
+	page: number
+}) => {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['logs', page],
-		queryFn: () => statisticsService.getLogs(page)
+		queryFn: () => boardsService.getLogs(board_id, page)
 	})
 
 	const [logs, setLogs] = useState<TimeLineItem[]>([])

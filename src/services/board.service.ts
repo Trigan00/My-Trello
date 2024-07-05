@@ -72,6 +72,16 @@ class BoardsService {
 		)
 		return response
 	}
+
+	async getLogs(board_id: number, page: number, per_page = 50) {
+		const response = await axiosWithAuth.get(`/boards/logs/${board_id}/`, {
+			params: {
+				page,
+				per_page
+			}
+		})
+		return response
+	}
 }
 
 export const boardsService = new BoardsService()

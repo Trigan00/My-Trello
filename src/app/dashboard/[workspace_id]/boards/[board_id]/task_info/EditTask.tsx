@@ -28,23 +28,26 @@ import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { COLORS } from '@/constants/color.constants'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
+import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
+import { useParams } from 'next/navigation'
 
 interface EditTaskI {
 	task_id: number
 	board_id: number
 	isModal: boolean
 	setIsModal: Dispatch<SetStateAction<boolean>>
-	isAdmin: boolean
 }
 
 export function EditTask({
 	task_id,
 	board_id,
 	isModal,
-	setIsModal,
-	isAdmin
+	setIsModal
 }: EditTaskI) {
+	const params = useParams<{ workspace_id: string }>()
+
 	const { task, isLoading } = useOneTask(task_id)
+	const { items: Workspaces } = useWorkspaces()
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
 	const { columns } = useGetColumns(board_id)
@@ -56,6 +59,11 @@ export function EditTask({
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
 	const [isVerified, setIsVerified] = useState(false)
 	const [deleteModal, setDeleteModal] = useState(false)
+
+	const isAdmin =
+		(Workspaces &&
+			Workspaces.find(ws => ws.id == Number(params.workspace_id))?.is_admin) ||
+		false
 
 	const { updateTask, isPending } = useUpdateTask(undefined, () =>
 		toast.success('Задача успешно изменена')
@@ -171,25 +179,24 @@ export function EditTask({
 						)}
 					</Box>
 
-					{isAdmin &&
-						(board_members && members ? (
-							<MembersSelect
-								all_users={board_members}
-								addFunc={addUser}
-								removeFunc={removeUser}
-								members={members || []}
-							/>
-						) : (
-							<Skeleton
-								variant='rounded'
-								sx={{
-									mt: 2,
-									height: '40px',
-									width: '100%',
-									borderRadius: '15px'
-								}}
-							/>
-						))}
+					{board_members && members ? (
+						<MembersSelect
+							all_users={board_members}
+							addFunc={addUser}
+							removeFunc={removeUser}
+							members={members || []}
+						/>
+					) : (
+						<Skeleton
+							variant='rounded'
+							sx={{
+								mt: 2,
+								height: '40px',
+								width: '100%',
+								borderRadius: '15px'
+							}}
+						/>
+					)}
 					<TextField
 						value={name}
 						onChange={e => setName(e.target.value)}
