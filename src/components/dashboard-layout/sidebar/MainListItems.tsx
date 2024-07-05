@@ -96,7 +96,10 @@ export function MainListItems({ onClose }: IMainListItems) {
 							}}
 						>
 							{workSpacePages.map(wsp => {
-								if (wsp.title === 'Настройки' && ws.is_admin === false)
+								if (
+									(wsp.title === 'Настройки' || wsp.title === 'Статистика') &&
+									ws.is_admin === false
+								)
 									return null
 								return (
 									<ListItemButton
