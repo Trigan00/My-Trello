@@ -1,6 +1,16 @@
 'use client'
 
-import { Typography, CardHeader, Box, Pagination } from '@mui/material'
+import {
+	Typography,
+	CardHeader,
+	Box,
+	Pagination,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select,
+	SelectChangeEvent
+} from '@mui/material'
 import {
 	Timeline,
 	TimelineDot,
@@ -9,7 +19,6 @@ import {
 	TimelineConnector,
 	TimelineItem
 } from '@mui/lab'
-
 import { timelineItemClasses } from '@mui/lab/TimelineItem'
 import { MyCard } from '@/components/UI/MyCard'
 import shortenText from '@/helpers/shortenText'
@@ -41,7 +50,8 @@ const ACTION_TYPE: ActionTypeI = {
 
 export default function LogsTimeline({ board_id }: { board_id: number }) {
 	const [page, setPage] = useState(1)
-	const { logs } = useLogs({ board_id, page })
+	const [perPage, setPerPage] = useState(10)
+	const { logs } = useLogs({ board_id, page, perPage })
 
 	const [isTask, setIsTask] = useState(false)
 	const [selectedTaskId, setSelectedTaskId] = useState<number>()
@@ -57,7 +67,7 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 	}
 
 	return (
-		<Box sx={{ p: 4 }}>
+		<Box sx={{ p: 3 }}>
 			<CardHeader title='Журнал событий' />
 			{!logs ? (
 				<Loader />
@@ -92,8 +102,20 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 							justifyContent: 'center'
 						}}
 					>
+						<Select
+							size='small'
+							value={String(perPage)}
+							variant='standard'
+							onChange={(event: SelectChangeEvent) =>
+								setPerPage(Number(event.target.value))
+							}
+						>
+							<MenuItem value={10}>10</MenuItem>
+							<MenuItem value={20}>20</MenuItem>
+							<MenuItem value={30}>30</MenuItem>
+						</Select>
 						<Pagination
-							count={Math.ceil(logs.count / per_Page) || 1}
+							count={Math.ceil(logs.count / perPage) || 1}
 							color='primary'
 							page={page}
 							onChange={onPageChange}

@@ -7,14 +7,16 @@ import { toast } from 'sonner'
 
 export const useLogs = ({
 	board_id,
-	page
+	page,
+	perPage
 }: {
 	board_id: number
 	page: number
+	perPage: number
 }) => {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['logs', page],
-		queryFn: () => boardsService.getLogs(board_id, page)
+		queryKey: ['logs', page, perPage],
+		queryFn: () => boardsService.getLogs(board_id, page, perPage)
 	})
 
 	const [logs, setLogs] = useState<TimeLineI>()
