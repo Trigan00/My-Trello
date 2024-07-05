@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
-import { initTasks } from './helper'
+import { getStartEndDateForProject, initTasks } from './helper'
 import { Box } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
@@ -13,6 +13,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	const [view, setView] = useState<ViewMode>(ViewMode.Day)
 	const [isTask, setIsTask] = useState(false)
 	const [selectedTaskId, setSelectedTaskId] = useState<number>()
+	const [tasks, setTasks] = React.useState<Task[]>(initTasks())
 
 	let columnWidth = 65
 	if (view === ViewMode.Year) {
@@ -28,6 +29,30 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 		setSelectedTaskId(task.id)
 	}
 
+	const handleDblClick = (task: Task) => {
+		handleClick(task)
+	}
+
+	const handleTaskChange = (task: Task) => {
+		console.log('On date change Id:' + task.id)
+		let newTasks = tasks.map(t => (t.id === task.id ? task : t))
+		// if (task.project) {
+		// 	const [start, end] = getStartEndDateForProject(newTasks, task.project)
+		// 	const project =
+		// 		newTasks[newTasks.findIndex(t => t.id === (task.project as any))]
+		// 	if (
+		// 		project.start.getTime() !== start.getTime() ||
+		// 		project.end.getTime() !== end.getTime()
+		// 	) {
+		// 		const changedProject = { ...project, start, end }
+		// 		newTasks = newTasks.map(t =>
+		// 			t.id === (task.project as any) ? changedProject : t
+		// 		)
+		// 	}
+		// }
+		setTasks(newTasks)
+	}
+
 	return (
 		<Box
 			className='Wrapper'
@@ -35,11 +60,12 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 		>
 			<ViewSwitcher onViewModeChange={viewMode => setView(viewMode)} />
 			<Gantt
-				tasks={initTasks()}
+				tasks={tasks}
 				viewMode={view}
-				onDateChange={undefined}
+				onDateChange={handleTaskChange}
 				onProgressChange={undefined}
-				onClick={handleClick}
+				// onClick={handleClick}
+				onDoubleClick={handleDblClick}
 				listCellWidth='155px'
 				columnWidth={columnWidth}
 				locale='ru'
@@ -59,25 +85,6 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	)
 }
 
-// const handleTaskChange = (task: Task) => {
-// 	console.log('On date change Id:' + task.id)
-// 	let newTasks = tasks.map(t => (t.id === task.id ? task : t))
-// 	if (task.project) {
-// 		const [start, end] = getStartEndDateForProject(newTasks, task.project)
-// 		const project = newTasks[newTasks.findIndex(t => t.id === task.project)]
-// 		if (
-// 			project.start.getTime() !== start.getTime() ||
-// 			project.end.getTime() !== end.getTime()
-// 		) {
-// 			const changedProject = { ...project, start, end }
-// 			newTasks = newTasks.map(t =>
-// 				t.id === task.project ? changedProject : t
-// 			)
-// 		}
-// 	}
-// 	setTasks(newTasks)
-// }
-
 // const handleTaskDelete = (task: Task) => {
 // 	const conf = window.confirm('Are you sure about ' + task.name + ' ?')
 // 	if (conf) {
@@ -89,10 +96,6 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 // const handleProgressChange = async (task: Task) => {
 // 	setTasks(tasks.map(t => (t.id === task.id ? task : t)))
 // 	console.log('On progress change Id:' + task.id)
-// }
-
-// const handleDblClick = (task: Task) => {
-// 	alert('On Double Click event Id:' + task.id)
 // }
 
 // const handleSelect = (task: Task, isSelected: boolean) => {

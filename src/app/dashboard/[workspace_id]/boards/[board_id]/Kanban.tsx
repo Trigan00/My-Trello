@@ -130,22 +130,24 @@ export function Kanban({ workspace_id, board_id }: KanbanI) {
 							<BarChartIcon sx={{ color: '#999999' }} />
 						</IconButton>
 					</Tooltip>
-					<Tooltip
-						title='Настройки'
-						placement='top'
-					>
-						<IconButton
-							sx={{ p: 1 }}
-							onClick={() => setIsSettings(true)}
+					{Workspaces?.find(ws => ws.id == workspace_id)?.is_admin && (
+						<Tooltip
+							title='Настройки'
+							placement='top'
 						>
-							<Image
-								src={'/svg/settings.svg'}
-								alt={'settings'}
-								width={25}
-								height={25}
-							/>
-						</IconButton>
-					</Tooltip>
+							<IconButton
+								sx={{ p: 1 }}
+								onClick={() => setIsSettings(true)}
+							>
+								<Image
+									src={'/svg/settings.svg'}
+									alt={'settings'}
+									width={25}
+									height={25}
+								/>
+							</IconButton>
+						</Tooltip>
+					)}
 				</Stack>
 			</Box>
 
