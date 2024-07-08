@@ -25,7 +25,7 @@ export interface TimeLineItemI {
 	id: number
 	log_info: string
 	time: string
-	task_name: string
+	task_name: string | null
 	task_id: number
 	action: string
 }

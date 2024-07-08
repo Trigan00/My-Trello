@@ -153,14 +153,16 @@ function LogsTimelineItem({ item, lastTimeline, showTask }: OrderItemP) {
 			<TimelineContent>
 				<Typography variant='subtitle2'>
 					{log_info}{' '}
-					<Typography
-						sx={{ cursor: action !== 'DELETE' ? 'pointer' : 'text' }}
-						color={action !== 'DELETE' ? 'primary' : 'inherit'}
-						component='span'
-						onClick={() => showTask(task_id, action === 'DELETE')}
-					>
-						{shortenText(task_name, 20)}
-					</Typography>
+					{task_name && (
+						<Typography
+							sx={{ cursor: action !== 'DELETE' ? 'pointer' : 'text' }}
+							color={action !== 'DELETE' ? 'primary' : 'inherit'}
+							component='span'
+							onClick={() => showTask(task_id, action === 'DELETE')}
+						>
+							{shortenText(task_name, 20)}
+						</Typography>
+					)}
 				</Typography>
 
 				<Typography
