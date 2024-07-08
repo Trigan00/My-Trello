@@ -28,8 +28,7 @@ import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { COLORS } from '@/constants/color.constants'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
-import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
-import { useParams } from 'next/navigation'
+import { useIsAdmin } from '@/hooks/useIsAdmin'
 
 interface EditTaskI {
 	task_id: number
@@ -44,14 +43,11 @@ export function EditTask({
 	isModal,
 	setIsModal
 }: EditTaskI) {
-	const params = useParams<{ workspace_id: string }>()
-
 	const { task, isLoading } = useOneTask(task_id)
-	const { items: Workspaces } = useWorkspaces()
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
 	const { columns } = useGetColumns(board_id)
-
+	const isAdmin = useIsAdmin()
 	const [name, setName] = useState('')
 	const [description, setDescription] = useState<string>('')
 	const [errMsg, setErrMsg] = useState('')
@@ -59,11 +55,6 @@ export function EditTask({
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
 	const [isVerified, setIsVerified] = useState(false)
 	const [deleteModal, setDeleteModal] = useState(false)
-
-	const isAdmin =
-		(Workspaces &&
-			Workspaces.find(ws => ws.id == Number(params.workspace_id))?.is_admin) ||
-		false
 
 	const { updateTask, isPending } = useUpdateTask(undefined, () =>
 		toast.success('Задача успешно изменена')

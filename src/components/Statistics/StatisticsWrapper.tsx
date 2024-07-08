@@ -1,10 +1,10 @@
 'use client'
 
-// import 'dayjs/locale/ru'
 import { Box, Button, ButtonGroup } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { GeneralStatistics } from './GeneralStatistics'
 import { MembersStatistics } from './MembersStatistics'
+import { useIsAdmin } from '@/hooks/useIsAdmin'
 
 interface StatisticsWrapperI {
 	id: number
@@ -13,18 +13,21 @@ interface StatisticsWrapperI {
 
 export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 	const [isGeneral, setISGeneral] = useState(true)
+	const isAdmin = useIsAdmin()
 	return (
 		<Box sx={{ p: 4 }}>
 			<Box
 				display='flex'
 				justifyContent='center'
 			>
-				<ButtonGroup variant='outlined'>
-					<Button onClick={() => setISGeneral(true)}>Основная</Button>
-					<Button onClick={() => setISGeneral(false)}>Участники</Button>
-				</ButtonGroup>
+				{isAdmin && (
+					<ButtonGroup variant='outlined'>
+						<Button onClick={() => setISGeneral(true)}>Основная</Button>
+						<Button onClick={() => setISGeneral(false)}>Участники</Button>
+					</ButtonGroup>
+				)}
 			</Box>
-			{isGeneral ? (
+			{isGeneral && isAdmin ? (
 				<GeneralStatistics
 					id={id}
 					isWorkspace={isWorkspace}
