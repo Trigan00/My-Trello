@@ -45,16 +45,9 @@ export default function NotFound(): React.JSX.Element {
 					variant='h3'
 					sx={{ textAlign: 'center' }}
 				>
-					404: Страницы, которую вы ищете, здесь нет
+					404: Страница не найдена
 				</Typography>
-				<Typography
-					color='text.secondary'
-					variant='body1'
-					sx={{ textAlign: 'center' }}
-				>
-					Вы либо выбрали какой-то сомнительный маршрут, либо попали сюда по
-					ошибке. Что бы это ни было, попробуйте воспользоваться навигацией
-				</Typography>
+
 				<Button
 					component={RouterLink}
 					href={DASHBOARD_PAGES.HOME}
@@ -64,7 +57,7 @@ export default function NotFound(): React.JSX.Element {
 						color: 'white'
 					}}
 				>
-					Вернуться на главную страницу
+					Вернуться на главную
 				</Button>
 			</Stack>
 		</Box>
