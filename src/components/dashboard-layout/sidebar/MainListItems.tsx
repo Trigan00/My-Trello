@@ -11,6 +11,8 @@ import { useMedia } from '@/hooks/useMedia'
 import { DIMENSIONS } from '@/constants/dimension.constants'
 import NextLink from 'next/link'
 import shortenText from '@/helpers/shortenText'
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
 
 const workSpacePages = [
 	{ title: 'Доски', link: '/boards', icon: '/svg/boards.svg' },
@@ -31,8 +33,10 @@ interface IMainListItems {
 }
 
 export function MainListItems({ onClose }: IMainListItems) {
+	const params = useParams<{ workspace_id: string }>()
 	const { items } = useWorkspaces()
 	const matches = useMedia(DIMENSIONS.MD)
+	const [expanded, setExpanded] = useState<string>(params.workspace_id)
 
 	const onClickHandler = () => {
 		matches && onClose()
@@ -58,6 +62,8 @@ export function MainListItems({ onClose }: IMainListItems) {
 			{items &&
 				items.map(ws => (
 					<Accordion
+						expanded={expanded === String(ws.id)}
+						onChange={() => setExpanded(String(ws.id))}
 						key={ws.id}
 						variant='outlined'
 						sx={{
