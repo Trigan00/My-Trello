@@ -17,6 +17,7 @@ import NextLink from 'next/link'
 import { useState } from 'react'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+import { headerHeight } from '@/components/dashboard-layout/header/Header'
 
 const pages: Array<{
 	title: string
@@ -79,7 +80,8 @@ export default function BoardLayout({
 		'/'
 
 	return (
-		<>
+		//TODO Откуда то 10 пикселей взялось у скрола
+		<Box sx={{ height: `calc(100% - ${headerHeight - 10}px)` }}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -195,6 +197,6 @@ export default function BoardLayout({
 					board_id={Number(params.board_id)}
 				/>
 			)}
-		</>
+		</Box>
 	)
 }

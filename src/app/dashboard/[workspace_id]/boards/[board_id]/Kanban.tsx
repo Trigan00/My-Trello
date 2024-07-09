@@ -54,51 +54,49 @@ export function Kanban({ board_id }: KanbanI) {
 	const sensors = useSensors(mouseSensor, touchSensor)
 
 	return (
-		<Box sx={{ height: `calc(100% - ${headerHeight}px)` }}>
-			<Box
-				sx={{
-					boxSizing: 'border-box',
-					height: '100%',
-					display: 'flex',
-					p: 4,
-					gap: 3,
-					overflowX: 'auto' //без него ставиться, с ним не вращается
-				}}
+		<Box
+			sx={{
+				boxSizing: 'border-box',
+				height: '100%',
+				display: 'flex',
+				p: 4,
+				gap: 3,
+				overflowX: 'auto' //без него ставиться, с ним не вращается
+			}}
+		>
+			<DndContext
+				sensors={sensors}
+				onDragEnd={onDragEnd}
+				onDragStart={onDragStart}
 			>
-				<DndContext
-					sensors={sensors}
-					onDragEnd={onDragEnd}
-					onDragStart={onDragStart}
-				>
-					{!columns
-						? new Array(4).fill(null).map((_, i) => (
-								<Box key={i}>
-									<Skeleton
-										variant='rounded'
-										sx={{
-											borderRadius: '15px',
-											width: '300px',
-											height: '200px'
-										}}
-									/>
-								</Box>
-							))
-						: columns.map(column => (
-								<KanbanColumn
-									key={column.id}
-									column_id={column.id}
-									board_id={board_id}
-									label={column.name}
-									items={items}
-									setItems={setItems}
+				{!columns
+					? new Array(4).fill(null).map((_, i) => (
+							<Box key={i}>
+								<Skeleton
+									variant='rounded'
+									sx={{
+										borderRadius: '15px',
+										width: '300px',
+										height: '200px'
+									}}
 								/>
-							))}
-					<DragOverlay>
-						{activeTask && <KanbanCard item={activeTask} />}
-					</DragOverlay>
-				</DndContext>
-				<AddColumn board_id={board_id} />
-			</Box>
+							</Box>
+						))
+					: columns.map(column => (
+							<KanbanColumn
+								key={column.id}
+								column_id={column.id}
+								board_id={board_id}
+								label={column.name}
+								items={items}
+								setItems={setItems}
+							/>
+						))}
+				<DragOverlay>
+					{activeTask && <KanbanCard item={activeTask} />}
+				</DragOverlay>
+			</DndContext>
+			<AddColumn board_id={board_id} />
 		</Box>
 	)
 }
