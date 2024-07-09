@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 export function useBoards(workspace_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['boards'],
+		queryKey: ['boards', workspace_id],
 		queryFn: () => boardsService.getBoards(workspace_id)
 	})
 

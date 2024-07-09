@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 export function useTasks(board_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['tasks'],
+		queryKey: ['tasks', board_id],
 		queryFn: () => taskService.getTasks(board_id)
 	})
 

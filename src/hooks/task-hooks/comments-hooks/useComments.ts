@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 export function useComments(task_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: [`comments ${task_id}`],
+		queryKey: ['comments', task_id],
 		queryFn: () => commentService.getComments(task_id)
 	})
 

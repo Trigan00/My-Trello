@@ -12,7 +12,7 @@ export function useCreateComment(task_id: number) {
 		mutationFn: (data: AddCommentI) => commentService.createComment(data),
 		onSuccess(res) {
 			queryClient.invalidateQueries({
-				queryKey: [`comments ${task_id}`]
+				queryKey: ['comments', task_id]
 			})
 			toast.success(res.data.message)
 		},
