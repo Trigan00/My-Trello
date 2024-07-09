@@ -39,7 +39,6 @@ const Item = styled(NextLink)(() => ({
 
 export function AllBoards({ workspace_id }: AllBoardsI) {
 	const { items, isLoading } = useBoards(workspace_id)
-	const { items: Workspaces } = useWorkspaces()
 
 	return (
 		<Box sx={{ p: 4 }}>
@@ -54,8 +53,9 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 					gap: '8px'
 				}}
 			>
-				<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
-				<NewBoard ws_id={workspace_id}/>
+				<Heading />
+				{/* <Heading workspace={Workspaces?.find(ws => ws.id == workspace_id)} /> */}
+				<NewBoard ws_id={workspace_id} />
 			</Box>
 			{isLoading && <Loader />}
 			{!isLoading && items && (
