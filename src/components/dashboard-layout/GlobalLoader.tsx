@@ -7,5 +7,5 @@ export function GlobalLoader() {
 	const isMutating = useIsMutating()
 	const isFetching = useIsFetching()
 
-	return isFetching || isMutating ? <CircularProgress /> : null
+	return isFetching || isMutating ? <CircularProgress size={20} /> : null
 }

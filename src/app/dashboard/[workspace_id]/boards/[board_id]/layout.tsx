@@ -4,17 +4,65 @@ import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
 import { Heading } from '@/components/UI/Heading'
 import { useBoards } from '@/hooks/board-hooks/useBoards'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
-import { Box, Stack, Tooltip, IconButton } from '@mui/material'
+import {
+	Box,
+	Stack,
+	Tooltip,
+	IconButton,
+	ButtonGroup,
+	Button
+} from '@mui/material'
 import { useParams, usePathname } from 'next/navigation'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import WaterfallChartIcon from '@mui/icons-material/WaterfallChart'
 import SettingsIcon from '@mui/icons-material/Settings'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import MenuIcon from '@mui/icons-material/Menu'
 import NextLink from 'next/link'
 import { useState } from 'react'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+import { COLORS } from '@/constants/color.constants'
+
+const pages: Array<{
+	title: string
+	route: string
+	Icon: React.ReactNode
+	isAdminReq: boolean
+}> = [
+	{
+		title: 'Диаграмма Ганта',
+		route: 'gantt',
+		Icon: (
+			<WaterfallChartIcon
+				color='inherit'
+				sx={{ transform: 'rotate(-90deg)' }}
+			/>
+		),
+		isAdminReq: false
+	},
+	{
+		title: 'Статистика',
+		route: 'statistics',
+		Icon: <BarChartIcon color='inherit' />,
+		isAdminReq: false
+	},
+	{
+		title: 'Журнал',
+		route: 'timeline',
+		Icon: <TimelineIcon color='inherit' />,
+		isAdminReq: true
+	},
+	{
+		title: 'Настройки',
+		route: '',
+		Icon: <SettingsIcon color='inherit' />,
+		isAdminReq: true
+	}
+]
 
 export default function BoardLayout({
 	children
@@ -26,6 +74,24 @@ export default function BoardLayout({
 	const isAdmin = useIsAdmin()
 	const [isSettings, setIsSettings] = useState(false)
 	const board_title = Boards?.find(b => b.id == Number(params.board_id))?.name
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+	const open = Boolean(anchorEl)
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget)
+	}
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
+
+	const default_route =
+		DASHBOARD_PAGES.HOME +
+		'/' +
+		params.workspace_id +
+		'/boards' +
+		'/' +
+		params.board_id +
+		'/'
 
 	return (
 		<>
@@ -40,86 +106,75 @@ export default function BoardLayout({
 				}}
 			>
 				<Heading />
-
 				<Stack
 					spacing={1}
 					direction='row'
+					alignItems='center'
 				>
 					<GlobalLoader />
-					<Tooltip
-						title='Диаграмма Ганта'
-						placement='top'
+					<Box
+						sx={{
+							display: {
+								xs: 'block',
+								lg: 'none'
+							}
+						}}
 					>
 						<IconButton
-							component={NextLink}
-							href={
-								DASHBOARD_PAGES.HOME +
-								'/' +
-								params.workspace_id +
-								'/boards' +
-								'/' +
-								params.board_id +
-								'/gantt'
-							}
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup='true'
+							aria-expanded={open ? 'true' : undefined}
+							onClick={handleClick}
 						>
-							<WaterfallChartIcon
-								sx={{ color: '#999999', transform: 'rotate(-90deg)' }}
-							/>
+							<MenuIcon />
 						</IconButton>
-					</Tooltip>
-
-					<Tooltip
-						title='Статистика'
-						placement='top'
+						<Menu
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+						>
+							{pages.map(page => {
+								if (!isAdmin && page.isAdminReq) return null
+								return (
+									<MenuItem
+										key={page.route}
+										component={NextLink}
+										href={default_route + page.route}
+										onClick={handleClose}
+									>
+										{page.Icon}
+										<span style={{ marginLeft: '10px' }}>{page.title}</span>
+									</MenuItem>
+								)
+							})}
+						</Menu>
+					</Box>
+					<ButtonGroup
+						variant='contained'
+						size='small'
+						sx={{
+							display: {
+								xs: 'none',
+								lg: 'block'
+							},
+							borderRadius: '10px'
+						}}
 					>
-						<IconButton
-							component={NextLink}
-							href={
-								DASHBOARD_PAGES.HOME +
-								'/' +
-								params.workspace_id +
-								'/boards' +
-								'/' +
-								params.board_id +
-								'/statistics'
-							}
-						>
-							<BarChartIcon sx={{ color: '#999999' }} />
-						</IconButton>
-					</Tooltip>
-
-					{isAdmin && (
-						<>
-							<Tooltip
-								title='Журнал'
-								placement='top'
-							>
-								<IconButton
+						{pages.map(page => {
+							if (!isAdmin && page.isAdminReq) return null
+							return (
+								<Button
+									key={page.route}
+									startIcon={page.Icon}
 									component={NextLink}
-									href={
-										DASHBOARD_PAGES.HOME +
-										'/' +
-										params.workspace_id +
-										'/boards' +
-										'/' +
-										params.board_id +
-										'/timeline'
-									}
+									href={default_route + page.route}
+									sx={{ color: 'white' }}
 								>
-									<TimelineIcon sx={{ color: '#999999' }} />
-								</IconButton>
-							</Tooltip>
-
-							<Tooltip
-								title='Настройки'
-								placement='top'
-							>
-								<IconButton onClick={() => setIsSettings(true)}>
-									<SettingsIcon sx={{ color: '#999999' }} />
-								</IconButton>
-							</Tooltip>
-						</>
-					)}
+									{page.title}
+								</Button>
+							)
+						})}
+					</ButtonGroup>
 				</Stack>
 			</Box>
 			{children}
