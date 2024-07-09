@@ -23,7 +23,7 @@ export function MembersStatistics({ id, isWorkspace }: MembersStatisticsI) {
 	})
 
 	return (
-		<Box mt={5}>
+		<Box mt={3}>
 			<LocalizationProvider
 				dateAdapter={AdapterDayjs}
 				adapterLocale={'ru'}

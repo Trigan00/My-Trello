@@ -24,7 +24,7 @@ export function GeneralStatistics({ id, isWorkspace }: GeneralStatisticsI) {
 	})
 
 	return (
-		<Box mt={5}>
+		<Box mt={3}>
 			<LocalizationProvider
 				dateAdapter={AdapterDayjs}
 				adapterLocale={'ru'}

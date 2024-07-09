@@ -49,6 +49,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 						xs: 'space-between',
 						md: 'flex-start'
 					},
+					alignItems: 'center',
 					flexWrap: 'wrap',
 					gap: '8px'
 				}}
