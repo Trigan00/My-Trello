@@ -3,16 +3,8 @@
 import { GlobalLoader } from '@/components/dashboard-layout/GlobalLoader'
 import { Heading } from '@/components/UI/Heading'
 import { useBoards } from '@/hooks/board-hooks/useBoards'
-import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
-import {
-	Box,
-	Stack,
-	Tooltip,
-	IconButton,
-	ButtonGroup,
-	Button
-} from '@mui/material'
-import { useParams, usePathname } from 'next/navigation'
+import { Box, Stack, IconButton, ButtonGroup, Button } from '@mui/material'
+import { useParams } from 'next/navigation'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import BarChartIcon from '@mui/icons-material/BarChart'
@@ -25,7 +17,6 @@ import NextLink from 'next/link'
 import { useState } from 'react'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
-import { COLORS } from '@/constants/color.constants'
 
 const pages: Array<{
 	title: string
@@ -54,12 +45,6 @@ const pages: Array<{
 		title: 'Журнал',
 		route: 'timeline',
 		Icon: <TimelineIcon color='inherit' />,
-		isAdminReq: true
-	},
-	{
-		title: 'Настройки',
-		route: '',
-		Icon: <SettingsIcon color='inherit' />,
 		isAdminReq: true
 	}
 ]
@@ -147,6 +132,17 @@ export default function BoardLayout({
 									</MenuItem>
 								)
 							})}
+							{isAdmin && (
+								<MenuItem
+									onClick={() => {
+										handleClose()
+										setIsSettings(true)
+									}}
+								>
+									<SettingsIcon color='inherit' />
+									<span style={{ marginLeft: '10px' }}>Настройки</span>
+								</MenuItem>
+							)}
 						</Menu>
 					</Box>
 					<ButtonGroup
@@ -169,11 +165,23 @@ export default function BoardLayout({
 									component={NextLink}
 									href={default_route + page.route}
 									sx={{ color: 'white' }}
+									onClick={() => {
+										if (page.title === 'Настройки') setIsSettings(true)
+									}}
 								>
 									{page.title}
 								</Button>
 							)
 						})}
+						{isAdmin && (
+							<Button
+								startIcon={<SettingsIcon color='inherit' />}
+								sx={{ color: 'white' }}
+								onClick={() => setIsSettings(true)}
+							>
+								Настройки
+							</Button>
+						)}
 					</ButtonGroup>
 				</Stack>
 			</Box>
