@@ -37,21 +37,26 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 		console.log('start:' + task.start)
 		console.log('end:' + task.end)
 		let newTasks = tasks.map(t => (t.id === task.id ? task : t))
-		// if (task.project) {
-		// 	const [start, end] = getStartEndDateForProject(newTasks, task.project)
-		// 	const project =
-		// 		newTasks[newTasks.findIndex(t => t.id === (task.project as any))]
-		// 	if (
-		// 		project.start.getTime() !== start.getTime() ||
-		// 		project.end.getTime() !== end.getTime()
-		// 	) {
-		// 		const changedProject = { ...project, start, end }
-		// 		newTasks = newTasks.map(t =>
-		// 			t.id === (task.project as any) ? changedProject : t
-		// 		)
-		// 	}
-		// }
+		if (task.project) {
+			const [start, end] = getStartEndDateForProject(newTasks, task.project)
+			const project =
+				newTasks[newTasks.findIndex(t => t.id === (task.project as any))]
+			if (
+				project.start.getTime() !== start.getTime() ||
+				project.end.getTime() !== end.getTime()
+			) {
+				const changedProject = { ...project, start, end }
+				newTasks = newTasks.map(t =>
+					t.id === (task.project as any) ? changedProject : t
+				)
+			}
+		}
 		setTasks(newTasks)
+	}
+
+	const handleExpanderClick = (task: Task) => {
+		setTasks(tasks.map(t => (t.id === task.id ? task : t)))
+		console.log('On expander click Id:' + task.id)
 	}
 
 	return (
@@ -67,12 +72,14 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 				onProgressChange={undefined}
 				// onClick={handleClick}
 				onDoubleClick={handleDblClick}
+				onExpanderClick={handleExpanderClick}
 				listCellWidth='155px'
 				columnWidth={columnWidth}
 				locale='ru'
 				barBackgroundColor={COLORS.primary}
 				todayColor={'#0000001F'}
 				barBackgroundSelectedColor={COLORS.primary}
+				projectBackgroundColor={COLORS.darkBlue}
 			/>
 			{isTask && (
 				<EditTask
@@ -101,9 +108,4 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 
 // const handleSelect = (task: Task, isSelected: boolean) => {
 // 	console.log(task.name + ' has ' + (isSelected ? 'selected' : 'unselected'))
-// }
-
-// const handleExpanderClick = (task: Task) => {
-// 	setTasks(tasks.map(t => (t.id === task.id ? task : t)))
-// 	console.log('On expander click Id:' + task.id)
 // }
