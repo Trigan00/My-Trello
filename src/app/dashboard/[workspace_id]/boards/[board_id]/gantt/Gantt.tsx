@@ -26,7 +26,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 
 	const handleClick = (task: Task) => {
 		setIsTask(true)
-		setSelectedTaskId(task.id)
+		setSelectedTaskId(Number(task.id))
 	}
 
 	const handleDblClick = (task: Task) => {

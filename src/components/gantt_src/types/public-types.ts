@@ -11,7 +11,7 @@ export enum ViewMode {
 }
 export type TaskType = 'task' | 'milestone' | 'project'
 export interface Task {
-	id: number
+	id: string
 	type: TaskType
 	name: string
 	start: Date
@@ -28,7 +28,7 @@ export interface Task {
 	}
 	isDisabled?: boolean
 	project?: string
-	dependencies?: number[]
+	dependencies?: string[]
 	hideChildren?: boolean
 	displayOrder?: number
 }
@@ -131,11 +131,11 @@ export interface StylingOption {
 		fontSize: string
 		locale: string
 		tasks: Task[]
-		selectedTaskId: number
+		selectedTaskId: string
 		/**
 		 * Sets selected task by id
 		 */
-		setSelectedTask: (taskId: number) => void
+		setSelectedTask: (taskId: string) => void
 		onExpanderClick: (task: Task) => void
 	}>
 }

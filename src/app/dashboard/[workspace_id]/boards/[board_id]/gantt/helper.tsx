@@ -3,16 +3,16 @@ import { Task } from '@/components/gantt_src'
 export function initTasks() {
 	const currentDate = new Date()
 	const tasks: Task[] = [
-		// {
-		// 	start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-		// 	end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
-		// 	name: 'Some Project',
-		// 	id: 'ProjectSample',
-		// 	progress: 0,
-		// 	type: 'project',
-		// 	hideChildren: false,
-		// 	displayOrder: 1
-		// },
+		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+			name: 'Some Project',
+			id: 'ProjectSample',
+			progress: 0,
+			type: 'project',
+			hideChildren: false,
+			displayOrder: 1
+		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
 			end: new Date(
@@ -23,66 +23,75 @@ export function initTasks() {
 				28
 			),
 			name: 'Idea',
-			id: 15,
+			id: 'Task 0',
 			progress: 0,
 			type: 'task',
-			// project: 'ProjectSample',
+			project: 'ProjectSample',
 			displayOrder: 2
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
 			name: 'Research',
-			id: 12,
+			id: 'Task 1',
 			progress: 0,
-			dependencies: [15],
+			dependencies: ['Task 0'],
 			type: 'task',
-			// project: 'ProjectSample',
+			project: 'ProjectSample',
 			displayOrder: 3
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8, 0, 0),
 			name: 'Discussion with team',
-			id: 14,
+			id: 'Task 2',
 			progress: 0,
-			dependencies: [12],
+			dependencies: ['Task 1'],
 			type: 'task',
-			// project: 'ProjectSample',
+			project: 'ProjectSample',
 			displayOrder: 4
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 9, 0, 0),
 			name: 'Developing',
-			id: 16,
+			id: 'Task 3',
 			progress: 0,
-			dependencies: [14],
+			dependencies: ['Task 2'],
 			type: 'task',
-			// project: 'ProjectSample',
+			project: 'ProjectSample',
 			displayOrder: 5
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 10),
 			name: 'Review',
-			id: 1,
+			id: 'Task 4',
 			type: 'task',
 			progress: 0,
-			dependencies: [14],
-			// project: 'ProjectSample',
+			dependencies: ['Task 2'],
+			project: 'ProjectSample',
 			displayOrder: 6
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
 			name: 'Release',
-			id: 3,
+			id: 'Task 6',
 			progress: 0,
-			type: 'task',
-			dependencies: [1],
-			// project: 'ProjectSample',
+			type: 'milestone',
+			dependencies: ['Task 4'],
+			project: 'ProjectSample',
 			displayOrder: 7
+		},
+		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
+			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
+			name: 'Party Time',
+			id: 'Task 9',
+			progress: 0,
+			isDisabled: true,
+			type: 'task'
 		}
 	]
 	return tasks

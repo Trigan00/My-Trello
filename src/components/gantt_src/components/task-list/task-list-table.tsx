@@ -28,8 +28,8 @@ export const TaskListTableDefault: React.FC<{
 	fontSize: string
 	locale: string
 	tasks: Task[]
-	selectedTaskId: number
-	setSelectedTask: (taskId: number) => void
+	selectedTaskId: string
+	setSelectedTask: (taskId: string) => void
 	onExpanderClick: (task: Task) => void
 }> = ({
 	rowHeight,

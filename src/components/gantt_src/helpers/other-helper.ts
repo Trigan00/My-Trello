@@ -36,7 +36,7 @@ function getChildren(taskList: Task[], task: Task) {
 			t => t.dependencies && t.dependencies.indexOf(task.id) !== -1
 		)
 	} else {
-		tasks = taskList.filter(t => t.project && t.project === String(task.id))
+		tasks = taskList.filter(t => t.project && t.project === task.id)
 	}
 	var taskChildren: Task[] = []
 	tasks.forEach(t => {

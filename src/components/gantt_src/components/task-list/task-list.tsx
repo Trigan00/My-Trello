@@ -15,7 +15,7 @@ export type TaskListProps = {
 	taskListRef: React.RefObject<HTMLDivElement>
 	horizontalContainerClass?: string
 	selectedTask: BarTask | undefined
-	setSelectedTask: (task: number) => void
+	setSelectedTask: (task: string) => void
 	onExpanderClick: (task: Task) => void
 	TaskListHeader: React.FC<{
 		headerHeight: number
@@ -30,8 +30,8 @@ export type TaskListProps = {
 		fontSize: string
 		locale: string
 		tasks: Task[]
-		selectedTaskId: number
-		setSelectedTask: (taskId: number) => void
+		selectedTaskId: string
+		setSelectedTask: (taskId: string) => void
 		onExpanderClick: (task: Task) => void
 	}>
 }
@@ -67,7 +67,7 @@ export const TaskList: React.FC<TaskListProps> = ({
 		fontSize,
 		rowWidth
 	}
-	const selectedTaskId = (selectedTask && selectedTask.id) as number
+	const selectedTaskId = selectedTask ? selectedTask.id : ''
 	const tableProps = {
 		rowHeight,
 		rowWidth,

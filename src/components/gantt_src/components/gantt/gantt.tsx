@@ -367,7 +367,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 	/**
 	 * Task select event
 	 */
-	const handleSelectedTask = (taskId: number) => {
+	const handleSelectedTask = (taskId: string) => {
 		const newSelectedTask = barTasks.find(t => t.id === taskId)
 		const oldSelectedTask = barTasks.find(
 			t => !!selectedTask && t.id === selectedTask.id

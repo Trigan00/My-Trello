@@ -29,7 +29,7 @@ export type TaskGanttContentProps = {
 	rtl: boolean
 	setGanttEvent: (value: GanttEvent) => void
 	setFailedTask: (value: BarTask | null) => void
-	setSelectedTask: (taskId: number) => void
+	setSelectedTask: (taskId: string) => void
 } & EventOption
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
