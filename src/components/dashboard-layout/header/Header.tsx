@@ -5,21 +5,13 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useMutation } from '@tanstack/react-query'
-import { authService } from '@/services/auth.service'
 import { SITE_NAME } from '@/constants/seo.constants'
 import Image from 'next/image'
 import { COLORS } from '@/constants/color.constants'
+import AccountPopover from './account-popover'
 import NextLink from 'next/link'
+import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 
-const settings = ['Профиль', 'Тариф', 'Выйти']
 export const headerHeight: number = 74
 
 interface IHeader {
@@ -27,24 +19,6 @@ interface IHeader {
 }
 
 export function Header({ toggleDrawer }: IHeader) {
-	const router = useRouter()
-
-	const { mutate } = useMutation({
-		mutationKey: ['logout'],
-		mutationFn: () => authService.logout(),
-		onSuccess: () => router.push('/auth')
-	})
-	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-
-	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElUser(event.currentTarget)
-	}
-
-	const handleCloseUserMenu = (setting: string) => {
-		if (setting === 'Выйти') mutate()
-		setAnchorElUser(null)
-	}
-
 	return (
 		<AppBar
 			position='absolute' //absolute || static
@@ -78,7 +52,6 @@ export function Header({ toggleDrawer }: IHeader) {
 					<Typography
 						variant='h6'
 						noWrap
-						component='a'
 						color='primary'
 						sx={{
 							ml: '45px',
@@ -87,57 +60,14 @@ export function Header({ toggleDrawer }: IHeader) {
 							fontSize: '24px',
 							cursor: 'pointer'
 						}}
+						component={NextLink}
+						href={DASHBOARD_PAGES.HOME}
 					>
 						{SITE_NAME}
 					</Typography>
 				</Box>
 			</Toolbar>
-			<Box>
-				<Tooltip title='Профиль'>
-					<IconButton
-						onClick={handleOpenUserMenu}
-						sx={{ p: 0 }}
-					>
-						<Avatar
-							alt='Remy Sharp' // TODO set RealName
-							// src='/static/images/avatar/2.jpg'
-							sx={{
-								width: '50px',
-								height: '50px'
-							}}
-						/>
-					</IconButton>
-				</Tooltip>
-				<Menu
-					sx={{ mt: '45px' }}
-					id='menu-appbar'
-					anchorEl={anchorElUser}
-					anchorOrigin={{
-						vertical: 'top',
-						horizontal: 'right'
-					}}
-					keepMounted
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'right'
-					}}
-					open={Boolean(anchorElUser)}
-					onClose={handleCloseUserMenu}
-				>
-					{settings.map(setting => (
-						<MenuItem
-							key={setting}
-							onClick={() => handleCloseUserMenu(setting)}
-						>
-							{setting === 'Выйти' ? (
-								<Typography textAlign='center'>{setting}</Typography>
-							) : (
-								<Typography textAlign='center'>{setting}</Typography>
-							)}
-						</MenuItem>
-					))}
-				</Menu>
-			</Box>
+			<AccountPopover />
 		</AppBar>
 	)
 }
