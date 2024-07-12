@@ -13,6 +13,8 @@ import { authService } from '@/services/auth.service'
 import { useMutation } from '@tanstack/react-query'
 import NextLink from 'next/link'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+import { Stack } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
 
 const MENU_OPTIONS = [
 	{
@@ -86,21 +88,37 @@ export default function AccountPopover() {
 					}
 				}}
 			>
-				<Box sx={{ my: 1.5, px: 2 }}>
-					<Typography
-						variant='subtitle2'
-						noWrap
-					>
-						{'Ayaz'}
-					</Typography>
-					<Typography
-						variant='body2'
-						sx={{ color: 'text.secondary' }}
-						noWrap
-					>
-						{'Ayaz@mailk.ru'}
-					</Typography>
-				</Box>
+				<Stack
+					direction='row'
+					sx={{
+						my: 1.5,
+						px: 2,
+						alignItems: 'center',
+						justifyContent: 'space-between'
+					}}
+				>
+					<Box>
+						<Typography
+							variant='subtitle2'
+							noWrap
+						>
+							{'Ayaz'}
+						</Typography>
+						<Typography
+							variant='body2'
+							sx={{ color: 'text.secondary' }}
+							noWrap
+						>
+							{'Ayaz@mailk.ru'}
+						</Typography>
+					</Box>
+					<IconButton size='small'>
+						<EditIcon
+							sx={{ color: 'text.secondary' }}
+							fontSize='small'
+						/>
+					</IconButton>
+				</Stack>
 
 				<Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -113,6 +131,7 @@ export default function AccountPopover() {
 						{option.label}
 					</MenuItem>
 				))}
+				<MenuItem>Смена пароля</MenuItem>
 
 				<Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 

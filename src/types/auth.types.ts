@@ -11,6 +11,12 @@ export interface IUser {
 	role: ROLES
 }
 
+export interface IProfile {
+	username: string
+	telegram_url: string
+	email: string
+}
+
 export interface IAuthForm {
 	email: string
 	password: string
