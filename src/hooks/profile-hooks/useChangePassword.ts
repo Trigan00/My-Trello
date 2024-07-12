@@ -3,12 +3,13 @@ import { errorCatch } from '@/api/error'
 import { toast } from 'sonner'
 import { accountService } from '@/services/account.service'
 
-export function useChangePassword() {
+export function useChangePassword(onSuccessFunc: () => void) {
 	const { mutate: changePassword, isPending } = useMutation({
 		mutationKey: ['edit profile'],
 		mutationFn: (data: { old_password: string; new_password: string }) =>
 			accountService.changePassword(data),
 		onSuccess(res) {
+			onSuccessFunc()
 			toast.success(res.data.message)
 		},
 		onError(error: any) {

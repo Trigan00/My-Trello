@@ -13,8 +13,11 @@ import { authService } from '@/services/auth.service'
 import { useMutation } from '@tanstack/react-query'
 import NextLink from 'next/link'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
-import { Stack } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
+import { Skeleton, Stack } from '@mui/material'
+import { useProfile } from '@/hooks/profile-hooks/useProfile'
+import shortenText from '@/helpers/shortenText'
+import { EditProfile } from './EditProfile'
+import { EditPassword } from './ChangePassword'
 
 const MENU_OPTIONS = [
 	{
@@ -31,6 +34,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
 	const router = useRouter()
+	const { profile } = useProfile()
 
 	const { mutate } = useMutation({
 		mutationKey: ['logout'],
@@ -47,6 +51,15 @@ export default function AccountPopover() {
 		setOpen(null)
 	}
 
+	if (!profile) {
+		return (
+			<Skeleton
+				variant='circular'
+				width={40}
+				height={40}
+			/>
+		)
+	}
 	return (
 		<>
 			<IconButton
@@ -62,14 +75,14 @@ export default function AccountPopover() {
 			>
 				<Avatar
 					src={'/'}
-					alt={'Ayaz'}
+					alt={profile.username}
 					sx={{
 						width: 36,
 						height: 36,
 						border: theme => `solid 2px ${theme.palette.background.default}`
 					}}
 				>
-					{'Ayaz'.charAt(0).toUpperCase()}
+					{profile.username.charAt(0).toUpperCase()}
 				</Avatar>
 			</IconButton>
 
@@ -102,22 +115,20 @@ export default function AccountPopover() {
 							variant='subtitle2'
 							noWrap
 						>
-							{'Ayaz'}
+							{shortenText(profile.username, 14)}
 						</Typography>
 						<Typography
 							variant='body2'
 							sx={{ color: 'text.secondary' }}
 							noWrap
 						>
-							{'Ayaz@mailk.ru'}
+							{shortenText(profile.telegram_url || profile.email, 14)}
 						</Typography>
 					</Box>
-					<IconButton size='small'>
-						<EditIcon
-							sx={{ color: 'text.secondary' }}
-							fontSize='small'
-						/>
-					</IconButton>
+					<EditProfile
+						username={profile.username}
+						telegram_url={profile.telegram_url}
+					/>
 				</Stack>
 
 				<Divider sx={{ borderStyle: 'dashed' }} />
@@ -131,8 +142,7 @@ export default function AccountPopover() {
 						{option.label}
 					</MenuItem>
 				))}
-				<MenuItem>Смена пароля</MenuItem>
-
+				<EditPassword />
 				<Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
 				<MenuItem

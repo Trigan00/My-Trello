@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { IProfile } from '@/types/auth.types'
 import { accountService } from '@/services/account.service'
 
-export function useEditProfile() {
+export function useEditProfile(onSuccessFunc: () => void) {
 	const queryClient = useQueryClient()
 
 	const { mutate: editProfile, isPending } = useMutation({
@@ -15,6 +15,7 @@ export function useEditProfile() {
 			queryClient.invalidateQueries({
 				queryKey: ['profile']
 			})
+			onSuccessFunc()
 			toast.success(res.data.message)
 		},
 		onError(error: any) {
