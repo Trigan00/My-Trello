@@ -45,7 +45,7 @@ export default function MembersSelect({
 		const remove = personName.filter(x => !arr.includes(x))
 		const add = arr.filter(x => !personName.includes(x))
 		if (remove.length)
-			removeFunc(all_users && all_users.find(u => u.email === remove[0]))
+			removeFunc(members && members.find(u => u.email === remove[0]))
 		if (add.length)
 			addFunc(all_users && all_users.find(u => u.email === add[0]))
 		setPersonName(arr)

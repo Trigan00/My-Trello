@@ -23,55 +23,46 @@ export function GeneralStatistics({ id, isWorkspace }: GeneralStatisticsI) {
 		year: date.year()
 	})
 
-	const all = stat.all.reduce((acc: number, el) => acc + (el || 0), 0)
-	const pieOpt = [
-		(stat.in.reduce((acc: number, el) => acc + (el || 0), 0) / all) * 100,
-		(stat.not_in.reduce((acc: number, el) => acc + (el || 0), 0) / all) * 100
-	]
-
 	return (
-		<Box mt={5}>
-			{isLoading ? (
+		<Box mt={3}>
+			<LocalizationProvider
+				dateAdapter={AdapterDayjs}
+				adapterLocale={'ru'}
+			>
+				<DatePicker
+					label={'месяц и год'}
+					views={['month', 'year']}
+					value={date}
+					onChange={newValue => setDate(newValue || dayjs())}
+				/>
+			</LocalizationProvider>
+			{!stat ? (
 				<Loader />
 			) : (
-				<>
-					<LocalizationProvider
-						dateAdapter={AdapterDayjs}
-						adapterLocale={'ru'}
-					>
-						<DatePicker
-							label={'месяц и год'}
-							views={['month', 'year']}
-							value={date}
-							onChange={newValue => setDate(newValue || dayjs())}
-						/>
-					</LocalizationProvider>
-
+				<Grid
+					mt={1}
+					container
+					rowSpacing={4.5}
+					columnSpacing={2.75}
+				>
 					<Grid
-						mt={1}
-						container
-						rowSpacing={4.5}
-						columnSpacing={2.75}
+						item
+						xs={12}
+						lg={8}
 					>
-						<Grid
-							item
-							xs={12}
-							lg={8}
-						>
-							<IncomeAreaChart stat={stat} />
-						</Grid>
-						<Grid
-							item
-							xs={12}
-							lg={4}
-						>
-							<PieChart
-								chartSeries={pieOpt}
-								labels={['Выполнено', 'Просрочено']}
-							/>
-						</Grid>
+						<IncomeAreaChart stat={stat} />
 					</Grid>
-				</>
+					<Grid
+						item
+						xs={12}
+						lg={4}
+					>
+						<PieChart
+							chartSeries={stat.pie_series.map(el => el.value)}
+							labels={stat.pie_series.map(el => el.name)}
+						/>
+					</Grid>
+				</Grid>
 			)}
 		</Box>
 	)

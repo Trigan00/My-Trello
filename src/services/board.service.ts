@@ -1,5 +1,11 @@
 import { axiosWithAuth } from '@/api/interceptors'
-import { BoardsResponse, boardMembersResponseI } from '@/types/board.types'
+import {
+	BoardsResponse,
+	TimeLineI,
+	boardMembersResponseI
+} from '@/types/board.types'
+
+export const per_Page = 10
 
 class BoardsService {
 	private BASE_URL = '/boards'
@@ -69,6 +75,19 @@ class BoardsService {
 	async deleteMemberFromBoard(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
 			`${this.MEMBERS_URL}/${user_id}/`
+		)
+		return response
+	}
+
+	async getLogs(board_id: number, page: number, per_page = per_Page) {
+		const response = await axiosWithAuth.get<TimeLineI>(
+			`${this.BASE_URL}/logs/${board_id}/`,
+			{
+				params: {
+					page,
+					per_page
+				}
+			}
 		)
 		return response
 	}

@@ -27,7 +27,7 @@ export const TaskListHeaderDefault: React.FC<{
 						minWidth: rowWidth
 					}}
 				>
-					&nbsp;Название
+					{/* &nbsp;Название */}
 				</div>
 				{/* <div
           className={styles.ganttTable_HeaderSeparator}

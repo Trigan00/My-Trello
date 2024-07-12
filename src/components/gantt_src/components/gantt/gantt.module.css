@@ -19,5 +19,5 @@
 	outline: none;
 	position: relative;
 	overflow: auto;
-	scrollbar-width: thin;
+	/* scrollbar-width: thin; */
 }

@@ -466,7 +466,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 					scrollY={scrollY}
 					scrollX={scrollX}
 				/>
-				{ganttEvent.changedTask && (
+				{/* {ganttEvent.changedTask && (
 					<Tooltip
 						arrowIndent={arrowIndent}
 						rowHeight={rowHeight}
@@ -483,7 +483,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 						rtl={rtl}
 						svgWidth={svgWidth}
 					/>
-				)}
+				)} */}
 				{/* <VerticalScroll
 					ganttFullHeight={ganttFullHeight}
 					ganttHeight={ganttHeight}

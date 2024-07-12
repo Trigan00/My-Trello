@@ -20,3 +20,17 @@ export type BoardMemberI = Omit<IUser, 'role'>
 export interface boardMembersResponseI {
 	members: BoardMemberI[]
 }
+
+export interface TimeLineItemI {
+	id: number
+	log_info: string
+	time: string
+	task_name: string | null
+	task_id: number
+	action: string
+}
+
+export interface TimeLineI {
+	count: number
+	logs: Array<TimeLineItemI>
+}

@@ -1,4 +1,4 @@
-import { Task } from './gantt_src'
+import { Task } from '@/components/gantt_src'
 
 export function initTasks() {
 	const currentDate = new Date()

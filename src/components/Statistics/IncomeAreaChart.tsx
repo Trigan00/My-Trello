@@ -1,5 +1,5 @@
 import { MyCard } from '@/components/UI/MyCard'
-import { GeneralStatistics } from '@/types/statistics.types'
+import { GeneralStatisticsResI } from '@/types/statistics.types'
 import { Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ApexOptions } from 'apexcharts'
@@ -26,7 +26,11 @@ const areaChartOptions: ApexOptions = {
 	}
 }
 
-export default function IncomeAreaChart({ stat }: { stat: GeneralStatistics }) {
+export default function IncomeAreaChart({
+	stat
+}: {
+	stat: GeneralStatisticsResI
+}) {
 	const theme = useTheme()
 	const { primary, secondary } = theme.palette.text
 	const line = theme.palette.divider
@@ -39,7 +43,11 @@ export default function IncomeAreaChart({ stat }: { stat: GeneralStatistics }) {
 			theme.palette.error.main
 		],
 		xaxis: {
-			categories: stat.all.reduce((acc: number) => acc + 1, 0),
+			categories: 31,
+			// categories: stat.linear_series[0].data.reduce(
+			// 	(acc: number) => acc + 1,
+			// 	0
+			// ),
 			axisBorder: {
 				show: true,
 				color: line
@@ -58,22 +66,6 @@ export default function IncomeAreaChart({ stat }: { stat: GeneralStatistics }) {
 		}
 	}
 
-	const series = [
-		{
-			name: 'Всего',
-			// data: [1, 2, null, 3, 4]
-			data: stat.all
-		},
-		{
-			name: 'Выполнено',
-			data: stat.in
-		},
-		{
-			name: 'Просрочено',
-			data: stat.not_in
-		}
-	]
-
 	return (
 		<MyCard
 			variant='shadowed'
@@ -91,7 +83,7 @@ export default function IncomeAreaChart({ stat }: { stat: GeneralStatistics }) {
 			</Typography>
 			<ReactApexChart
 				options={options}
-				series={series}
+				series={stat.linear_series}
 				type='area'
 				height={450}
 				width={'100%'}

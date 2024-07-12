@@ -28,6 +28,7 @@ import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { COLORS } from '@/constants/color.constants'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
+import { useIsAdmin } from '@/hooks/useIsAdmin'
 
 interface EditTaskI {
 	task_id: number
@@ -46,7 +47,7 @@ export function EditTask({
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
 	const { columns } = useGetColumns(board_id)
-
+	const isAdmin = useIsAdmin()
 	const [name, setName] = useState('')
 	const [description, setDescription] = useState<string>('')
 	const [errMsg, setErrMsg] = useState('')
@@ -147,24 +148,26 @@ export function EditTask({
 								mini={true}
 							/>
 						</Box>
-						<Tooltip
-							title='Проверить'
-							placement='top'
-						>
-							<IconButton
-								aria-label='check'
-								sx={{
-									height: 'fit-content',
-									backgroundColor: isVerified ? COLORS.primary : 'none',
-									'&:hover': {
-										backgroundColor: COLORS.darkBlue
-									}
-								}}
-								onClick={changeTaskStatus}
+						{isAdmin && (
+							<Tooltip
+								title='Проверить'
+								placement='top'
 							>
-								<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
-							</IconButton>
-						</Tooltip>
+								<IconButton
+									aria-label='check'
+									sx={{
+										height: 'fit-content',
+										backgroundColor: isVerified ? COLORS.primary : 'none',
+										'&:hover': {
+											backgroundColor: COLORS.darkBlue
+										}
+									}}
+									onClick={changeTaskStatus}
+								>
+									<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
+								</IconButton>
+							</Tooltip>
+						)}
 					</Box>
 
 					{board_members && members ? (

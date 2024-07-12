@@ -29,7 +29,6 @@ export function NameChanger({ workspace_id }: NameChangerI) {
 
 	return (
 		<>
-			<Heading title={Workspaces?.find(ws => ws.id == workspace_id)?.name} />
 			<MyCard
 				variant='shadowed'
 				sx={{ mt: '20px' }}

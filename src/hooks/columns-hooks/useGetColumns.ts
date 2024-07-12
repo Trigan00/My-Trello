@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 
 export function useGetColumns(board_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['columns'],
+		queryKey: ['columns', board_id],
 		queryFn: () => columnService.getColumns(board_id)
 	})
 
