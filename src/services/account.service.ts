@@ -19,7 +19,7 @@ class AccountService {
 
 	async changePassword(data: { old_password: string; new_password: string }) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
-			`${this.BASE_URL}/`,
+			`${this.BASE_URL}/change_password`,
 			{ ...data }
 		)
 		return response
