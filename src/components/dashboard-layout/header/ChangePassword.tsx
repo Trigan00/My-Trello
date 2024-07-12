@@ -11,8 +11,13 @@ export function EditPassword() {
 		register,
 		handleSubmit,
 		reset,
+		watch,
 		formState: { errors }
-	} = useForm<{ old_password: string; new_password: string }>({})
+	} = useForm<{
+		old_password: string
+		new_password: string
+		confirm_password: string
+	}>({})
 	const { changePassword, isPending } = useChangePassword(() => {
 		reset()
 		setIsModal(false)
@@ -69,6 +74,24 @@ export function EditPassword() {
 					error={!!errors.new_password}
 					label='Введите новый пароль'
 					helperText={errors.new_password?.message}
+					variant='outlined'
+					margin='normal'
+					size='small'
+					fullWidth
+					required
+				/>
+				<TextField
+					{...register('confirm_password', {
+						required: 'Не может быть пустым',
+						validate: {
+							matchesPassword: value =>
+								value === watch('new_password') || 'Пароли не совпадают'
+						}
+					})}
+					type='password'
+					error={!!errors.confirm_password}
+					label='Повторите новый пароль'
+					helperText={errors.confirm_password?.message}
 					variant='outlined'
 					margin='normal'
 					size='small'
