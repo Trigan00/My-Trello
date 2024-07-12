@@ -31,7 +31,7 @@ const pages: Array<{
 		Icon: (
 			<WaterfallChartIcon
 				color='inherit'
-				sx={{ color: 'text.secondary', transform: 'rotate(-90deg)' }}
+				sx={{ transform: 'rotate(-90deg)' }}
 			/>
 		),
 		isAdminReq: false
@@ -39,23 +39,13 @@ const pages: Array<{
 	{
 		title: 'Статистика',
 		route: 'statistics',
-		Icon: (
-			<BarChartIcon
-				color='inherit'
-				sx={{ color: 'text.secondary' }}
-			/>
-		),
+		Icon: <BarChartIcon color='inherit' />,
 		isAdminReq: false
 	},
 	{
 		title: 'Журнал',
 		route: 'timeline',
-		Icon: (
-			<TimelineIcon
-				color='inherit'
-				sx={{ color: 'text.secondary' }}
-			/>
-		),
+		Icon: <TimelineIcon color='inherit' />,
 		isAdminReq: true
 	}
 ]
@@ -151,10 +141,7 @@ export default function BoardLayout({
 										setIsSettings(true)
 									}}
 								>
-									<SettingsIcon
-										color='inherit'
-										sx={{ color: 'text.secondary' }}
-									/>
+									<SettingsIcon color='inherit' />
 									<span style={{ marginLeft: '10px' }}>Настройки</span>
 								</MenuItem>
 							)}
