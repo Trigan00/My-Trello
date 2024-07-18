@@ -29,6 +29,7 @@ import { useDeleteTask } from '@/hooks/task-hooks/useDeleteTask'
 import { COLORS } from '@/constants/color.constants'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
+import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
 
 interface EditTaskI {
 	task_id: number
@@ -48,12 +49,14 @@ export function EditTask({
 	const { members } = useTaskMembers(task_id)
 	const { columns } = useGetColumns(board_id)
 	const isAdmin = useIsAdmin()
+
 	const [name, setName] = useState('')
 	const [description, setDescription] = useState<string>('')
 	const [errMsg, setErrMsg] = useState('')
 	const [startTime, setStartTime] = useState<Dayjs | null>(null)
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
 	const [isVerified, setIsVerified] = useState(false)
+	const [dependence, setDependence] = useState<number[]>([])
 	const [deleteModal, setDeleteModal] = useState(false)
 
 	const { updateTask, isPending } = useUpdateTask(undefined, () =>
@@ -70,6 +73,7 @@ export function EditTask({
 			setStartTime(task.start_time ? dayjs(task.start_time) : null)
 			setEndTime(task.deadline ? dayjs(task.deadline) : null)
 			setIsVerified(task.verified)
+			setDependence(task.relation_id)
 		}
 	}, [task])
 
@@ -81,7 +85,8 @@ export function EditTask({
 				name,
 				description,
 				start_time: startTime?.format() || null,
-				deadline: endTime?.format() || null
+				deadline: endTime?.format() || null,
+				relation_id: dependence
 			}
 		})
 	}
@@ -188,6 +193,12 @@ export function EditTask({
 							}}
 						/>
 					)}
+					<TaskDependenceSelect
+						board_id={board_id}
+						dependence={dependence}
+						setDependence={setDependence}
+						currentTask_id={task_id}
+					/>
 					<TextField
 						value={name}
 						onChange={e => setName(e.target.value)}

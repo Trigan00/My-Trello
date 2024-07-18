@@ -1,14 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Box, Button, Skeleton, TextField, Typography } from '@mui/material'
+import { Dispatch, SetStateAction, useState } from 'react'
+import { Box, Button, TextField, Typography } from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
 import MyModal from '@/components/UI/MyModal'
-import MembersSelect from '@/components/dashboard-layout/MembersSelect'
-import { BoardMemberI } from '@/types/board.types'
 import { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
-import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
 import { useCreateTask } from '@/hooks/task-hooks/useCreateTask'
+import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
 
 interface KanbanTaskFormI {
 	board_id: number
@@ -23,9 +20,7 @@ export function KanbanTaskForm({
 	isModal,
 	setIsModal
 }: KanbanTaskFormI) {
-	const { members: board_members } = useBoardMembers(board_id)
-
-	const [members, setMembers] = useState<BoardMemberI[] | []>([])
+	const [dependence, setDependence] = useState<number[]>([])
 	const [name, setName] = useState('')
 	const [description, setDescription] = useState<string>('')
 	const [errMsg, setErrMsg] = useState('')
@@ -45,25 +40,9 @@ export function KanbanTaskForm({
 			column_id,
 			start_time: startTime?.format() || null,
 			deadline: endTime?.format() || null,
+			relation_id: dependence,
 			verified: false
 		})
-	}
-
-	const addUser = (member: BoardMemberI | undefined) => {
-		member &&
-			setMembers(prev => {
-				const arr = [...prev]
-				arr.push({
-					id: member.id,
-					email: member.email,
-					username: member.username
-				})
-				return arr
-			})
-	}
-
-	const removeUser = (member: BoardMemberI | undefined) => {
-		member && setMembers(prev => prev.filter(u => u.id !== member.id))
 	}
 
 	function onClose() {
@@ -72,7 +51,7 @@ export function KanbanTaskForm({
 		setEndTime(null)
 		setName('')
 		setDescription('')
-		setMembers([])
+		setDependence([])
 	}
 
 	return (
@@ -111,24 +90,12 @@ export function KanbanTaskForm({
 				/>
 			</Box>
 
-			{board_members ? (
-				<MembersSelect
-					all_users={board_members}
-					addFunc={addUser}
-					removeFunc={removeUser}
-					members={members as BoardMemberI[]}
-				/>
-			) : (
-				<Skeleton
-					variant='rounded'
-					sx={{
-						mt: 2,
-						height: '40px',
-						width: '100%',
-						borderRadius: '15px'
-					}}
-				/>
-			)}
+			<TaskDependenceSelect
+				board_id={board_id}
+				dependence={dependence}
+				setDependence={setDependence}
+			/>
+
 			<TextField
 				value={name}
 				onChange={e => setName(e.target.value)}

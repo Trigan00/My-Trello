@@ -1,9 +1,4 @@
-import type {
-	FullTaskI,
-	TaskDependence,
-	TaskI,
-	TypeTaskFormState
-} from '@/types/task.types'
+import type { FullTaskI, TaskI, TypeTaskFormState } from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 import { BoardMemberI } from '@/types/board.types'
@@ -82,7 +77,7 @@ class TaskService {
 	}
 
 	async getTaskDependencies(task_id: number) {
-		const response = await axiosWithAuth.get<{ tasks: TaskDependence[] }>(
+		const response = await axiosWithAuth.get<{ tasks: TaskI[] }>(
 			`${this.BASE_URL}/${task_id}/dependence/`
 		)
 		return response
