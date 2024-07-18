@@ -13,9 +13,9 @@ export interface FullTaskI {
 	name: string
 	description: string | null
 	column_id: number
-	start_time: string | null
-	deadline: string | null
-	relation_id: number[]
+	start: string | null
+	end: string | null
+	dependencies_id: number[]
 	verified: boolean
 }
 

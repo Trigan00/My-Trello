@@ -4,16 +4,23 @@ import React, { useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
 import { getStartEndDateForProject, initTasks } from './helper'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
 import { EditTask } from '../task_info/EditTask'
+import { useGantt } from '@/hooks/task-hooks/useGantt'
+import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
+import dayjs from 'dayjs'
 
 export function GanttComponent({ board_id }: { board_id: number }) {
+	const [sortType, setSort] = useState<'default' | 'columns'>('columns')
+	const { tasks, setTasks } = useGantt({ board_id, sort_by: sortType })
+	const { updateTask } = useUpdateTask()
+
 	const [view, setView] = useState<ViewMode>(ViewMode.Day)
 	const [isTask, setIsTask] = useState(false)
 	const [selectedTaskId, setSelectedTaskId] = useState<number>()
-	const [tasks, setTasks] = React.useState<Task[]>(initTasks())
+	// const [tasks, setTasks] = React.useState<Task[]>(initTasks())
 
 	let columnWidth = 65
 	if (view === ViewMode.Year) {
@@ -34,6 +41,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	}
 
 	const handleTaskChange = (task: Task) => {
+		if (!tasks) return
 		console.log('start:' + task.start)
 		console.log('end:' + task.end)
 		let newTasks = tasks.map(t => (t.id === task.id ? task : t))
@@ -51,10 +59,18 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 				)
 			}
 		}
+		updateTask({
+			id: Number(task.id),
+			data: {
+				start: dayjs(task.start).format(),
+				end: dayjs(task.end).format()
+			}
+		})
 		setTasks(newTasks)
 	}
 
 	const handleExpanderClick = (task: Task) => {
+		if (!tasks) return
 		setTasks(tasks.map(t => (t.id === task.id ? task : t)))
 		console.log('On expander click Id:' + task.id)
 	}
@@ -64,23 +80,33 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 			className='Wrapper'
 			p={4}
 		>
+			<Button
+				onClick={() =>
+					setSort(prev => (prev === 'columns' ? 'default' : 'columns'))
+				}
+			>
+				{sortType}
+			</Button>
 			<ViewSwitcher onViewModeChange={viewMode => setView(viewMode)} />
-			<Gantt
-				tasks={tasks}
-				viewMode={view}
-				onDateChange={handleTaskChange}
-				onProgressChange={undefined}
-				// onClick={handleClick}
-				onDoubleClick={handleDblClick}
-				onExpanderClick={handleExpanderClick}
-				listCellWidth='155px'
-				columnWidth={columnWidth}
-				locale='ru'
-				barBackgroundColor={COLORS.primary}
-				todayColor={'#0000001F'}
-				barBackgroundSelectedColor={COLORS.primary}
-				projectBackgroundColor={COLORS.darkBlue}
-			/>
+			{tasks && (
+				<Gantt
+					tasks={tasks}
+					viewMode={view}
+					onDateChange={handleTaskChange}
+					onProgressChange={undefined}
+					// onClick={handleClick}
+					onDoubleClick={handleDblClick}
+					onExpanderClick={handleExpanderClick}
+					listCellWidth='155px'
+					columnWidth={columnWidth}
+					locale='ru'
+					barBackgroundColor={COLORS.primary}
+					todayColor={'#0000001F'}
+					barBackgroundSelectedColor={COLORS.primary}
+					projectBackgroundColor={COLORS.darkBlue}
+				/>
+			)}
+
 			{isTask && (
 				<EditTask
 					board_id={board_id}

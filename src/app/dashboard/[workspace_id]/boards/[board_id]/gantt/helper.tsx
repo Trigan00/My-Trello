@@ -29,17 +29,7 @@ export function initTasks() {
 			project: 'ProjectSample'
 			// displayOrder: 2
 		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
-			name: 'Research',
-			id: 'Task 1',
-			progress: 0,
-			dependencies: ['Task 0'],
-			type: 'task',
-			project: 'ProjectSample'
-			// displayOrder: 3
-		},
+
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8, 0, 0),
@@ -85,6 +75,17 @@ export function initTasks() {
 			// displayOrder: 7
 		},
 		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
+			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
+			name: 'Research',
+			id: 'Task 1',
+			progress: 0,
+			dependencies: ['Task 0'],
+			type: 'task',
+			project: 'ProjectSample'
+			// displayOrder: 3
+		},
+		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
 			name: 'Party Time',
@@ -115,7 +116,7 @@ export function initTasks() {
 			name: 'Idea 2',
 			id: 'Task test',
 			progress: 0,
-			dependencies: ['Task 1'],
+			// dependencies: ['Task 1'],
 			type: 'task',
 			project: 'ProjectSample 2'
 			// displayOrder: 2

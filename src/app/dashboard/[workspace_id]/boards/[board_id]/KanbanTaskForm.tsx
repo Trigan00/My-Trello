@@ -38,9 +38,9 @@ export function KanbanTaskForm({
 			name,
 			description: description ? description : null,
 			column_id,
-			start_time: startTime?.format() || null,
-			deadline: endTime?.format() || null,
-			relation_id: dependence,
+			start: startTime?.format() || null,
+			end: endTime?.format() || null,
+			dependencies_id: dependence,
 			verified: false
 		})
 	}

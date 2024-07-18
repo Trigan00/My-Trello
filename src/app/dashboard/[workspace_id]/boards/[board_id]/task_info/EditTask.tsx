@@ -70,10 +70,10 @@ export function EditTask({
 		if (task) {
 			setName(task.name || '')
 			setDescription(task.description || '')
-			setStartTime(task.start_time ? dayjs(task.start_time) : null)
-			setEndTime(task.deadline ? dayjs(task.deadline) : null)
+			setStartTime(task.start ? dayjs(task.start) : null)
+			setEndTime(task.end ? dayjs(task.end) : null)
 			setIsVerified(task.verified)
-			setDependence(task.relation_id)
+			setDependence(task.dependencies_id)
 		}
 	}, [task])
 
@@ -84,9 +84,9 @@ export function EditTask({
 			data: {
 				name,
 				description,
-				start_time: startTime?.format() || null,
-				deadline: endTime?.format() || null,
-				relation_id: dependence
+				start: startTime?.format() || null,
+				end: endTime?.format() || null,
+				dependencies_id: dependence
 			}
 		})
 	}
