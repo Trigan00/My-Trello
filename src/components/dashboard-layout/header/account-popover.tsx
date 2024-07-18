@@ -34,7 +34,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
 	const router = useRouter()
-	const { profile } = useProfile()
+	const { profile, isLoading } = useProfile()
 
 	const { mutate } = useMutation({
 		mutationKey: ['logout'],
@@ -51,7 +51,7 @@ export default function AccountPopover() {
 		setOpen(null)
 	}
 
-	if (!profile) {
+	if (isLoading) {
 		return (
 			<Skeleton
 				variant='circular'

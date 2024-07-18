@@ -5,20 +5,25 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+const empty: IProfile = {
+	email: '',
+	telegram_url: '',
+	username: ''
+}
 export function useProfile() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['profile'],
 		queryFn: () => accountService.getProfile()
 	})
 
-	const [profile, setProfile] = useState<IProfile | undefined>(data?.data)
+	const [profile, setProfile] = useState<IProfile>(data?.data || empty)
 
 	useEffect(() => {
 		if (error) toast.error(errorCatch(error))
 	}, [error])
 
 	useEffect(() => {
-		setProfile(data?.data)
+		if (data) setProfile(data.data)
 	}, [data?.data])
 
 	return { profile, isLoading }
