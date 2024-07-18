@@ -1,4 +1,9 @@
-import type { FullTaskI, TaskI, TypeTaskFormState } from '@/types/task.types'
+import type {
+	FullTaskI,
+	TaskDependence,
+	TaskI,
+	TypeTaskFormState
+} from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 import { BoardMemberI } from '@/types/board.types'
@@ -72,6 +77,13 @@ class TaskService {
 	async deleteMemberFromTask(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
 			`${this.MEMBERS_URL}/${user_id}/`
+		)
+		return response
+	}
+
+	async getTaskDependencies(task_id: number) {
+		const response = await axiosWithAuth.get<{ tasks: TaskDependence[] }>(
+			`${this.BASE_URL}/${task_id}/dependence/`
 		)
 		return response
 	}
