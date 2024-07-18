@@ -85,7 +85,8 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 		<Tooltip
 			title={
 				<Typography variant='caption'>
-					{task.name}: {task.start.getDate()}.{task.start.getMonth() + 1}.
+					<div>{task.name}</div>
+					{task.start.getDate()}.{task.start.getMonth() + 1}.
 					{task.start.getFullYear()} &#8212; {task.end.getDate()}.
 					{task.end.getMonth() + 1}.{task.end.getFullYear()}
 					{task.end.getTime() - task.start.getTime() !== 0 && (
@@ -97,6 +98,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 				</Typography>
 			}
 			placement='top'
+			disableHoverListener={task.type === 'project'}
 		>
 			<g
 				// onKeyDown={e => {
@@ -136,7 +138,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 					}
 					ref={textRef}
 				>
-					{task.name}
+					{task.type === 'project' ? '' : task.name}
 				</text>
 			</g>
 		</Tooltip>

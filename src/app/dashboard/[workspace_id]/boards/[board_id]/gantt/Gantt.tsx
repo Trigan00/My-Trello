@@ -103,7 +103,8 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 					barBackgroundColor={COLORS.primary}
 					todayColor={'#0000001F'}
 					barBackgroundSelectedColor={COLORS.primary}
-					projectBackgroundColor={COLORS.darkBlue}
+					projectBackgroundColor='#00000000'
+					projectBackgroundSelectedColor='#00000000'
 				/>
 			)}
 
