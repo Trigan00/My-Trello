@@ -101,6 +101,7 @@ export function Tariffs() {
 						key={title}
 						variant='outlined'
 						sx={{
+							boxSizing: 'border-box',
 							p: 2,
 							width: '100%',
 							display: 'flex',
@@ -116,7 +117,7 @@ export function Tariffs() {
 								{title}
 							</Typography>
 							<Typography
-								variant='subtitle2'
+								variant='subtitle1'
 								my={1}
 							>
 								{subtitle}
