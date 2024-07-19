@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
 import { getStartEndDateForProject, initTasks } from './helper'
-import { Box, Button } from '@mui/material'
+import { Box, Button, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
 import { EditTask } from '../task_info/EditTask'
@@ -84,14 +84,12 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 			className='Wrapper'
 			p={4}
 		>
-			<Button
-				onClick={() => {
-					setSort(prev => (prev === 'columns' ? 'default' : 'columns'))
-				}}
-			>
-				{sortType}
-			</Button>
-			<ViewSwitcher onViewModeChange={viewMode => setView(viewMode)} />
+			<ViewSwitcher
+				sortType={sortType}
+				setSort={setSort}
+				view={view}
+				setView={setView}
+			/>
 			{tasks && (
 				<Gantt
 					tasks={tasks}
