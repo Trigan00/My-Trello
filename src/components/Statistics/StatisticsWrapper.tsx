@@ -1,6 +1,12 @@
 'use client'
 
-import { Box, Button, ButtonGroup } from '@mui/material'
+import {
+	Box,
+	Button,
+	ButtonGroup,
+	ToggleButton,
+	ToggleButtonGroup
+} from '@mui/material'
 import { useState } from 'react'
 import { GeneralStatistics } from './GeneralStatistics'
 import { MembersStatistics } from './MembersStatistics'
@@ -13,6 +19,14 @@ interface StatisticsWrapperI {
 
 export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 	const [isGeneral, setISGeneral] = useState(true)
+
+	const handleChange = (
+		event: React.MouseEvent<HTMLElement>,
+		variant: boolean
+	) => {
+		setISGeneral(variant)
+	}
+
 	const isAdmin = useIsAdmin()
 	return (
 		<Box sx={{ p: 4 }}>
@@ -21,10 +35,26 @@ export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 				justifyContent='center'
 			>
 				{isAdmin && (
-					<ButtonGroup variant='outlined'>
-						<Button onClick={() => setISGeneral(true)}>Основная</Button>
-						<Button onClick={() => setISGeneral(false)}>Участники</Button>
-					</ButtonGroup>
+					<ToggleButtonGroup
+						color='primary'
+						value={isGeneral}
+						exclusive
+						onChange={handleChange}
+						sx={{ textTransform: 'lowercase' }}
+					>
+						<ToggleButton
+							value={true}
+							sx={{ textTransform: 'initial' }}
+						>
+							Основная
+						</ToggleButton>
+						<ToggleButton
+							value={false}
+							sx={{ textTransform: 'initial' }}
+						>
+							Участники
+						</ToggleButton>
+					</ToggleButtonGroup>
 				)}
 			</Box>
 			{isGeneral && isAdmin ? (
