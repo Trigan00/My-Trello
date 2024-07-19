@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
 import { getStartEndDateForProject, initTasks } from './helper'
@@ -14,7 +14,7 @@ import dayjs from 'dayjs'
 
 export function GanttComponent({ board_id }: { board_id: number }) {
 	const [sortType, setSort] = useState<'default' | 'columns'>('columns')
-	const { tasks, setTasks } = useGantt({ board_id, sort_by: sortType })
+	const { tasks, setTasks, refetch } = useGantt({ board_id, sort_by: sortType })
 	const { updateTask } = useUpdateTask()
 
 	const [view, setView] = useState<ViewMode>(ViewMode.Day)
@@ -30,6 +30,10 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	} else if (view === ViewMode.Week) {
 		columnWidth = 250
 	}
+
+	useEffect(() => {
+		refetch()
+	}, [sortType])
 
 	const handleClick = (task: Task) => {
 		setIsTask(true)
@@ -81,9 +85,9 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 			p={4}
 		>
 			<Button
-				onClick={() =>
+				onClick={() => {
 					setSort(prev => (prev === 'columns' ? 'default' : 'columns'))
-				}
+				}}
 			>
 				{sortType}
 			</Button>

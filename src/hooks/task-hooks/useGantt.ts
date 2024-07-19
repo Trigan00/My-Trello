@@ -13,7 +13,7 @@ export function useGantt({
 	board_id: number
 	sort_by: 'default' | 'columns'
 }) {
-	const { data, isLoading, error } = useQuery({
+	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ['gantt', board_id],
 		queryFn: () => taskService.getGantt(board_id, sort_by)
 	})
@@ -35,5 +35,5 @@ export function useGantt({
 		setTasks(temp)
 	}, [data?.data])
 
-	return { tasks, setTasks, isLoading }
+	return { tasks, refetch, setTasks, isLoading }
 }

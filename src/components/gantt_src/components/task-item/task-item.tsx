@@ -117,9 +117,11 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 					onEventStart('mouseleave', task, e)
 				}}
 				onDoubleClick={e => {
+					if (task.type === 'project') return
 					onEventStart('dblclick', task, e)
 				}}
 				onClick={e => {
+					if (task.type === 'project') return
 					onEventStart('click', task, e)
 				}}
 				onFocus={() => {
