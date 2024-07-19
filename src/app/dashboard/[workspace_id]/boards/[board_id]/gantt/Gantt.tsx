@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
-import { getStartEndDateForProject, initTasks } from './helper'
-import { Box, Button, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { getStartEndDateForProject } from './helper'
+import { Box } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
 import { EditTask } from '../task_info/EditTask'
@@ -20,7 +20,6 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	const [view, setView] = useState<ViewMode>(ViewMode.Day)
 	const [isTask, setIsTask] = useState(false)
 	const [selectedTaskId, setSelectedTaskId] = useState<number>()
-	// const [tasks, setTasks] = React.useState<Task[]>(initTasks())
 
 	let columnWidth = 65
 	if (view === ViewMode.Year) {
