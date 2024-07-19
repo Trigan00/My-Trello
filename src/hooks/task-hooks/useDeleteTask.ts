@@ -14,6 +14,9 @@ export function useDeleteTask(onDelete: () => void) {
 			queryClient.invalidateQueries({
 				queryKey: ['tasks']
 			})
+			queryClient.invalidateQueries({
+				queryKey: ['gantt']
+			})
 			onDelete()
 			toast.success(res.data.message)
 		},

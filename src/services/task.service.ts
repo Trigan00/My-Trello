@@ -2,6 +2,7 @@ import type { FullTaskI, TaskI, TypeTaskFormState } from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 import { BoardMemberI } from '@/types/board.types'
+import { Task } from '@/components/gantt_src'
 
 class TaskService {
 	private BASE_URL = '/tasks'
@@ -72,6 +73,19 @@ class TaskService {
 	async deleteMemberFromTask(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
 			`${this.MEMBERS_URL}/${user_id}/`
+		)
+		return response
+	}
+
+	async getGantt(board_id: number, sort_by: 'default' | 'columns') {
+		const response = await axiosWithAuth.get<{ tasks: Task[] }>(
+			`${this.BASE_URL}/gant`,
+			{
+				params: {
+					board_id,
+					sort_by
+				}
+			}
 		)
 		return response
 	}

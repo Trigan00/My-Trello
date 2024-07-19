@@ -10,8 +10,8 @@ export function initTasks() {
 			id: 'ProjectSample',
 			progress: 0,
 			type: 'project',
-			hideChildren: false,
-			displayOrder: 1
+			hideChildren: false
+			// displayOrder: 1
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
@@ -26,20 +26,10 @@ export function initTasks() {
 			id: 'Task 0',
 			progress: 0,
 			type: 'task',
-			project: 'ProjectSample',
-			displayOrder: 2
+			project: 'ProjectSample'
+			// displayOrder: 2
 		},
-		{
-			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
-			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
-			name: 'Research',
-			id: 'Task 1',
-			progress: 0,
-			dependencies: ['Task 0'],
-			type: 'task',
-			project: 'ProjectSample',
-			displayOrder: 3
-		},
+
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
 			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8, 0, 0),
@@ -48,8 +38,8 @@ export function initTasks() {
 			progress: 0,
 			dependencies: ['Task 1'],
 			type: 'task',
-			project: 'ProjectSample',
-			displayOrder: 4
+			project: 'ProjectSample'
+			// displayOrder: 4
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
@@ -59,8 +49,8 @@ export function initTasks() {
 			progress: 0,
 			dependencies: ['Task 2'],
 			type: 'task',
-			project: 'ProjectSample',
-			displayOrder: 5
+			project: 'ProjectSample'
+			// displayOrder: 5
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 8),
@@ -70,8 +60,8 @@ export function initTasks() {
 			type: 'task',
 			progress: 0,
 			dependencies: ['Task 2'],
-			project: 'ProjectSample',
-			displayOrder: 6
+			project: 'ProjectSample'
+			// displayOrder: 6
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
@@ -81,8 +71,19 @@ export function initTasks() {
 			progress: 0,
 			type: 'milestone',
 			dependencies: ['Task 4'],
-			project: 'ProjectSample',
-			displayOrder: 7
+			project: 'ProjectSample'
+			// displayOrder: 7
+		},
+		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
+			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4, 0, 0),
+			name: 'Research',
+			id: 'Task 1',
+			progress: 0,
+			dependencies: ['Task 0'],
+			type: 'task',
+			project: 'ProjectSample'
+			// displayOrder: 3
 		},
 		{
 			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
@@ -92,6 +93,33 @@ export function initTasks() {
 			progress: 0,
 			isDisabled: true,
 			type: 'task'
+		},
+		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+			end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+			name: 'Project 2',
+			id: 'ProjectSample 2',
+			progress: 0,
+			type: 'project',
+			hideChildren: false
+			// displayOrder: 1
+		},
+		{
+			start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+			end: new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				2,
+				12,
+				28
+			),
+			name: 'Idea 2',
+			id: 'Task test',
+			progress: 0,
+			// dependencies: ['Task 1'],
+			type: 'task',
+			project: 'ProjectSample 2'
+			// displayOrder: 2
 		}
 	]
 	return tasks

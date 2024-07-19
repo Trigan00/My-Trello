@@ -26,15 +26,15 @@ const MENU_OPTIONS = [
 		// icon: 'eva:home-fill'
 	},
 	{
-		label: 'Тариф',
-		href: DASHBOARD_PAGES.HOME
+		label: 'Тарифы',
+		href: `${DASHBOARD_PAGES.HOME}/pricing`
 		// icon: 'eva:person-fill'
 	}
 ]
 
 export default function AccountPopover() {
 	const router = useRouter()
-	const { profile } = useProfile()
+	const { profile, isLoading } = useProfile()
 
 	const { mutate } = useMutation({
 		mutationKey: ['logout'],
@@ -51,7 +51,7 @@ export default function AccountPopover() {
 		setOpen(null)
 	}
 
-	if (!profile) {
+	if (isLoading) {
 		return (
 			<Skeleton
 				variant='circular'
