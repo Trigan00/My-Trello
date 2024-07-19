@@ -26,8 +26,8 @@ const MENU_OPTIONS = [
 		// icon: 'eva:home-fill'
 	},
 	{
-		label: 'Тариф',
-		href: DASHBOARD_PAGES.HOME
+		label: 'Тарифы',
+		href: `${DASHBOARD_PAGES.HOME}/pricing`
 		// icon: 'eva:person-fill'
 	}
 ]
