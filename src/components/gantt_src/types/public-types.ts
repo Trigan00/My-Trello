@@ -143,4 +143,5 @@ export interface StylingOption {
 export interface GanttProps extends EventOption, DisplayOption, StylingOption {
 	tasks: Task[]
 	onDetailClick: (task: Task) => void
+	onTableTaskClick: (task: Task) => void
 }

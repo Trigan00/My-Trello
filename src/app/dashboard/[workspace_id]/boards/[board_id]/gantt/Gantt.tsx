@@ -99,6 +99,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 					onDoubleClick={handleDblClick}
 					onExpanderClick={handleExpanderClick}
 					onDetailClick={handleClick}
+					onTableTaskClick={handleClick}
 					listCellWidth='155px'
 					columnWidth={columnWidth}
 					locale='ru'

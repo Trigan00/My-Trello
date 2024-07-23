@@ -33,6 +33,7 @@ export const TaskListTableDefault: React.FC<{
 	selectedTaskId: string
 	setSelectedTask: (taskId: string) => void
 	onExpanderClick: (task: Task) => void
+	onTableTaskClick: (task: Task) => void
 }> = ({
 	rowHeight,
 	rowWidth,
@@ -40,7 +41,8 @@ export const TaskListTableDefault: React.FC<{
 	fontFamily,
 	fontSize,
 	locale,
-	onExpanderClick
+	onExpanderClick,
+	onTableTaskClick
 }) => {
 	const toLocaleDateString = useMemo(
 		() => toLocaleDateStringFactory(locale),
@@ -93,7 +95,15 @@ export const TaskListTableDefault: React.FC<{
 									placement='top'
 									disableHoverListener={t.type === 'project'}
 								>
-									<Box style={{ cursor: 'pointer' }}>
+									<Box
+										style={{ cursor: 'pointer' }}
+										onClick={() => onTableTaskClick(t)}
+										sx={{
+											'&:hover': {
+												textDecoration: 'underline'
+											}
+										}}
+									>
 										{shortenText(t.name, 20)}
 									</Box>
 								</Tooltip>
