@@ -35,6 +35,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	}, [sortType])
 
 	const handleClick = (task: Task) => {
+		if (task.type !== 'task') return
 		setIsTask(true)
 		setSelectedTaskId(Number(task.id))
 	}
