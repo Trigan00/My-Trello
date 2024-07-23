@@ -96,11 +96,11 @@ export const TaskListTableDefault: React.FC<{
 									disableHoverListener={t.type === 'project'}
 								>
 									<Box
-										style={{ cursor: 'pointer' }}
 										onClick={() => onTableTaskClick(t)}
 										sx={{
+											cursor: t.type === 'task' ? 'pointer' : 'default',
 											'&:hover': {
-												textDecoration: 'underline'
+												textDecoration: t.type === 'task' ? 'underline' : 'none'
 											}
 										}}
 									>
