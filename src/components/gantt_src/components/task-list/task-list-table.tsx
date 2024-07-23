@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import styles from './task-list-table.module.css'
 import { Task } from '../../types/public-types'
+import shortenText from '@/helpers/shortenText'
+import { Box, Tooltip } from '@mui/material'
 
 const localeDateStringCache: any = {}
 const toLocaleDateStringFactory =
@@ -73,7 +75,7 @@ export const TaskListTableDefault: React.FC<{
 								minWidth: rowWidth,
 								maxWidth: rowWidth
 							}}
-							title={t.name}
+							// title={t.name}
 						>
 							<div className={styles.taskListNameWrapper}>
 								<div
@@ -86,7 +88,15 @@ export const TaskListTableDefault: React.FC<{
 								>
 									{expanderSymbol}
 								</div>
-								<div>{t.name}</div>
+								<Tooltip
+									title={t.name}
+									placement='top'
+									disableHoverListener={t.type === 'project'}
+								>
+									<Box style={{ cursor: 'pointer' }}>
+										{shortenText(t.name, 20)}
+									</Box>
+								</Tooltip>
 							</div>
 						</div>
 						{/* <div
