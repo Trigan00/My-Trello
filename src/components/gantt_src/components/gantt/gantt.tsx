@@ -64,7 +64,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 	onClick,
 	onDelete,
 	onSelect,
-	onExpanderClick
+	onExpanderClick,
+	onDetailClick
 }) => {
 	const wrapperRef = useRef<HTMLDivElement>(null)
 	const taskListRef = useRef<HTMLDivElement>(null)
@@ -428,7 +429,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 		onProgressChange,
 		onDoubleClick,
 		onClick,
-		onDelete
+		onDelete,
+		onDetailClick
 	}
 
 	const tableProps: TaskListProps = {

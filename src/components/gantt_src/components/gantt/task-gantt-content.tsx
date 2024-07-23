@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { EventOption } from '../../types/public-types'
+import { EventOption, Task } from '../../types/public-types'
 import { BarTask } from '../../types/bar-task'
 import { Arrow } from '../other/arrow'
 import { handleTaskBySVGMouseEvent } from '../../helpers/bar-helper'
@@ -30,6 +30,7 @@ export type TaskGanttContentProps = {
 	setGanttEvent: (value: GanttEvent) => void
 	setFailedTask: (value: BarTask | null) => void
 	setSelectedTask: (taskId: string) => void
+	onDetailClick: (task: Task) => void
 } & EventOption
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
@@ -50,6 +51,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
 	setGanttEvent,
 	setFailedTask,
 	setSelectedTask,
+	onDetailClick,
 	onDateChange,
 	onProgressChange,
 	onDoubleClick,
@@ -301,6 +303,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
 							key={task.id}
 							isSelected={!!selectedTask && task.id === selectedTask.id}
 							rtl={rtl}
+							onDetailClick={onDetailClick}
 						/>
 					)
 				})}
