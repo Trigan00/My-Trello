@@ -23,7 +23,7 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 		transition,
 		isDragging
 	} = useSortable({
-		id: item.task_id,
+		id: String(item.task_id),
 		data: {
 			type: 'Task',
 			task: item
@@ -38,30 +38,15 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 		// cursor: 'pointer'
 	}
 
-	// if (isDragging) {
-	// 	return (
-	// 		<div
-	// 			ref={setNodeRef}
-	// 			style={{
-	// 				...style,
-	// 				position: 'relative',
-	// 				marginTop: '10px',
-	// 				color: COLORS.textBlack,
-	// 				backgroundColor: COLORS.border,
-	// 				borderRadius: '10px'
-	// 			}}
-	// 		>
-	// 			<Box sx={{ height: '40px', width: '100%' }}></Box>
-	// 		</div>
-	// 	)
-	// }
-
 	if (isDragging) {
 		return (
 			<div
 				ref={setNodeRef}
 				style={style}
-			></div>
+				// className='Under-card'
+			>
+				<div style={{ height: '40px' }}></div>
+			</div>
 		)
 	}
 
@@ -72,10 +57,10 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 			{...listeners}
 			{...attributes}
 		>
-			<Box
-				sx={{
+			<div
+				style={{
 					position: 'relative',
-					mt: '10px',
+					marginTop: '10px',
 					color: COLORS.textBlack,
 					backgroundColor: COLORS.border,
 					borderRadius: '10px'
@@ -121,15 +106,7 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 					width={10}
 					height={16}
 				/>
-				{/* {isEdit && (
-				<EditTask
-					task_id={item.task_id}
-					board_id={board_id as number}
-					isModal={isEdit}
-					setIsModal={setIsEdit}
-				/>
-			)} */}
-			</Box>
+			</div>
 		</div>
 	)
 }

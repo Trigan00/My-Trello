@@ -30,8 +30,8 @@ export function KanbanColumn({
 	items,
 	label
 }: IKanbanColumn) {
-	const { setNodeRef, over } = useSortable({
-		id: column_id,
+	const { setNodeRef, over } = useDroppable({
+		id: String(column_id),
 		data: {
 			type: 'Column'
 		}
@@ -43,7 +43,10 @@ export function KanbanColumn({
 	const [isTaskEdit, setIsTaskEdit] = useState(false)
 	const [editTaskId, setEditTaskId] = useState<number>()
 
-	const tasksIds = useMemo(() => items.map(task => task.task_id), [items])
+	const tasksIds = useMemo(
+		() => items.map(task => String(task.task_id)),
+		[items]
+	)
 
 	const taskEditHandler = (tasK_id: number) => {
 		setEditTaskId(tasK_id)

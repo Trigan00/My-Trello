@@ -12,6 +12,7 @@ import {
 	DragOverlay,
 	DragStartEvent,
 	MouseSensor,
+	pointerWithin,
 	TouchSensor,
 	useSensor,
 	useSensors
@@ -59,17 +60,19 @@ export function Kanban({ board_id }: KanbanI) {
 		if (isActiveATask && isOverATask) {
 			setItems(tasks => {
 				if (!tasks) return
-				const activeIndex = tasks.findIndex(t => t.task_id === activeId)
-				const overIndex = tasks.findIndex(t => t.task_id === overId)
+				const activeIndex = tasks.findIndex(t => t.task_id == Number(activeId))
+				const overIndex = tasks.findIndex(t => t.task_id == Number(overId))
 
-				if (tasks[activeIndex].column_id != tasks[overIndex].column_id) {
-					// Fix introduced after video recording
-					tasks[activeIndex].column_id = tasks[overIndex].column_id
-					return arrayMove(tasks, activeIndex, overIndex - 1)
-				}
+				tasks[activeIndex].column_id = tasks[overIndex].column_id
+				// if (tasks[activeIndex].column_id != tasks[overIndex].column_id) {
+				// 	// Fix introduced after video recording
+				// 	tasks[activeIndex].column_id = tasks[overIndex].column_id
+				// 	return arrayMove(tasks, activeIndex, overIndex - 1)
+				// }
 
 				return arrayMove(tasks, activeIndex, overIndex)
 			})
+			return
 		}
 
 		const isOverAColumn = over.data.current?.type === 'Column'
@@ -79,10 +82,10 @@ export function Kanban({ board_id }: KanbanI) {
 			setItems(tasks => {
 				if (!tasks) return
 
-				const activeIndex = tasks.findIndex(t => t.task_id === activeId)
+				const activeIndex = tasks.findIndex(t => t.task_id == Number(activeId))
 
 				tasks[activeIndex].column_id = Number(overId)
-				console.log('DROPPING TASK OVER COLUMN', { activeIndex })
+				// console.log('DROPPING TASK OVER COLUMN', { activeIndex })
 				return arrayMove(tasks, activeIndex, activeIndex)
 			})
 		}
@@ -103,13 +106,13 @@ export function Kanban({ board_id }: KanbanI) {
 	const sensors = useSensors(mouseSensor, touchSensor)
 
 	return (
-		<Box
-			sx={{
+		<div
+			style={{
 				boxSizing: 'border-box',
 				height: '100%',
 				display: 'flex',
-				p: 4,
-				gap: 3,
+				padding: 4,
+				gap: 30,
 				overflowX: 'auto' //без него ставиться, с ним не вращается
 			}}
 		>
@@ -118,6 +121,7 @@ export function Kanban({ board_id }: KanbanI) {
 				onDragEnd={onDragEnd}
 				onDragStart={onDragStart}
 				onDragOver={onDragOver}
+				collisionDetection={pointerWithin}
 			>
 				{!columns || items === undefined
 					? new Array(4).fill(null).map((_, i) => (
@@ -147,6 +151,6 @@ export function Kanban({ board_id }: KanbanI) {
 				</DragOverlay>
 			</DndContext>
 			<AddColumn board_id={board_id} />
-		</Box>
+		</div>
 	)
 }
