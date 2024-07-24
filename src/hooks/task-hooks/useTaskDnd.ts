@@ -28,22 +28,22 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 
-		const tempItem = items?.find(
-			value => value.task_id === Number(activeId)
-		) as TaskI
-		tempItem.column_id = Number(overId)
-		const tempItems = items?.filter(value => value.task_id !== Number(activeId))
-		tempItems?.push(tempItem as TaskI)
-		setItems(tempItems)
+		// const tempItem = items?.find(
+		// 	value => value.task_id === Number(activeId)
+		// ) as TaskI
+		// tempItem.column_id = Number(overId)
+		// const tempItems = items?.filter(value => value.task_id !== Number(activeId))
+		// tempItems?.push(tempItem as TaskI)
+		// setItems(tempItems)
 		document.body.style.setProperty('cursor', '')
 
-		updateTask({
-			id: Number(activeId),
-			data: {
-				// createdAt: newCreatedAt,
-				column_id: Number(overId)
-			}
-		})
+		// updateTask({
+		// 	id: Number(activeId),
+		// 	data: {
+		// 		// createdAt: newCreatedAt,
+		// 		column_id: Number(overId)
+		// 	}
+		// })
 	}
 
 	return { onDragEnd }

@@ -1,5 +1,5 @@
 // import { Draggable, Droppable } from '@hello-pangea/dnd'
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useMemo, useState, type Dispatch, type SetStateAction } from 'react'
 
 import type { ColumnI, TaskI } from '@/types/task.types'
 import AddIcon from '@mui/icons-material/Add'
@@ -14,12 +14,13 @@ import { ColumnSettings } from './ColumnSettings'
 import { useEditName } from '@/hooks/columns-hooks/useEditName'
 import { EditTask } from './task_info/EditTask'
 import { DEFAULT_COLUMNS } from '@/constants/columns.constants'
+import { SortableContext, useSortable } from '@dnd-kit/sortable'
 
 interface IKanbanColumn {
 	column_id: number
 	board_id: number
 	label: string
-	items: TaskI[] | undefined
+	items: TaskI[]
 	setItems: Dispatch<SetStateAction<TaskI[] | undefined>>
 }
 
@@ -29,8 +30,11 @@ export function KanbanColumn({
 	items,
 	label
 }: IKanbanColumn) {
-	const { setNodeRef, over } = useDroppable({
-		id: column_id
+	const { setNodeRef, over } = useSortable({
+		id: column_id,
+		data: {
+			type: 'Column'
+		}
 	})
 	const { editName } = useEditName(reset)
 	const [isEdit, setIsEdit] = useState(false)
@@ -38,6 +42,8 @@ export function KanbanColumn({
 	const [isTaskForm, setIsTaskForm] = useState(false)
 	const [isTaskEdit, setIsTaskEdit] = useState(false)
 	const [editTaskId, setEditTaskId] = useState<number>()
+
+	const tasksIds = useMemo(() => items.map(task => task.task_id), [items])
 
 	const taskEditHandler = (tasK_id: number) => {
 		setEditTaskId(tasK_id)
@@ -65,8 +71,8 @@ export function KanbanColumn({
 					padding: '20px 21px',
 					width: '250px',
 					height: 'fit-content',
-					transition: '0.2s',
-					transform: over && over.id === column_id ? 'scale(1.05)' : 'none'
+					transition: '0.2s'
+					// transform: over && over.id === column_id ? 'scale(1.05)' : 'none'
 				}}
 			>
 				{isEdit ? (
@@ -145,15 +151,17 @@ export function KanbanColumn({
 				// 	}
 				// }
 				>
-					{items
-						?.filter(item => item.column_id === column_id)
-						.map(item => (
-							<KanbanCard
-								key={item.task_id}
-								item={item}
-								taskEditHandler={taskEditHandler}
-							/>
-						))}
+					<SortableContext items={tasksIds}>
+						{items
+							.filter(item => item.column_id === column_id)
+							.map(item => (
+								<KanbanCard
+									key={item.task_id}
+									item={item}
+									// taskEditHandler={taskEditHandler}
+								/>
+							))}
+					</SortableContext>
 				</div>
 				<Button
 					onClick={() => setIsTaskForm(true)}
