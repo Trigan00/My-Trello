@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { ViewSwitcher } from './view-switcher'
 import { getStartEndDateForProject } from './helper'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import { ViewMode, Task, Gantt } from '@/components/gantt_src'
 import { EditTask } from '../task_info/EditTask'
@@ -90,7 +90,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 				view={view}
 				setView={setView}
 			/>
-			{tasks && (
+			{tasks?.length ? (
 				<Gantt
 					tasks={tasks}
 					viewMode={view}
@@ -110,6 +110,8 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 					projectBackgroundColor='#00000000'
 					projectBackgroundSelectedColor='#00000000'
 				/>
+			) : (
+				<Typography textAlign={'center'}>Нет данных</Typography>
 			)}
 
 			{isTask && (
