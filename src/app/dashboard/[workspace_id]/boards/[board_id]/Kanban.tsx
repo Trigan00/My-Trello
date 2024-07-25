@@ -5,7 +5,6 @@ import { useTasks } from '@/hooks/task-hooks/useTasks'
 import { Box, Skeleton } from '@mui/material'
 import { KanbanColumn } from './KanbanColumn'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
-import { headerHeight } from '@/components/dashboard-layout/header/Header'
 import {
 	DndContext,
 	DragOverEvent,
@@ -106,13 +105,13 @@ export function Kanban({ board_id }: KanbanI) {
 	const sensors = useSensors(mouseSensor, touchSensor)
 
 	return (
-		<div
-			style={{
+		<Box
+			sx={{
 				boxSizing: 'border-box',
 				height: '100%',
 				display: 'flex',
-				padding: 4,
-				gap: 30,
+				p: 4,
+				gap: 3,
 				overflowX: 'auto' //без него ставиться, с ним не вращается
 			}}
 		>
@@ -151,6 +150,6 @@ export function Kanban({ board_id }: KanbanI) {
 				</DragOverlay>
 			</DndContext>
 			<AddColumn board_id={board_id} />
-		</div>
+		</Box>
 	)
 }

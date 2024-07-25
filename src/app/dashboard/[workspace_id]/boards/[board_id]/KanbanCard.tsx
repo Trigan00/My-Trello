@@ -1,12 +1,9 @@
-import { useState } from 'react'
 import type { TaskI } from '@/types/task.types'
-import { Box, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { COLORS } from '@/constants/color.constants'
 import Image from 'next/image'
-import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import shortenText from '@/helpers/shortenText'
-import { EditTask } from './task_info/EditTask'
 import { useSortable } from '@dnd-kit/sortable'
 
 interface IKanbanCard {
@@ -29,13 +26,10 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 			task: item
 		}
 	})
-	const [isEdit, setIsEdit] = useState(false)
 
 	const style = {
 		transition,
 		transform: CSS.Transform.toString(transform)
-		// opacity: isDragging ? 0 : 1,
-		// cursor: 'pointer'
 	}
 
 	if (isDragging) {
@@ -43,9 +37,20 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 			<div
 				ref={setNodeRef}
 				style={style}
-				// className='Under-card'
 			>
-				<div style={{ height: '40px' }}></div>
+				<Typography
+					sx={{
+						marginTop: '10px',
+						padding: '8px',
+						wordWrap: 'break-word',
+						color: 'white',
+						border: `1px dashed ${COLORS.textGrey}`,
+						borderRadius: '10px'
+					}}
+					onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
+				>
+					{shortenText(item.name, 120)}
+				</Typography>
 			</div>
 		)
 	}
@@ -70,33 +75,43 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 					// }
 				}}
 			>
-				<div style={{ height: '40px' }}>{shortenText(item.name, 120)}</div>
-				{/* <TextField
-				// onClick={() => setIsEdit(true)}
-				multiline
-				value={shortenText(item.name, 120)}
-				onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
-				InputProps={{
-					readOnly: true
-				}}
-				sx={{
-					outline: 'none',
-					'& .MuiOutlinedInput-root': {
-						'& fieldset': {
-							border: 'none'
-						},
-						padding: '4px'
-					},
-					'& .MuiInputBase-input': {
+				<Typography
+					sx={{
 						padding: '8px',
+						pr: '25px',
+						wordWrap: 'break-word',
 						cursor: 'pointer'
-					}
-				}}
-			/> */}
+					}}
+					onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
+				>
+					{shortenText(item.name, 120)}
+				</Typography>
+				{/* <TextField
+					// onClick={() => setIsEdit(true)}
+					multiline
+					value={shortenText(item.name, 120)}
+					onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
+					InputProps={{
+						readOnly: true
+					}}
+					sx={{
+						outline: 'none',
+						'& .MuiOutlinedInput-root': {
+							'& fieldset': {
+								border: 'none'
+							},
+							padding: '4px'
+						},
+						'& .MuiInputBase-input': {
+							padding: '8px',
+							cursor: 'pointer'
+						}
+					}}
+				/> */}
 				<Image
 					style={{
 						position: 'absolute',
-						top: '10px',
+						top: '7px',
 						right: '6px',
 						cursor: 'grab',
 						padding: '5px'

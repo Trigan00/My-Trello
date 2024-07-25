@@ -1,7 +1,5 @@
-// import { Draggable, Droppable } from '@hello-pangea/dnd'
 import { useMemo, useState, type Dispatch, type SetStateAction } from 'react'
-
-import type { ColumnI, TaskI } from '@/types/task.types'
+import type { TaskI } from '@/types/task.types'
 import AddIcon from '@mui/icons-material/Add'
 import { KanbanTaskForm } from './KanbanTaskForm'
 import { KanbanCard } from './KanbanCard'
@@ -14,7 +12,7 @@ import { ColumnSettings } from './ColumnSettings'
 import { useEditName } from '@/hooks/columns-hooks/useEditName'
 import { EditTask } from './task_info/EditTask'
 import { DEFAULT_COLUMNS } from '@/constants/columns.constants'
-import { SortableContext, useSortable } from '@dnd-kit/sortable'
+import { SortableContext } from '@dnd-kit/sortable'
 
 interface IKanbanColumn {
 	column_id: number
@@ -30,7 +28,7 @@ export function KanbanColumn({
 	items,
 	label
 }: IKanbanColumn) {
-	const { setNodeRef, over } = useDroppable({
+	const { setNodeRef } = useDroppable({
 		id: String(column_id),
 		data: {
 			type: 'Column'
@@ -73,8 +71,7 @@ export function KanbanColumn({
 					flexShrink: 0,
 					padding: '20px 21px',
 					width: '250px',
-					height: 'fit-content',
-					transition: '0.2s'
+					height: 'fit-content'
 					// transform: over && over.id === column_id ? 'scale(1.05)' : 'none'
 				}}
 			>
@@ -161,7 +158,7 @@ export function KanbanColumn({
 								<KanbanCard
 									key={item.task_id}
 									item={item}
-									// taskEditHandler={taskEditHandler}
+									taskEditHandler={taskEditHandler}
 								/>
 							))}
 					</SortableContext>
