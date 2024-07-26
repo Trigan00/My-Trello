@@ -29,7 +29,7 @@ export function KanbanColumn({
 	label
 }: IKanbanColumn) {
 	const { setNodeRef } = useDroppable({
-		id: String(column_id),
+		id: column_id,
 		data: {
 			type: 'Column'
 		}

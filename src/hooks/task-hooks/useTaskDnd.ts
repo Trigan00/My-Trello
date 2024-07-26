@@ -21,10 +21,11 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 
 	const onDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event
-		if (!over) return
+		// if (!over) return
 
-		const activeId = active.id
-		const overId = over.id
+		// const activeId = active.id
+		// const overId = over.id
+		// console.log(items)
 
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 

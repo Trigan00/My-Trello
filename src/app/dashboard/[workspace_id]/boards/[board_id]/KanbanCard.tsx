@@ -20,7 +20,7 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 		transition,
 		isDragging
 	} = useSortable({
-		id: String(item.task_id),
+		id: item.task_id,
 		data: {
 			type: 'Task',
 			task: item
