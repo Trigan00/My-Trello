@@ -23,6 +23,7 @@ import React from 'react'
 import { useInviteLink } from '@/hooks/workspace-hooks/useInviteLink'
 import MyTableRow from './MyTableRow'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
+import { useWorkspaceRoles } from '@/hooks/workspace-hooks/useWorkspaceRoles'
 
 interface UsersI {
 	workspace_id: number
@@ -30,6 +31,7 @@ interface UsersI {
 
 export function Users({ workspace_id }: UsersI) {
 	const { users } = useWorkspaceUsers(workspace_id)
+	const { roles } = useWorkspaceRoles()
 	const { item: link, refetch_link, isLoading } = useInviteLink(workspace_id)
 
 	const copyHandler = () => {
@@ -58,7 +60,7 @@ export function Users({ workspace_id }: UsersI) {
 			</Box>
 			<Divider />
 			<Box sx={{ p: 3, overflowX: 'auto' }}>
-				{users ? (
+				{users && roles ? (
 					<Table>
 						<TableHead>
 							<TableRow>
@@ -76,6 +78,7 @@ export function Users({ workspace_id }: UsersI) {
 									key={row.id}
 									row={row}
 									i={i}
+									roles={roles}
 								/>
 							))}
 						</TableBody>

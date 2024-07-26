@@ -1,6 +1,6 @@
 import { axiosWithAuth } from '@/api/interceptors'
 import { IGetMembersResponse, ROLES } from '@/types/auth.types'
-import { IWorkspaces } from '@/types/workspace.types'
+import { IRole, IWorkspaces } from '@/types/workspace.types'
 
 class WorkspaceService {
 	private BASE_URL = '/workspaces'
@@ -61,10 +61,17 @@ class WorkspaceService {
 		return response
 	}
 
-	async updateRole(user_id: number, data: { ws_id: number; role: ROLES }) {
+	async updateRole(user_id: number, data: { ws_id: number; role: string }) {
 		const response = await axiosWithAuth.patch<{ message: string }>(
 			`${this.BASE_URL}/members/${user_id}/`,
 			data
+		)
+		return response
+	}
+
+	async getWorkspaceRoles() {
+		const response = await axiosWithAuth.get<{ roles: IRole[] }>(
+			this.BASE_URL + '/roles/'
 		)
 		return response
 	}

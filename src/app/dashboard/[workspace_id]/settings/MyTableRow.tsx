@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IUser, ROLES } from '@/types/auth.types'
+import { IUser } from '@/types/auth.types'
 import {
 	SelectChangeEvent,
 	TableCell,
@@ -15,6 +15,7 @@ import React from 'react'
 import { useUpdateRole } from '@/hooks/workspace-hooks/useUpdateRole'
 import { useDeleteWorkspaceUser } from '@/hooks/workspace-hooks/useDeleteWorkspaceUser'
 import DeleteModal from '@/components/dashboard-layout/DeleteModal'
+import { IRole } from '@/types/workspace.types'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
@@ -30,16 +31,22 @@ interface MyTableRowI {
 	workspace_id: number
 	row: IUser
 	i: number
+	roles: IRole[]
 }
 
-export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
+export default function MyTableRow({
+	workspace_id,
+	row,
+	i,
+	roles
+}: MyTableRowI) {
 	const { updateRole } = useUpdateRole()
 	const { deleteWorkspaceUser, isDeleteUserPending } = useDeleteWorkspaceUser()
 	const [isDelete, setIsDelete] = useState(false)
-	const [role, setRole] = useState<ROLES>(row.role)
+	const [role, setRole] = useState<string>(row.role)
 
 	const handleRoleChange = (event: SelectChangeEvent) => {
-		const newRole = event.target.value as ROLES
+		const newRole = event.target.value
 		setRole(newRole)
 		updateRole({ ws_id: workspace_id, role: newRole, user_id: row.id })
 	}
@@ -64,9 +71,14 @@ export default function MyTableRow({ workspace_id, row, i }: MyTableRowI) {
 								fontSize: '14px'
 							}}
 						>
-							<MenuItem value={ROLES.ADMIN}>{ROLES.ADMIN}</MenuItem>
-							<MenuItem value={ROLES.EMPLOYEE}>{ROLES.EMPLOYEE}</MenuItem>
-							<MenuItem value={ROLES.OBSERVER}>{ROLES.OBSERVER}</MenuItem>
+							{roles.map(role => (
+								<MenuItem
+									key={role.role}
+									value={role.role}
+								>
+									{role.role}
+								</MenuItem>
+							))}
 						</Select>
 					</FormControl>
 				</TableCell>

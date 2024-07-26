@@ -16,7 +16,7 @@ export function useUpdateRole() {
 		}: {
 			ws_id: number
 			user_id: number
-			role: ROLES
+			role: string
 		}) => workspaceService.updateRole(user_id, { ws_id, role }),
 		onSuccess(res) {
 			toast.success(res.data.message)
