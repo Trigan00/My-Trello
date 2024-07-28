@@ -3,7 +3,7 @@ import { taskService } from '@/services/task.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export function useAddMemberToTask() {
+export function useAddMemberToTask(key: number) {
 	const queryClient = useQueryClient()
 
 	const { mutate: addMember, isPending } = useMutation({
@@ -13,7 +13,7 @@ export function useAddMemberToTask() {
 		onSuccess(res) {
 			toast.success(res.data.message)
 			queryClient.invalidateQueries({
-				queryKey: ['task members']
+				queryKey: ['task members', key]
 			})
 		},
 		onError: (error: any) => toast.error(errorCatch(error))

@@ -1,27 +1,25 @@
 import { errorCatch } from '@/api/error'
 import { boardsService } from '@/services/board.service'
-import { BoardMemberI } from '@/types/board.types'
+import { IRole } from '@/types/workspace.types'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-export function useBoardMembers(board_id: number) {
+export function useBoardsRoles() {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['board members', board_id],
-		queryFn: () => boardsService.getBoardMembers(board_id)
+		queryKey: ['board roles'],
+		queryFn: () => boardsService.getBoardRoles()
 	})
 
-	const [members, setMembers] = useState<BoardMemberI[] | undefined>(
-		data?.data.members
-	)
+	const [roles, setRoles] = useState<IRole[] | undefined>(data?.data.roles)
 
 	useEffect(() => {
 		if (error) toast.error(errorCatch(error))
 	}, [error])
 
 	useEffect(() => {
-		setMembers(data?.data.members)
+		setRoles(data?.data.roles)
 	}, [data?.data])
 
-	return { members, isLoading }
+	return { roles, isLoading }
 }

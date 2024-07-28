@@ -6,7 +6,9 @@ import { BarSmall } from './bar/bar-small'
 import { Milestone } from './milestone/milestone'
 import { Project } from './project/project'
 import style from './task-list.module.css'
-import { Tooltip, Typography } from '@mui/material'
+import { Box, Link, Tooltip, Typography } from '@mui/material'
+import { COLORS } from '@/constants/color.constants'
+import { Task } from '../../types/public-types'
 
 export type TaskItemProps = {
 	task: BarTask
@@ -22,6 +24,7 @@ export type TaskItemProps = {
 		selectedTask: BarTask,
 		event?: React.MouseEvent | React.KeyboardEvent
 	) => any
+	onDetailClick: (task: Task) => void
 }
 
 export const TaskItem: React.FC<TaskItemProps> = props => {
@@ -32,7 +35,8 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 		taskHeight,
 		isSelected,
 		rtl,
-		onEventStart
+		onEventStart,
+		onDetailClick
 	} = {
 		...props
 	}
@@ -84,18 +88,38 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
 	return (
 		<Tooltip
 			title={
-				<Typography variant='caption'>
+				<Box
+					fontSize={13}
+					sx={{ p: 1 }}
+				>
 					<div>{task.name}</div>
-					{task.start.getDate()}.{task.start.getMonth() + 1}.
-					{task.start.getFullYear()} &#8212; {task.end.getDate()}.
-					{task.end.getMonth() + 1}.{task.end.getFullYear()}
+					<div>
+						{task.start.getDate()}.{task.start.getMonth() + 1}.
+						{task.start.getFullYear()} &#8212; {task.end.getDate()}.
+						{task.end.getMonth() + 1}.{task.end.getFullYear()}
+					</div>
 					{task.end.getTime() - task.start.getTime() !== 0 && (
 						<div>{`Длительность: ${~~(
 							(task.end.getTime() - task.start.getTime()) /
 							(1000 * 60 * 60 * 24)
 						)} д.`}</div>
 					)}
-				</Typography>
+					<Box
+						color={COLORS.primary}
+						// variant='body2'
+						sx={{
+							mt: 1,
+							textAlign: 'right',
+							cursor: 'pointer',
+							'&:hover': {
+								textDecoration: 'underline'
+							}
+						}}
+						onClick={() => onDetailClick(task)}
+					>
+						Подробнее
+					</Box>
+				</Box>
 			}
 			placement='top'
 			disableHoverListener={task.type === 'project'}

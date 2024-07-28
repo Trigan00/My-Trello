@@ -62,8 +62,8 @@ export function EditTask({
 	const { updateTask, isPending } = useUpdateTask(undefined, () =>
 		toast.success('Задача успешно изменена')
 	)
-	const { addMember } = useAddMemberToTask()
-	const { deleteTaskMember } = useDeleteTaskMember()
+	const { addMember } = useAddMemberToTask(task_id)
+	const { deleteTaskMember } = useDeleteTaskMember(task_id)
 	const { deleteTask, isDeletePending } = useDeleteTask(() => setIsModal(false))
 
 	useEffect(() => {

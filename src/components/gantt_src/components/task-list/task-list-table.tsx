@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import styles from './task-list-table.module.css'
 import { Task } from '../../types/public-types'
+import shortenText from '@/helpers/shortenText'
+import { Box, Tooltip } from '@mui/material'
 
 const localeDateStringCache: any = {}
 const toLocaleDateStringFactory =
@@ -31,6 +33,7 @@ export const TaskListTableDefault: React.FC<{
 	selectedTaskId: string
 	setSelectedTask: (taskId: string) => void
 	onExpanderClick: (task: Task) => void
+	onTableTaskClick: (task: Task) => void
 }> = ({
 	rowHeight,
 	rowWidth,
@@ -38,7 +41,8 @@ export const TaskListTableDefault: React.FC<{
 	fontFamily,
 	fontSize,
 	locale,
-	onExpanderClick
+	onExpanderClick,
+	onTableTaskClick
 }) => {
 	const toLocaleDateString = useMemo(
 		() => toLocaleDateStringFactory(locale),
@@ -73,7 +77,7 @@ export const TaskListTableDefault: React.FC<{
 								minWidth: rowWidth,
 								maxWidth: rowWidth
 							}}
-							title={t.name}
+							// title={t.name}
 						>
 							<div className={styles.taskListNameWrapper}>
 								<div
@@ -86,7 +90,23 @@ export const TaskListTableDefault: React.FC<{
 								>
 									{expanderSymbol}
 								</div>
-								<div>{t.name}</div>
+								<Tooltip
+									title={t.name}
+									placement='top'
+									disableHoverListener={t.type === 'project'}
+								>
+									<Box
+										onClick={() => onTableTaskClick(t)}
+										sx={{
+											cursor: t.type === 'task' ? 'pointer' : 'default',
+											'&:hover': {
+												textDecoration: t.type === 'task' ? 'underline' : 'none'
+											}
+										}}
+									>
+										{shortenText(t.name, 20)}
+									</Box>
+								</Tooltip>
 							</div>
 						</div>
 						{/* <div

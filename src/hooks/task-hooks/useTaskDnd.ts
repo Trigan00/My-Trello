@@ -23,27 +23,35 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 		const { active, over } = event
 		if (!over) return
 
-		const activeId = active.id
-		const overId = over.id
+		// const activeId = active.id
+		// const overId = over.id
+		let column_id: number
+		if (over.data.current?.type === 'Column') column_id = Number(over.id)
+		else column_id = Number(over.data.current?.task.column_id)
+
+		const over_column_tasks = items?.filter(
+			task => task.column_id === column_id
+		)
+		console.log(over_column_tasks)
 
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 
-		const tempItem = items?.find(
-			value => value.task_id === Number(activeId)
-		) as TaskI
-		tempItem.column_id = Number(overId)
-		const tempItems = items?.filter(value => value.task_id !== Number(activeId))
-		tempItems?.push(tempItem as TaskI)
-		setItems(tempItems)
+		// const tempItem = items?.find(
+		// 	value => value.task_id === Number(activeId)
+		// ) as TaskI
+		// tempItem.column_id = Number(overId)
+		// const tempItems = items?.filter(value => value.task_id !== Number(activeId))
+		// tempItems?.push(tempItem as TaskI)
+		// setItems(tempItems)
 		document.body.style.setProperty('cursor', '')
 
-		updateTask({
-			id: Number(activeId),
-			data: {
-				// createdAt: newCreatedAt,
-				column_id: Number(overId)
-			}
-		})
+		// updateTask({
+		// 	id: Number(activeId),
+		// 	data: {
+		// 		// createdAt: newCreatedAt,
+		// 		column_id: Number(overId)
+		// 	}
+		// })
 	}
 
 	return { onDragEnd }

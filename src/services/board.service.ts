@@ -4,6 +4,7 @@ import {
 	TimeLineI,
 	boardMembersResponseI
 } from '@/types/board.types'
+import { IRole } from '@/types/workspace.types'
 
 export const per_Page = 10
 
@@ -61,12 +62,13 @@ class BoardsService {
 		return response
 	}
 
-	async addMemberToBoard(user_id: number, board_id: number) {
+	async addMemberToBoard(user_id: number, board_id: number, role: string) {
 		const response = await axiosWithAuth.post<{ message: string }>(
 			this.MEMBERS_URL + '/',
 			{
+				board_id,
 				user_id,
-				board_id
+				role
 			}
 		)
 		return response
@@ -87,6 +89,23 @@ class BoardsService {
 					page,
 					per_page
 				}
+			}
+		)
+		return response
+	}
+
+	async getBoardRoles() {
+		const response = await axiosWithAuth.get<{ roles: IRole[] }>(
+			this.BASE_URL + '/roles/'
+		)
+		return response
+	}
+
+	async updateBoardMemberRole(user_id: number, role: string) {
+		const response = await axiosWithAuth.patch<{ message: string }>(
+			`${this.MEMBERS_URL}/${user_id}/`,
+			{
+				role
 			}
 		)
 		return response

@@ -9,29 +9,21 @@ interface MyCardI extends BoxProps {
 
 export function MyCard({ children, variant, sx, ...props }: MyCardI) {
 	return (
-		// <Box
-		// 	{...props}
-		// 	sx={{
-		// 		boxShadow:
-		// 			variant === 'shadowed'
-		// 				? '0px 0px 10px 0px rgba(0, 0, 0, 0.15)'
-		// 				: 'none',
-		// 		backgroundColor: 'white',
-		// 		border: variant === 'outlined' ? `1px solid ${COLORS.border}` : 'none',
-		// 		borderRadius: '15px',
-		// 		...sx
-		// 	}}
-		// >
-		// 	{children}
-		// </Box>
-		<Card
-			variant='outlined'
+		<Box
+			{...props}
 			sx={{
+				// boxShadow:
+				// 	variant === 'shadowed'
+				// 		? '0px 0px 10px 0px rgba(0, 0, 0, 0.15)'
+				// 		: 'none',
+				backgroundColor: 'white',
+				// border: variant === 'outlined' ? `1px solid ${COLORS.border}` : 'none',
+				border: `1px solid ${COLORS.border}`,
 				borderRadius: '15px',
 				...sx
 			}}
 		>
 			{children}
-		</Card>
+		</Box>
 	)
 }

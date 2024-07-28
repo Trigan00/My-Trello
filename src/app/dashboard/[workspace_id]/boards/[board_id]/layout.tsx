@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import BarChartIcon from '@mui/icons-material/BarChart'
+import ViewKanbanIcon from '@mui/icons-material/ViewKanban'
 import WaterfallChartIcon from '@mui/icons-material/WaterfallChart'
 import SettingsIcon from '@mui/icons-material/Settings'
 import Menu from '@mui/material/Menu'
@@ -25,6 +26,12 @@ const pages: Array<{
 	Icon: React.ReactNode
 	isAdminReq: boolean
 }> = [
+	{
+		title: 'Доска',
+		route: '',
+		Icon: <ViewKanbanIcon color='inherit' />,
+		isAdminReq: false
+	},
 	{
 		title: 'Диаграмма Ганта',
 		route: 'gantt',

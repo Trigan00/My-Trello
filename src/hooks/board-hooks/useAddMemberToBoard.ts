@@ -3,17 +3,17 @@ import { boardsService } from '@/services/board.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export function useAddMemberToBoard(onSuccessFunc?: () => void) {
+export function useAddMemberToBoard(key: number, onSuccessFunc?: () => void) {
 	const queryClient = useQueryClient()
 
 	const { mutate: addMember, isPending } = useMutation({
 		mutationKey: ['add member to board'],
-		mutationFn: (data: { board_id: number; user_id: number }) =>
-			boardsService.addMemberToBoard(data.user_id, data.board_id),
+		mutationFn: (data: { board_id: number; user_id: number; role: string }) =>
+			boardsService.addMemberToBoard(data.user_id, data.board_id, data.role),
 		onSuccess(res) {
 			toast.success(res.data.message)
 			queryClient.invalidateQueries({
-				queryKey: ['board members']
+				queryKey: ['board members', key]
 			})
 			onSuccessFunc && onSuccessFunc()
 		},

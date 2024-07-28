@@ -11,3 +11,8 @@ export interface IWorkspaces {
 export interface IAddWorkspace {
 	name: string
 }
+
+export type IRole = {
+	role: string
+	description: string
+}

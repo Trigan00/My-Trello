@@ -34,9 +34,10 @@ export function Delete({ board_id, name, workspace_id }: DeleteI) {
 		<Box sx={{ mt: 1 }}>
 			{!isDelete ? (
 				<Button
-					variant='text'
+					variant='outlined'
 					color='error'
 					size='small'
+					fullWidth
 					sx={{
 						mt: { xs: 2, md: 0 }
 					}}
@@ -47,7 +48,7 @@ export function Delete({ board_id, name, workspace_id }: DeleteI) {
 			) : (
 				<Card
 					variant='outlined'
-					sx={{ p: 1, borderRadius: '15px' }}
+					sx={{ p: 2, borderRadius: '15px' }}
 				>
 					<Typography
 						id='transition-modal-description'

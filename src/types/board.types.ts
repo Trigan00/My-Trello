@@ -15,7 +15,12 @@ export interface AddBoardI {
 	ws_id: number
 }
 
-export type BoardMemberI = Omit<IUser, 'role'>
+export type BoardMemberI = {
+	id: number
+	email: string
+	username: string
+	role: string
+}
 
 export interface boardMembersResponseI {
 	members: BoardMemberI[]
