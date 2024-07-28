@@ -68,7 +68,7 @@ export default function TaskDependenceSelect({
 								backgroundColor: 'white'
 							}}
 						>
-							Зависимость
+							Зависимые задачи
 						</p>
 					</InputLabel>
 					<Select
