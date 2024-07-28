@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 
 export function useTaskMembers(task_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['task members'],
+		queryKey: ['task members', task_id],
 		queryFn: () => taskService.getTaskMembers(task_id)
 	})
 
