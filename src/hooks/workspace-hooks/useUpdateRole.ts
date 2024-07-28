@@ -4,7 +4,7 @@ import { ROLES } from '@/types/auth.types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export function useUpdateRole() {
+export function useUpdateRole(onErrorFn?: () => void) {
 	const queryClient = useQueryClient()
 
 	const { mutate: updateRole, isPending } = useMutation({
@@ -24,7 +24,10 @@ export function useUpdateRole() {
 				queryKey: ['workspace users']
 			})
 		},
-		onError: (error: any) => toast.error(errorCatch(error))
+		onError: (error: any) => {
+			onErrorFn && onErrorFn()
+			toast.error(errorCatch(error))
+		}
 	})
 
 	return { updateRole, isPending }
