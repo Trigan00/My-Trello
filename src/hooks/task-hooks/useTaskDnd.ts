@@ -21,11 +21,18 @@ export function useTaskDnd({ items, setItems }: useTaskDndI) {
 
 	const onDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event
-		// if (!over) return
+		if (!over) return
 
 		// const activeId = active.id
 		// const overId = over.id
-		// console.log(items)
+		let column_id: number
+		if (over.data.current?.type === 'Column') column_id = Number(over.id)
+		else column_id = Number(over.data.current?.task.column_id)
+
+		const over_column_tasks = items?.filter(
+			task => task.column_id === column_id
+		)
+		console.log(over_column_tasks)
 
 		sessionStorage.setItem('TasksState', JSON.stringify(items))
 

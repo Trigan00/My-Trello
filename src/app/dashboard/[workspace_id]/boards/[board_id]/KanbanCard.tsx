@@ -20,7 +20,7 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 		transition,
 		isDragging
 	} = useSortable({
-		id: item.task_id,
+		id: String(item.task_id),
 		data: {
 			type: 'Task',
 			task: item
@@ -86,28 +86,7 @@ export function KanbanCard({ item, taskEditHandler }: IKanbanCard) {
 				>
 					{shortenText(item.name, 120)}
 				</Typography>
-				{/* <TextField
-					// onClick={() => setIsEdit(true)}
-					multiline
-					value={shortenText(item.name, 120)}
-					onClick={() => taskEditHandler && taskEditHandler(item.task_id)}
-					InputProps={{
-						readOnly: true
-					}}
-					sx={{
-						outline: 'none',
-						'& .MuiOutlinedInput-root': {
-							'& fieldset': {
-								border: 'none'
-							},
-							padding: '4px'
-						},
-						'& .MuiInputBase-input': {
-							padding: '8px',
-							cursor: 'pointer'
-						}
-					}}
-				/> */}
+
 				<Image
 					style={{
 						position: 'absolute',

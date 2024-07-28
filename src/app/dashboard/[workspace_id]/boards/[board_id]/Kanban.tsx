@@ -47,8 +47,6 @@ export function Kanban({ board_id }: KanbanI) {
 
 		const activeId = active.id
 		const overId = over.id
-		// console.log('over: ' + overId)
-		// console.log('active: ' + activeId)
 		if (activeId === overId) return
 
 		const isActiveATask = active.data.current?.type === 'Task'
@@ -60,8 +58,8 @@ export function Kanban({ board_id }: KanbanI) {
 		if (isActiveATask && isOverATask) {
 			setItems(tasks => {
 				if (!tasks) return
-				const activeIndex = tasks.findIndex(t => t.task_id === activeId)
-				const overIndex = tasks.findIndex(t => t.task_id === overId)
+				const activeIndex = tasks.findIndex(t => t.task_id == activeId)
+				const overIndex = tasks.findIndex(t => t.task_id == overId)
 
 				tasks[activeIndex].column_id = tasks[overIndex].column_id
 				// if (tasks[activeIndex].column_id != tasks[overIndex].column_id) {
@@ -82,10 +80,9 @@ export function Kanban({ board_id }: KanbanI) {
 			setItems(tasks => {
 				if (!tasks) return
 
-				const activeIndex = tasks.findIndex(t => t.task_id === activeId)
+				const activeIndex = tasks.findIndex(t => t.task_id == activeId)
 
 				tasks[activeIndex].column_id = Number(overId)
-				// console.log('DROPPING TASK OVER COLUMN', { activeIndex })
 				return arrayMove(tasks, activeIndex, activeIndex)
 			})
 		}
