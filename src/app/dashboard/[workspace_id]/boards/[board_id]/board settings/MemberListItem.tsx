@@ -18,10 +18,15 @@ import DeleteIcon from '@mui/icons-material/Delete'
 interface MemberListItemProps {
 	member: BoardMemberI
 	roles: IRole[]
+	board_id: number
 }
 
-export default function MemberListItem({ member, roles }: MemberListItemProps) {
-	const { updateRole } = useUpdateBoardMemberRole(() =>
+export default function MemberListItem({
+	member,
+	roles,
+	board_id
+}: MemberListItemProps) {
+	const { updateRole } = useUpdateBoardMemberRole(board_id, () =>
 		setUserRole(member.role)
 	)
 	const { deleteBoardMember } = useDeleteBoardMember()

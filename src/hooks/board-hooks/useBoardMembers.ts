@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 export function useBoardMembers(board_id: number) {
 	const { data, isLoading, error } = useQuery({
-		queryKey: ['board members'],
+		queryKey: ['board members', board_id],
 		queryFn: () => boardsService.getBoardMembers(board_id)
 	})
 

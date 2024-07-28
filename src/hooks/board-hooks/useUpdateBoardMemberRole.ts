@@ -3,7 +3,7 @@ import { boardsService } from '@/services/board.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export function useUpdateBoardMemberRole(onErrorFn?: () => void) {
+export function useUpdateBoardMemberRole(key: number, onErrorFn?: () => void) {
 	const queryClient = useQueryClient()
 
 	const { mutate: updateRole, isPending } = useMutation({
@@ -13,7 +13,7 @@ export function useUpdateBoardMemberRole(onErrorFn?: () => void) {
 		onSuccess(res) {
 			toast.success(res.data.message)
 			queryClient.invalidateQueries({
-				queryKey: ['board members']
+				queryKey: ['board members', key]
 			})
 		},
 		onError: (error: any) => {

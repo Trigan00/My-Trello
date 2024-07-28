@@ -25,7 +25,7 @@ export function MembersSelect({ board_id, workspace_id }: MembersSelectI) {
 	const { members, isLoading } = useBoardMembers(board_id)
 	const { roles } = useBoardsRoles()
 
-	const { addMember } = useAddMemberToBoard()
+	const { addMember } = useAddMemberToBoard(board_id)
 
 	const [user, setUser] = useState<{
 		username: string
@@ -36,7 +36,7 @@ export function MembersSelect({ board_id, workspace_id }: MembersSelectI) {
 	const addUser = () => {
 		user && addMember({ board_id, user_id: user.id, role: userRole })
 		setUser(null)
-		setUserRole('Роль')
+		setUserRole('Наблюдатель')
 	}
 
 	return (
@@ -109,6 +109,7 @@ export function MembersSelect({ board_id, workspace_id }: MembersSelectI) {
 							key={member.id}
 							member={member}
 							roles={roles}
+							board_id={board_id}
 						/>
 					))}
 				</List>
