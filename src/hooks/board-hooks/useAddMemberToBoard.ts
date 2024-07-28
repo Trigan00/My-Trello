@@ -8,8 +8,8 @@ export function useAddMemberToBoard(onSuccessFunc?: () => void) {
 
 	const { mutate: addMember, isPending } = useMutation({
 		mutationKey: ['add member to board'],
-		mutationFn: (data: { board_id: number; user_id: number }) =>
-			boardsService.addMemberToBoard(data.user_id, data.board_id),
+		mutationFn: (data: { board_id: number; user_id: number; role: string }) =>
+			boardsService.addMemberToBoard(data.user_id, data.board_id, data.role),
 		onSuccess(res) {
 			toast.success(res.data.message)
 			queryClient.invalidateQueries({

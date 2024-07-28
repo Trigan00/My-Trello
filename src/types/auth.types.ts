@@ -8,7 +8,7 @@ export interface IUser {
 	id: number
 	email: string
 	username: string
-	role: ROLES
+	role: string
 }
 
 export interface IProfile {
