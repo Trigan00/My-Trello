@@ -63,7 +63,7 @@ export function KanbanColumn({
 	return (
 		<div
 			ref={setNodeRef}
-			style={{ height: 'fit-content' }}
+			// style={{ height: 'fit-content' }}
 		>
 			<MyCard
 				variant='shadowed'
@@ -72,7 +72,6 @@ export function KanbanColumn({
 					padding: '20px 21px',
 					width: '250px',
 					height: 'fit-content'
-					// transform: over && over.id === column_id ? 'scale(1.05)' : 'none'
 				}}
 			>
 				{isEdit ? (
@@ -142,14 +141,12 @@ export function KanbanColumn({
 					</Box>
 				)}
 				<div
-				// style={
-				// 	{
-				// 		maxHeight: '500px',
-				// 		overflowX: 'hidden',
-				// 		overflowY: 'auto',
-				// 		scrollbarWidth: 'thin'
-				// 	}
-				// }
+					style={{
+						maxHeight: 'calc(100vh - 330px)',
+						// overflowX: 'hidden',
+						overflowY: 'auto',
+						scrollbarWidth: 'thin'
+					}}
 				>
 					<SortableContext items={tasksIds}>
 						{items

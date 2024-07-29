@@ -28,7 +28,7 @@ export default function RootLayout({
 			</head>
 			<body
 			// style={{
-			// 	backgroundImage: `url(/boards/1.jpeg)`,
+			// 	backgroundImage: `url(/assets/bg_beach.jpg)`,
 			// 	backgroundSize: 'cover'
 			// }}
 			>
