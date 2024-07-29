@@ -12,10 +12,14 @@ import { Loader } from '../UI/Loader/Loader'
 interface GeneralStatisticsI {
 	id: number
 	isWorkspace: boolean
+	date: Dayjs
 }
 
-export function GeneralStatistics({ id, isWorkspace }: GeneralStatisticsI) {
-	const [date, setDate] = useState<Dayjs>(dayjs())
+export function GeneralStatistics({
+	id,
+	isWorkspace,
+	date
+}: GeneralStatisticsI) {
 	const { isLoading, stat } = useGeneralStatistics({
 		id,
 		isWorkspace,
@@ -25,17 +29,6 @@ export function GeneralStatistics({ id, isWorkspace }: GeneralStatisticsI) {
 
 	return (
 		<Box mt={3}>
-			<LocalizationProvider
-				dateAdapter={AdapterDayjs}
-				adapterLocale={'ru'}
-			>
-				<DatePicker
-					label={'месяц и год'}
-					views={['month', 'year']}
-					value={date}
-					onChange={newValue => setDate(newValue || dayjs())}
-				/>
-			</LocalizationProvider>
 			{!stat ? (
 				<Loader />
 			) : (

@@ -11,10 +11,14 @@ import { Loader } from '../UI/Loader/Loader'
 interface MembersStatisticsI {
 	id: number
 	isWorkspace: boolean
+	date: Dayjs
 }
 
-export function MembersStatistics({ id, isWorkspace }: MembersStatisticsI) {
-	const [date, setDate] = useState<Dayjs>(dayjs())
+export function MembersStatistics({
+	id,
+	isWorkspace,
+	date
+}: MembersStatisticsI) {
 	const { isLoading, stat } = useMembersStatistics({
 		id,
 		isWorkspace,
@@ -24,17 +28,6 @@ export function MembersStatistics({ id, isWorkspace }: MembersStatisticsI) {
 
 	return (
 		<Box mt={3}>
-			<LocalizationProvider
-				dateAdapter={AdapterDayjs}
-				adapterLocale={'ru'}
-			>
-				<DatePicker
-					label={'месяц и год'}
-					views={['month', 'year']}
-					value={date}
-					onChange={newValue => setDate(newValue || dayjs())}
-				/>
-			</LocalizationProvider>
 			{!stat ? (
 				<Loader />
 			) : (
