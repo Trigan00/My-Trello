@@ -68,69 +68,71 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 
 	return (
 		<Box sx={{ p: 3 }}>
-			<CardHeader title='Журнал событий' />
-			{!logs ? (
-				<Loader />
-			) : (
-				<MyCard
-					variant='shadowed'
-					sx={{ width: 'fit-content' }}
-				>
-					<Timeline
-						sx={{
-							m: 0,
-							p: 2,
-							[`& .${timelineItemClasses.root}:before`]: {
-								flex: 0,
-								padding: 0
-							}
-						}}
-					>
-						{logs.logs.map((item, index) => (
-							<LogsTimelineItem
-								key={item.id}
-								item={item}
-								lastTimeline={index === logs.logs.length - 1}
-								showTask={showTask}
-							/>
-						))}
-					</Timeline>
-					<Box
-						sx={{
-							p: '0 5px 10px 5px',
-							display: 'flex',
-							justifyContent: 'center'
-						}}
-					>
-						<Select
-							size='small'
-							value={String(perPage)}
-							variant='standard'
-							onChange={(event: SelectChangeEvent) =>
-								setPerPage(Number(event.target.value))
-							}
+			<MyCard
+				variant='shadowed'
+				sx={{ width: 'fit-content' }}
+			>
+				<CardHeader title='Журнал событий' />
+				{!logs ? (
+					<Loader />
+				) : (
+					<>
+						<Timeline
+							sx={{
+								m: 0,
+								p: 2,
+								[`& .${timelineItemClasses.root}:before`]: {
+									flex: 0,
+									padding: 0
+								}
+							}}
 						>
-							<MenuItem value={10}>10</MenuItem>
-							<MenuItem value={20}>20</MenuItem>
-							<MenuItem value={30}>30</MenuItem>
-						</Select>
-						<Pagination
-							count={Math.ceil(logs.count / perPage) || 1}
-							color='primary'
-							page={page}
-							onChange={onPageChange}
-						/>
-					</Box>
-				</MyCard>
-			)}
-			{isTask && (
-				<EditTask
-					board_id={board_id}
-					task_id={selectedTaskId as number}
-					isModal={isTask}
-					setIsModal={setIsTask}
-				/>
-			)}
+							{logs.logs.map((item, index) => (
+								<LogsTimelineItem
+									key={item.id}
+									item={item}
+									lastTimeline={index === logs.logs.length - 1}
+									showTask={showTask}
+								/>
+							))}
+						</Timeline>
+						<Box
+							sx={{
+								p: '0 5px 10px 5px',
+								display: 'flex',
+								justifyContent: 'center'
+							}}
+						>
+							<Select
+								size='small'
+								value={String(perPage)}
+								variant='standard'
+								onChange={(event: SelectChangeEvent) =>
+									setPerPage(Number(event.target.value))
+								}
+							>
+								<MenuItem value={10}>10</MenuItem>
+								<MenuItem value={20}>20</MenuItem>
+								<MenuItem value={30}>30</MenuItem>
+							</Select>
+							<Pagination
+								count={Math.ceil(logs.count / perPage) || 1}
+								color='primary'
+								page={page}
+								onChange={onPageChange}
+							/>
+						</Box>
+					</>
+				)}
+				{isTask && (
+					<EditTask
+						board_id={board_id}
+						task_id={selectedTaskId as number}
+						isModal={isTask}
+						setIsModal={setIsTask}
+					/>
+				)}
+			</MyCard>
 		</Box>
 	)
 }

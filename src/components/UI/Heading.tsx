@@ -32,13 +32,13 @@ export function Heading() {
 			{workspace_title && Boards ? (
 				<Breadcrumbs
 					aria-label='breadcrumb'
-					// sx={{ fontWeight: '600', color: 'white' }}
-					sx={{ fontWeight: '600' }}
+					sx={{ fontWeight: '600', color: 'white' }}
+					// sx={{ fontWeight: '600' }}
 				>
 					<Link
 						underline='hover'
-						color={arr.length === 4 ? 'text.primary' : 'inherit'}
-						// color={arr.length === 4 ? 'white' : COLORS.border}
+						// color={arr.length === 4 ? 'text.primary' : 'inherit'}
+						color={arr.length === 4 ? 'white' : COLORS.border}
 						component={NextLink}
 						href={DASHBOARD_PAGES.HOME + '/' + params.workspace_id + '/boards'}
 					>
@@ -47,8 +47,8 @@ export function Heading() {
 					{params.board_id && (
 						<Link
 							underline='hover'
-							color={arr.length === 5 ? 'text.primary' : 'inherit'}
-							// color={arr.length === 5 ? 'white' : COLORS.border}
+							// color={arr.length === 5 ? 'text.primary' : 'inherit'}
+							color={arr.length === 5 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
 								DASHBOARD_PAGES.HOME +
@@ -65,8 +65,8 @@ export function Heading() {
 					{last_pages[last_page] && (
 						<Link
 							underline='hover'
-							color={arr.length === 6 ? 'text.primary' : 'inherit'}
-							// color={arr.length === 6 ? 'white' : COLORS.border}
+							// color={arr.length === 6 ? 'text.primary' : 'inherit'}
+							color={arr.length === 6 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
 								DASHBOARD_PAGES.HOME +

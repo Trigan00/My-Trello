@@ -95,6 +95,18 @@ export default function BoardLayout({
 		>
 			<Box
 				sx={{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundImage: `url(/assets/bg_beach.png)`,
+					backgroundSize: 'cover',
+					zIndex: -1
+				}}
+			/>
+			<Box
+				sx={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
