@@ -1,4 +1,5 @@
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+import { COLORS } from '@/constants/color.constants'
 import { useBoards } from '@/hooks/board-hooks/useBoards'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
 import { Skeleton } from '@mui/material'
@@ -29,10 +30,15 @@ export function Heading() {
 	return (
 		<div>
 			{workspace_title && Boards ? (
-				<Breadcrumbs aria-label='breadcrumb'>
+				<Breadcrumbs
+					aria-label='breadcrumb'
+					// sx={{ fontWeight: '600', color: 'white' }}
+					sx={{ fontWeight: '600' }}
+				>
 					<Link
 						underline='hover'
 						color={arr.length === 4 ? 'text.primary' : 'inherit'}
+						// color={arr.length === 4 ? 'white' : COLORS.border}
 						component={NextLink}
 						href={DASHBOARD_PAGES.HOME + '/' + params.workspace_id + '/boards'}
 					>
@@ -42,6 +48,7 @@ export function Heading() {
 						<Link
 							underline='hover'
 							color={arr.length === 5 ? 'text.primary' : 'inherit'}
+							// color={arr.length === 5 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
 								DASHBOARD_PAGES.HOME +
@@ -59,6 +66,7 @@ export function Heading() {
 						<Link
 							underline='hover'
 							color={arr.length === 6 ? 'text.primary' : 'inherit'}
+							// color={arr.length === 6 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
 								DASHBOARD_PAGES.HOME +

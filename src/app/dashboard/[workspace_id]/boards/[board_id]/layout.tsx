@@ -88,7 +88,11 @@ export default function BoardLayout({
 
 	return (
 		//TODO Откуда то 10 пикселей взялось у скрола
-		<Box sx={{ height: `calc(100% - ${headerHeight - 10}px)` }}>
+		<Box
+			sx={{
+				height: `calc(100% - ${headerHeight - 10}px)`
+			}}
+		>
 			<Box
 				sx={{
 					display: 'flex',
