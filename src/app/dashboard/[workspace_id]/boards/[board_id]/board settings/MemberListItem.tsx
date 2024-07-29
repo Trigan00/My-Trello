@@ -40,7 +40,7 @@ export default function MemberListItem({
 	const removeUser = () => deleteBoardMember({ user_id: member.id })
 
 	return (
-		<ListItem sx={{ pl: 0, display: 'flex', justifyContent: 'space-between' }}>
+		<ListItem sx={{ px: 0, display: 'flex', justifyContent: 'space-between' }}>
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
 				<ListItemAvatar>
 					<Avatar

@@ -4,5 +4,5 @@ export enum COLORS {
 	textBlack = '#343434',
 	textGrey = '#999999',
 	border = '#E7E7E7',
-	transparent = '#FFFFFFDF'
+	transparent = '#FFFFFFEC'
 }

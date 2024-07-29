@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { BoardSettingsModal } from './board settings/BoardSettingsModal'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { headerHeight } from '@/components/dashboard-layout/header/Header'
+import { MyCard } from '@/components/UI/MyCard'
 
 const pages: Array<{
 	title: string
@@ -87,10 +88,10 @@ export default function BoardLayout({
 		'/'
 
 	return (
-		//TODO Откуда то 10 пикселей взялось у скрола
+		//TODO Методом тыка 21
 		<Box
 			sx={{
-				height: `calc(100% - ${headerHeight - 10}px)`
+				height: `calc(100% - ${headerHeight + 21}px)`
 			}}
 		>
 			<Box
@@ -105,14 +106,18 @@ export default function BoardLayout({
 					zIndex: -1
 				}}
 			/>
-			<Box
+			<MyCard
+				variant='shadowed'
 				sx={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
-					pt: 4,
-					pr: 4,
-					pl: 4
+					p: 2,
+					m: 4,
+					mb: 0
+					// pt: 4,
+					// pr: 4,
+					// pl: 4
 				}}
 			>
 				<Heading />
@@ -209,7 +214,7 @@ export default function BoardLayout({
 						)}
 					</ButtonGroup>
 				</Stack>
-			</Box>
+			</MyCard>
 			{children}
 			{board_title && isSettings && (
 				<BoardSettingsModal

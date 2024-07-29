@@ -142,7 +142,7 @@ export function KanbanColumn({
 				)}
 				<div
 					style={{
-						maxHeight: 'calc(100vh - 330px)',
+						maxHeight: 'calc(100vh - 360px)',
 						// overflowX: 'hidden',
 						overflowY: 'auto',
 						scrollbarWidth: 'thin'
