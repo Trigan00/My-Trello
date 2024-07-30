@@ -19,4 +19,7 @@ export interface FullTaskI {
 	verified: boolean
 }
 
-export type TypeTaskFormState = Partial<FullTaskI> //На бэке проверять что пришло, потому что все параметры опциональны
+export type TypeTaskFormState = Partial<FullTaskI> & {
+	initial_order?: number[]
+	finite_order?: number[]
+} //На бэке проверять что пришло, потому что все параметры опциональны
