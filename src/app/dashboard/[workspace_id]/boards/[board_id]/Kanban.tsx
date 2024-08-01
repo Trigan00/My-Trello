@@ -61,13 +61,8 @@ export function Kanban({ board_id }: KanbanI) {
 			if (task.column_id === column_id) over_column_tasks_id.push(task.task_id)
 		}
 
-		// const prev_column_tasks =
-		// 	items?.filter(task => task.column_id === activeColumnId) || []
-		// const over_column_tasks =
-		// 	items?.filter(task => task.column_id === column_id) || []
-
-		console.log(prev_column_tasks_id)
-		console.log(over_column_tasks_id)
+		// console.log(prev_column_tasks_id)
+		// console.log(over_column_tasks_id)
 
 		setActiveTask(null)
 		setActiveColumnId(null)

@@ -116,7 +116,7 @@ export function EditTask({
 		<MyModal
 			isModal={isModal}
 			setIsModal={setIsModal}
-			maxWidth={600}
+			maxWidth={650}
 		>
 			{!isLoading ? (
 				<>
