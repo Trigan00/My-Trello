@@ -24,7 +24,16 @@ export function AddColumn({ board_id }: AddColumnI) {
 
 	if (isEdit) {
 		return (
-			<Box sx={{ flexShrink: 0, width: '292px' }}>
+			<MyCard
+				variant='shadowed'
+				sx={{
+					boxSizing: 'border-box',
+					padding: '20px 21px',
+					flexShrink: 0,
+					width: '292px',
+					height: 'fit-content'
+				}}
+			>
 				<TextField
 					variant='outlined'
 					fullWidth
@@ -59,7 +68,7 @@ export function AddColumn({ board_id }: AddColumnI) {
 						Отмена
 					</Button>
 				</Box>
-			</Box>
+			</MyCard>
 		)
 	}
 
@@ -71,34 +80,41 @@ export function AddColumn({ board_id }: AddColumnI) {
 				padding: '20px 21px',
 				width: '250px',
 				height: 'fit-content',
-				transition: '0.2s',
 				display: 'flex',
 				alignItems: 'center',
 				gap: 1,
-				cursor: 'pointer',
-				'&:hover': {
-					filter: 'brightness(0.8)'
-				}
+				cursor: 'pointer'
 			}}
 			onClick={() => setIsEdit(true)}
 		>
-			<Image
-				src='/svg/circle_add.svg'
-				alt={'circle_add'}
-				width={20}
-				height={20}
-			/>
-			<Typography
-				// fontWeight={600}
-				fontSize={'15px'}
-				fontWeight={500}
+			<Box
 				sx={{
-					color: COLORS.textGrey,
-					width: '100%'
+					display: 'flex',
+					alignItems: 'center',
+					gap: 1,
+					'&:hover': {
+						filter: 'brightness(0.7)'
+					}
 				}}
 			>
-				Добавить колонку
-			</Typography>
+				<Image
+					src='/svg/circle_add.svg'
+					alt={'circle_add'}
+					width={20}
+					height={20}
+				/>
+				<Typography
+					// fontWeight={600}
+					fontSize={'15px'}
+					fontWeight={500}
+					sx={{
+						color: COLORS.textGrey,
+						width: '100%'
+					}}
+				>
+					Добавить колонку
+				</Typography>
+			</Box>
 		</MyCard>
 	)
 }
