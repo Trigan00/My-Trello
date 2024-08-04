@@ -6,6 +6,11 @@ import { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
 import { useCreateTask } from '@/hooks/task-hooks/useCreateTask'
 import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
+import dynamic from 'next/dynamic'
+import { OutputData } from '@editorjs/editorjs'
+const Description = dynamic(() => import('./task_info/Description'), {
+	ssr: false
+})
 
 interface KanbanTaskFormI {
 	board_id: number
@@ -22,7 +27,7 @@ export function KanbanTaskForm({
 }: KanbanTaskFormI) {
 	const [dependence, setDependence] = useState<number[]>([])
 	const [name, setName] = useState('')
-	const [description, setDescription] = useState<string>('')
+	const [description, setDescription] = useState<OutputData | undefined>()
 	const [errMsg, setErrMsg] = useState('')
 	const [startTime, setStartTime] = useState<Dayjs | null>(null)
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
@@ -36,7 +41,7 @@ export function KanbanTaskForm({
 		if (!name.trim()) return setErrMsg('Не может быть пустым')
 		createTask({
 			name,
-			description: description ? description : null,
+			description: description ? JSON.stringify(description) : null,
 			column_id,
 			start: startTime?.format() || null,
 			end: endTime?.format() || null,
@@ -50,7 +55,7 @@ export function KanbanTaskForm({
 		setStartTime(null)
 		setEndTime(null)
 		setName('')
-		setDescription('')
+		setDescription(undefined)
 		setDependence([])
 	}
 
@@ -110,7 +115,7 @@ export function KanbanTaskForm({
 				fullWidth
 				sx={{ mt: 2 }}
 			/>
-			<TextField
+			{/* <TextField
 				value={description}
 				onChange={e => setDescription(e.target.value)}
 				size='small'
@@ -121,6 +126,11 @@ export function KanbanTaskForm({
 				rows={5}
 				fullWidth
 				sx={{ mt: 2 }}
+			/> */}
+			<Description
+				description={description}
+				setDescription={setDescription}
+				holder='editor-new-task'
 			/>
 			<Box sx={{ mt: 3, float: 'right' }}>
 				{isPending ? (

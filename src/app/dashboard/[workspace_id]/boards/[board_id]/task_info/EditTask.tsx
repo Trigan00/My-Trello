@@ -30,6 +30,11 @@ import { COLORS } from '@/constants/color.constants'
 import { useGetColumns } from '@/hooks/columns-hooks/useGetColumns'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
 import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
+import dynamic from 'next/dynamic'
+import { OutputData } from '@editorjs/editorjs'
+const Description = dynamic(() => import('./Description'), {
+	ssr: false
+})
 
 interface EditTaskI {
 	task_id: number
@@ -51,7 +56,7 @@ export function EditTask({
 	const isAdmin = useIsAdmin()
 
 	const [name, setName] = useState('')
-	const [description, setDescription] = useState<string>('')
+	const [description, setDescription] = useState<OutputData | undefined>()
 	const [errMsg, setErrMsg] = useState('')
 	const [startTime, setStartTime] = useState<Dayjs | null>(null)
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
@@ -69,7 +74,7 @@ export function EditTask({
 	useEffect(() => {
 		if (task) {
 			setName(task.name || '')
-			setDescription(task.description || '')
+			setDescription(task.description ? JSON.parse(task.description) : {})
 			setStartTime(task.start ? dayjs(task.start) : null)
 			setEndTime(task.end ? dayjs(task.end) : null)
 			setIsVerified(task.verified)
@@ -83,7 +88,7 @@ export function EditTask({
 			id: task_id,
 			data: {
 				name,
-				description,
+				description: JSON.stringify(description),
 				start: startTime?.format() || null,
 				end: endTime?.format() || null,
 				dependencies_id: dependence
@@ -213,7 +218,7 @@ export function EditTask({
 						fullWidth
 						sx={{ mt: 2 }}
 					/>
-					<TextField
+					{/* <TextField
 						value={description}
 						onChange={e => setDescription(e.target.value)}
 						size='small'
@@ -224,7 +229,15 @@ export function EditTask({
 						rows={4}
 						fullWidth
 						sx={{ mt: 2 }}
-					/>
+					/> */}
+
+					{description && (
+						<Description
+							description={description}
+							setDescription={setDescription}
+							holder='editor-task'
+						/>
+					)}
 					<Box
 						sx={{
 							mt: 3,
