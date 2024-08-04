@@ -11,10 +11,45 @@ import Checklist from '@editorjs/checklist'
 import Embed from '@editorjs/embed'
 import InlineCode from '@editorjs/inline-code'
 import List from '@editorjs/list'
+// @ts-ignore
+import SimpleImage from '@editorjs/simple-image'
+import ImageTool from '@editorjs/image'
+// @ts-ignore
+import Delimiter from '@editorjs/delimiter'
+// @ts-ignore
+import Table from '@editorjs/table'
+// @ts-ignore
+import Warning from '@editorjs/warning'
 import { I18nDictionary } from '@editorjs/editorjs'
 
 export const EDITOR_TOOLS = {
 	code: CodeTool,
+	image: {
+		class: ImageTool,
+		config: {
+			endpoints: {
+				byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+				byUrl: 'http://localhost:8008/fetchUrl' // Your endpoint that provides uploading by Url
+			}
+		}
+	},
+	table: {
+		class: Table,
+		inlineToolbar: true,
+		config: {
+			rows: 2,
+			cols: 3
+		}
+	},
+	warning: {
+		class: Warning,
+		inlineToolbar: true,
+		config: {
+			titlePlaceholder: 'Название',
+			messagePlaceholder: 'Сообщение'
+		}
+	},
+	delimiter: Delimiter,
 	header: {
 		class: Header,
 		config: {
