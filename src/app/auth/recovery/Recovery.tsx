@@ -1,16 +1,15 @@
 'use client'
 
-import NextLink from 'next/link'
 import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Button, TextField, Box, Typography, Avatar } from '@mui/material'
+import { TextField, Box, Typography, Stack, Link } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IAuthRecoveryForm } from '@/types/auth.types'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { authService } from '@/services/auth.service'
 import { errorCatch } from '@/api/error'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { LoadingButton } from '@mui/lab'
 
 export default function Recovery() {
 	const searchParams = useSearchParams()
@@ -22,7 +21,7 @@ export default function Recovery() {
 		watch,
 		formState: { errors }
 	} = useForm<IAuthRecoveryForm>({})
-	const { mutate } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth_recovery'],
 		mutationFn: (data: IAuthRecoveryForm) =>
 			authService.recovery(
@@ -45,30 +44,18 @@ export default function Recovery() {
 
 	return (
 		<Box
-			sx={{
-				my: 8,
-				mx: 4,
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center'
-			}}
+			component='form'
+			onSubmit={handleSubmit(onSubmit)}
+			noValidate
 		>
-			<Avatar sx={{ m: 1, bgcolor: '#9c07ab' }}>
-				<LockOutlinedIcon />
-			</Avatar>
-			<Typography
-				component='h1'
-				variant='h5'
-			>
-				{token ? 'Восстановить пароль' : 'Забыли пароль?'}
-			</Typography>
-
-			<Box
-				component='form'
-				onSubmit={handleSubmit(onSubmit)}
-				noValidate
-				sx={{ mt: 1, maxWidth: '505px', width: '100%' }}
-			>
+			<Stack spacing={3}>
+				<Typography
+					component='h1'
+					variant='h5'
+					fontWeight={'600'}
+				>
+					{token ? 'Восстановить пароль' : 'Забыли пароль?'}
+				</Typography>
 				{token ? (
 					<>
 						<TextField
@@ -89,7 +76,6 @@ export default function Recovery() {
 							label='Введите новый пароль'
 							helperText={errors.password?.message}
 							variant='outlined'
-							margin='normal'
 							size='small'
 							fullWidth
 							required
@@ -107,7 +93,6 @@ export default function Recovery() {
 							label='Подтвердите новый пароль'
 							helperText={errors.confirm_password?.message}
 							variant='outlined'
-							margin='normal'
 							size='small'
 							fullWidth
 							required
@@ -133,7 +118,8 @@ export default function Recovery() {
 					/>
 				)}
 
-				<Button
+				<LoadingButton
+					loading={isPending}
 					type='submit'
 					fullWidth
 					variant='contained'
@@ -142,15 +128,23 @@ export default function Recovery() {
 					}}
 				>
 					Сбросить пароль
-				</Button>
+				</LoadingButton>
 
-				<NextLink
-					href='/auth'
-					className='Link'
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='flex-start'
+					sx={{ my: 3 }}
 				>
-					Войти
-				</NextLink>
-			</Box>
+					<Link
+						variant='subtitle2'
+						underline='hover'
+						href='/auth'
+					>
+						Войти
+					</Link>
+				</Stack>
+			</Stack>
 		</Box>
 	)
 }
