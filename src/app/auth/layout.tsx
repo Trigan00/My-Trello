@@ -2,6 +2,7 @@
 
 import { MyCard } from '@/components/UI/MyCard'
 import { SITE_NAME } from '@/constants/seo.constants'
+import bgGradient from '@/helpers/bgGardient'
 import { Link, Typography, alpha, Box, Stack, useTheme } from '@mui/material'
 
 function Copyright(props: any) {
@@ -23,29 +24,6 @@ function Copyright(props: any) {
 			{'.'}
 		</Typography>
 	)
-}
-
-function bgGradient(props: any) {
-	const direction = props?.direction || 'to bottom'
-	const startColor = props?.startColor
-	const endColor = props?.endColor
-	const imgUrl = props?.imgUrl
-	const color = props?.color
-
-	if (imgUrl) {
-		return {
-			background: `linear-gradient(${direction}, ${startColor || color}, ${
-				endColor || color
-			}), url(${imgUrl})`,
-			backgroundSize: 'cover',
-			backgroundRepeat: 'no-repeat',
-			backgroundPosition: 'center center'
-		}
-	}
-
-	return {
-		background: `linear-gradient(${direction}, ${startColor}, ${endColor})`
-	}
 }
 
 export default function AuthLayout({
