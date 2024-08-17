@@ -21,6 +21,18 @@ export default function DashboardLayoutWrapper({
 
 	return (
 		<>
+			<Box
+				sx={{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					right: 0,
+					bottom: 0,
+					backgroundImage: `url(/assets/bg_beach.png)`,
+					backgroundSize: 'cover',
+					zIndex: -1
+				}}
+			/>
 			<Header toggleDrawer={toggleDrawer} />
 			<Box
 				component='main'

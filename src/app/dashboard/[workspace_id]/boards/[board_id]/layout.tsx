@@ -94,7 +94,7 @@ export default function BoardLayout({
 				height: `calc(100% - ${headerHeight + 21}px)`
 			}}
 		>
-			<Box
+			{/* <Box
 				sx={{
 					position: 'absolute',
 					top: 0,
@@ -105,7 +105,7 @@ export default function BoardLayout({
 					backgroundSize: 'cover',
 					zIndex: -1
 				}}
-			/>
+			/> */}
 			<MyCard
 				variant='shadowed'
 				sx={{
