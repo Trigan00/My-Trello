@@ -20,12 +20,12 @@ export default function Description({
 		<Box
 			sx={{
 				p: 1,
-				mt: 2,
 				border: `1px solid rgba(0, 0, 0, 0.23)`,
 				borderRadius: '15px',
 				'&.editor-container.codex-editor.codex-editor__redactor': {
 					paddingBottom: '100px'
-				}
+				},
+				maxWidth: '100%'
 			}}
 		>
 			<Editor

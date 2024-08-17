@@ -2,8 +2,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
 	Box,
 	Button,
+	Grid,
 	IconButton,
 	Skeleton,
+	Stack,
 	TextField,
 	Tooltip,
 	Typography
@@ -121,7 +123,7 @@ export function EditTask({
 		<MyModal
 			isModal={isModal}
 			setIsModal={setIsModal}
-			maxWidth={650}
+			maxWidth={1000}
 		>
 			{!isLoading ? (
 				<>
@@ -135,90 +137,30 @@ export function EditTask({
 					>
 						Редактировать задачу
 					</Typography>
-					<Box
-						display='flex'
-						alignItems='center'
+					<Grid
+						container
+						columnSpacing={3}
 					>
-						<Box
-							flex='1'
-							display='flex'
-							flexWrap='wrap'
-							gap={2}
+						<Grid
+							item
+							xs={12}
+							md={8}
 						>
-							<MyDate
-								value={startTime}
-								setValue={setStartTime}
-								label='Начало'
-								mini={true}
-							/>
-							<MyDate
-								value={endTime}
-								setValue={setEndTime}
-								label='Конец'
-								mini={true}
-							/>
-						</Box>
-						{isAdmin && (
-							<Tooltip
-								title='Проверить'
-								placement='top'
-							>
-								<IconButton
-									aria-label='check'
-									sx={{
-										height: 'fit-content',
-										backgroundColor: isVerified ? COLORS.primary : 'none',
-										'&:hover': {
-											backgroundColor: COLORS.darkBlue
-										}
-									}}
-									onClick={changeTaskStatus}
-								>
-									<CheckIcon sx={{ color: isVerified ? 'white' : 'inherit' }} />
-								</IconButton>
-							</Tooltip>
-						)}
-					</Box>
-
-					{board_members && members ? (
-						<MembersSelect
-							all_users={board_members}
-							addFunc={addUser}
-							removeFunc={removeUser}
-							members={members || []}
-						/>
-					) : (
-						<Skeleton
-							variant='rounded'
-							sx={{
-								mt: 2,
-								height: '40px',
-								width: '100%',
-								borderRadius: '15px'
-							}}
-						/>
-					)}
-					<TaskDependenceSelect
-						board_id={board_id}
-						dependence={dependence}
-						setDependence={setDependence}
-						currentTask_id={task_id}
-					/>
-					<TextField
-						value={name}
-						onChange={e => setName(e.target.value)}
-						error={!!errMsg}
-						helperText={errMsg}
-						multiline
-						maxRows={3}
-						size='small'
-						label='Название'
-						variant='outlined'
-						type='text'
-						fullWidth
-						sx={{ mt: 2 }}
-					/>
-					{/* <TextField
+							<Stack spacing={2}>
+								<TextField
+									value={name}
+									onChange={e => setName(e.target.value)}
+									error={!!errMsg}
+									helperText={errMsg}
+									multiline
+									maxRows={3}
+									size='small'
+									label='Название'
+									variant='outlined'
+									type='text'
+									fullWidth
+								/>
+								{/* <TextField
 						value={description}
 						onChange={e => setDescription(e.target.value)}
 						size='small'
@@ -231,13 +173,72 @@ export function EditTask({
 						sx={{ mt: 2 }}
 					/> */}
 
-					{description && (
-						<Description
-							description={description}
-							setDescription={setDescription}
-							holder='editor-task'
-						/>
-					)}
+								{description && (
+									<Description
+										description={description}
+										setDescription={setDescription}
+										holder='editor-task'
+									/>
+								)}
+								<Comments task_id={task_id} />
+							</Stack>
+						</Grid>
+						<Grid
+							item
+							xs={12}
+							md={4}
+						>
+							<Stack spacing={2}>
+								{isAdmin && (
+									<Button
+										variant={isVerified ? 'contained' : 'outlined'}
+										fullWidth
+										sx={{ color: isVerified ? 'white' : COLORS.primary }}
+										onClick={changeTaskStatus}
+										endIcon={<CheckIcon />}
+									>
+										{isVerified ? 'Проверено' : 'Проверить'}
+									</Button>
+								)}
+								<MyDate
+									value={startTime}
+									setValue={setStartTime}
+									label='Начало'
+								/>
+								<MyDate
+									value={endTime}
+									setValue={setEndTime}
+									label='Конец'
+								/>
+
+								{board_members && members ? (
+									<MembersSelect
+										all_users={board_members}
+										addFunc={addUser}
+										removeFunc={removeUser}
+										members={members || []}
+									/>
+								) : (
+									<Skeleton
+										variant='rounded'
+										sx={{
+											mt: 2,
+											height: '40px',
+											width: '100%',
+											borderRadius: '15px'
+										}}
+									/>
+								)}
+								<TaskDependenceSelect
+									board_id={board_id}
+									dependence={dependence}
+									setDependence={setDependence}
+									currentTask_id={task_id}
+								/>
+							</Stack>
+						</Grid>
+					</Grid>
+
 					<Box
 						sx={{
 							mt: 3,
@@ -280,7 +281,6 @@ export function EditTask({
 			) : (
 				<Loader />
 			)}
-			<Comments task_id={task_id} />
 			<DeleteModal
 				isModal={deleteModal}
 				setIsModal={setDeleteModal}

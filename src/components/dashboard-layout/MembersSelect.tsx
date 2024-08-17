@@ -52,7 +52,7 @@ export default function MembersSelect({
 	}
 
 	return (
-		<FormControl sx={{ mt: 2, width: '100%' }}>
+		<FormControl sx={{ width: '100%' }}>
 			<InputLabel
 				id='demo-multiple-chip-label'
 				size='small'

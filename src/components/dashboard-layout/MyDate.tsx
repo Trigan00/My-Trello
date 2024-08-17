@@ -28,13 +28,16 @@ export default function MyDate({
 			<DemoContainer
 				components={['DateTimePicker']}
 				sx={{
-					minWidth: 'none',
-					width: mini ? '200px' : '250px',
-					overflow: 'hidden',
-					'& .MuiInputBase-root': {
-						width: mini ? '200px' : '250px'
-					}
+					p: 0
 				}}
+				// sx={{
+				// 	minWidth: 'none',
+				// 	width: mini ? '200px' : '300px',
+				// 	overflow: 'hidden',
+				// 	'& .MuiInputBase-root': {
+				// 		width: mini ? '200px' : '300px'
+				// 	}
+				// }}
 			>
 				<DateTimePicker
 					label={label}
