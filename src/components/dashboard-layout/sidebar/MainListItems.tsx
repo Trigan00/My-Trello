@@ -29,18 +29,13 @@ const workSpacePages = [
 ]
 
 interface IMainListItems {
-	onClose: () => void
+	onClickHandler: () => void
 }
 
-export function MainListItems({ onClose }: IMainListItems) {
+export function MainListItems({ onClickHandler }: IMainListItems) {
 	const params = useParams<{ workspace_id: string }>()
 	const { items } = useWorkspaces()
-	const matches = useMedia(DIMENSIONS.MD)
 	const [expanded, setExpanded] = useState<string>(params.workspace_id)
-
-	const onClickHandler = () => {
-		matches && onClose()
-	}
 
 	return (
 		<React.Fragment>
