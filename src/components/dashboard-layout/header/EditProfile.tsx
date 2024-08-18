@@ -64,7 +64,10 @@ export function EditProfile({
 						type='text'
 						fullWidth
 					/>
-					<a href='https://t.me/tackk_trackker_bot'>
+					<a
+						href='https://t.me/tackk_trackker_bot'
+						target='_blank'
+					>
 						<Button
 							variant='contained'
 							fullWidth
