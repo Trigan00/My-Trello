@@ -28,7 +28,7 @@ export function GeneralStatistics({
 	})
 
 	return (
-		<Box mt={3}>
+		<Box>
 			{!stat ? (
 				<Loader />
 			) : (

@@ -27,7 +27,7 @@ export function MembersStatistics({
 	})
 
 	return (
-		<Box mt={3}>
+		<Box>
 			{!stat ? (
 				<Loader />
 			) : (
