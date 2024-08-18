@@ -111,6 +111,7 @@ export function InBox() {
 											sx={{
 												display: 'flex',
 												justifyContent: 'space-between',
+												gap: 1,
 												padding: '8px',
 												pr: '25px',
 												cursor: 'pointer'
