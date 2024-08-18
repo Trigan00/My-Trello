@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
 import MyModal from '@/components/UI/MyModal'
 import { Dayjs } from 'dayjs'
@@ -64,7 +64,7 @@ export function KanbanTaskForm({
 			isModal={isModal}
 			setIsModal={setIsModal}
 			onClose={onClose}
-			maxWidth={600}
+			maxWidth={800}
 		>
 			<Typography
 				sx={{
@@ -76,13 +76,7 @@ export function KanbanTaskForm({
 			>
 				Добавить задачу
 			</Typography>
-
-			<Box
-				display='flex'
-				justifyContent='space-between'
-				flexWrap='wrap'
-				gap={2}
-			>
+			<Stack spacing={2}>
 				<MyDate
 					value={startTime}
 					setValue={setStartTime}
@@ -93,29 +87,27 @@ export function KanbanTaskForm({
 					setValue={setEndTime}
 					label='Конец'
 				/>
-			</Box>
 
-			<TaskDependenceSelect
-				board_id={board_id}
-				dependence={dependence}
-				setDependence={setDependence}
-			/>
+				<TaskDependenceSelect
+					board_id={board_id}
+					dependence={dependence}
+					setDependence={setDependence}
+				/>
 
-			<TextField
-				value={name}
-				onChange={e => setName(e.target.value)}
-				error={!!errMsg}
-				helperText={errMsg}
-				multiline
-				maxRows={3}
-				size='small'
-				label='Название'
-				variant='outlined'
-				type='text'
-				fullWidth
-				sx={{ mt: 2 }}
-			/>
-			{/* <TextField
+				<TextField
+					value={name}
+					onChange={e => setName(e.target.value)}
+					error={!!errMsg}
+					helperText={errMsg}
+					multiline
+					maxRows={3}
+					size='small'
+					label='Название'
+					variant='outlined'
+					type='text'
+					fullWidth
+				/>
+				{/* <TextField
 				value={description}
 				onChange={e => setDescription(e.target.value)}
 				size='small'
@@ -127,11 +119,12 @@ export function KanbanTaskForm({
 				fullWidth
 				sx={{ mt: 2 }}
 			/> */}
-			<Description
-				description={description}
-				setDescription={setDescription}
-				holder='editor-new-task'
-			/>
+				<Description
+					description={description}
+					setDescription={setDescription}
+					holder='editor-new-task'
+				/>
+			</Stack>
 			<Box sx={{ mt: 3, float: 'right' }}>
 				{isPending ? (
 					<Loader />

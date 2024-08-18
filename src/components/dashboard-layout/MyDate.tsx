@@ -28,7 +28,7 @@ export default function MyDate({
 			<DemoContainer
 				components={['DateTimePicker']}
 				sx={{
-					p: 0
+					pt: '4px'
 				}}
 				// sx={{
 				// 	minWidth: 'none',
