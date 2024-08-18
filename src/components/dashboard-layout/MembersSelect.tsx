@@ -25,13 +25,15 @@ interface MembersSelectI {
 	members: BoardMemberI[]
 	addFunc: (user: BoardMemberI | undefined) => void
 	removeFunc: (user: BoardMemberI | undefined) => void
+	label: string
 }
 
 export default function MembersSelect({
 	all_users,
 	addFunc,
 	removeFunc,
-	members
+	members,
+	label
 }: MembersSelectI) {
 	const [personName, setPersonName] = useState<string[]>(
 		members.map(m => m.email)
@@ -64,7 +66,7 @@ export default function MembersSelect({
 						backgroundColor: 'white'
 					}}
 				>
-					Участники
+					{label}
 				</p>
 			</InputLabel>
 			<Select

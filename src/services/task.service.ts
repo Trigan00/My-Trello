@@ -7,6 +7,7 @@ import { Task } from '@/components/gantt_src'
 class TaskService {
 	private BASE_URL = '/tasks'
 	private MEMBERS_URL = this.BASE_URL + '/members'
+	private WORKERS_URL = this.BASE_URL + '/workermembers'
 
 	async getTasks(board_id: number) {
 		const response = await axiosWithAuth.get<{ tasks: TaskI[] }>(
@@ -73,6 +74,36 @@ class TaskService {
 	async deleteMemberFromTask(user_id: number) {
 		const response = await axiosWithAuth.delete<{ message: string }>(
 			`${this.MEMBERS_URL}/${user_id}/`
+		)
+		return response
+	}
+
+	async getTaskWorkers(task_id: number) {
+		const response = await axiosWithAuth.get<{ members: BoardMemberI[] }>(
+			this.WORKERS_URL + '/',
+			{
+				params: {
+					task_id
+				}
+			}
+		)
+		return response
+	}
+
+	async addWorkerToTask(user_id: number, task_id: number) {
+		const response = await axiosWithAuth.post<{ message: string }>(
+			this.WORKERS_URL + '/',
+			{
+				user_id,
+				task_id
+			}
+		)
+		return response
+	}
+
+	async deleteWorkerFromTask(user_id: number) {
+		const response = await axiosWithAuth.delete<{ message: string }>(
+			`${this.WORKERS_URL}/${user_id}/`
 		)
 		return response
 	}

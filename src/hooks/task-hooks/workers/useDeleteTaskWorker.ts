@@ -3,21 +3,21 @@ import { taskService } from '@/services/task.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export function useDeleteTaskMember(key: number) {
+export function useDeleteTaskWorker(key: number) {
 	const queryClient = useQueryClient()
 
-	const { mutate: deleteTaskMember, isPending } = useMutation({
-		mutationKey: ['delete board member'],
+	const { mutate: deleteTaskWorker, isPending } = useMutation({
+		mutationKey: ['delete task worker'],
 		mutationFn: (data: { user_id: number }) =>
-			taskService.deleteMemberFromTask(data.user_id),
+			taskService.deleteWorkerFromTask(data.user_id),
 		onSuccess(res) {
 			queryClient.invalidateQueries({
-				queryKey: ['task members', key]
+				queryKey: ['task workers', key]
 			})
 			toast.success(res.data.message)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})
 
-	return { deleteTaskMember, isPending }
+	return { deleteTaskWorker, isPending }
 }

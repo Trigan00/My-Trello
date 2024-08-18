@@ -3,11 +3,9 @@ import {
 	Box,
 	Button,
 	Grid,
-	IconButton,
 	Skeleton,
 	Stack,
 	TextField,
-	Tooltip,
 	Typography
 } from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
@@ -17,11 +15,11 @@ import { BoardMemberI } from '@/types/board.types'
 import dayjs, { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
 import { useBoardMembers } from '@/hooks/board-hooks/useBoardMembers'
-import { useTaskMembers } from '@/hooks/task-hooks/useTaskMembers'
+import { useTaskMembers } from '@/hooks/task-hooks/members/useTaskMembers'
 import { useOneTask } from '@/hooks/task-hooks/useOneTask'
 import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
-import { useAddMemberToTask } from '@/hooks/task-hooks/useAddMemberToTask'
-import { useDeleteTaskMember } from '@/hooks/task-hooks/useDeleteTaskMember'
+import { useAddMemberToTask } from '@/hooks/task-hooks/members/useAddMemberToTask'
+import { useDeleteTaskMember } from '@/hooks/task-hooks/members/useDeleteTaskMember'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckIcon from '@mui/icons-material/Check'
 import { toast } from 'sonner'
@@ -34,6 +32,9 @@ import { useIsAdmin } from '@/hooks/useIsAdmin'
 import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
 import dynamic from 'next/dynamic'
 import { OutputData } from '@editorjs/editorjs'
+import { useTaskWorkers } from '@/hooks/task-hooks/workers/useTaskWorkers'
+import { useAddWorkerToTask } from '@/hooks/task-hooks/workers/useAddWorkerToTask'
+import { useDeleteTaskWorker } from '@/hooks/task-hooks/workers/useDeleteTaskWorker'
 const Description = dynamic(() => import('./Description'), {
 	ssr: false
 })
@@ -54,6 +55,7 @@ export function EditTask({
 	const { task, isLoading } = useOneTask(task_id)
 	const { members: board_members } = useBoardMembers(board_id)
 	const { members } = useTaskMembers(task_id)
+	const { workers } = useTaskWorkers(task_id)
 	const { columns } = useGetColumns(board_id)
 	const isAdmin = useIsAdmin()
 
@@ -71,6 +73,8 @@ export function EditTask({
 	)
 	const { addMember } = useAddMemberToTask(task_id)
 	const { deleteTaskMember } = useDeleteTaskMember(task_id)
+	const { addWorker } = useAddWorkerToTask(task_id)
+	const { deleteTaskWorker } = useDeleteTaskWorker(task_id)
 	const { deleteTask, isDeletePending } = useDeleteTask(() => setIsModal(false))
 
 	useEffect(() => {
@@ -98,11 +102,17 @@ export function EditTask({
 		})
 	}
 
-	const addUser = (member: BoardMemberI | undefined) =>
+	const addUserHandler = (member: BoardMemberI | undefined) =>
 		member && addMember({ task_id, user_id: member.id })
 
-	const removeUser = (member: BoardMemberI | undefined) =>
+	const removeUserHandler = (member: BoardMemberI | undefined) =>
 		member && deleteTaskMember({ user_id: member.id })
+
+	const addWorkerHandler = (worker: BoardMemberI | undefined) =>
+		worker && addWorker({ task_id, user_id: worker.id })
+
+	const removeWorkerHandler = (worker: BoardMemberI | undefined) =>
+		worker && deleteTaskWorker({ user_id: worker.id })
 
 	const changeTaskStatus = () => {
 		if (!columns) return
@@ -146,7 +156,10 @@ export function EditTask({
 							xs={12}
 							md={8}
 						>
-							<Stack spacing={2}>
+							<Stack
+								spacing={2}
+								pt={'4px'}
+							>
 								<TextField
 									value={name}
 									onChange={e => setName(e.target.value)}
@@ -214,15 +227,33 @@ export function EditTask({
 								{board_members && members ? (
 									<MembersSelect
 										all_users={board_members}
-										addFunc={addUser}
-										removeFunc={removeUser}
+										addFunc={addUserHandler}
+										removeFunc={removeUserHandler}
 										members={members || []}
+										label='Участники'
 									/>
 								) : (
 									<Skeleton
 										variant='rounded'
 										sx={{
-											mt: 2,
+											height: '40px',
+											width: '100%',
+											borderRadius: '15px'
+										}}
+									/>
+								)}
+								{board_members && workers ? (
+									<MembersSelect
+										all_users={board_members}
+										addFunc={addWorkerHandler}
+										removeFunc={removeWorkerHandler}
+										members={workers || []}
+										label='Исполнители'
+									/>
+								) : (
+									<Skeleton
+										variant='rounded'
+										sx={{
 											height: '40px',
 											width: '100%',
 											borderRadius: '15px'
