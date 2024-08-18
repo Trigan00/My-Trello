@@ -1,4 +1,9 @@
-import type { FullTaskI, TaskI, TypeTaskFormState } from '@/types/task.types'
+import type {
+	DashboardResponseI,
+	FullTaskI,
+	TaskI,
+	TypeTaskFormState
+} from '@/types/task.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 import { BoardMemberI } from '@/types/board.types'
@@ -117,6 +122,13 @@ class TaskService {
 					sort_by
 				}
 			}
+		)
+		return response
+	}
+
+	async getDashboard() {
+		const response = await axiosWithAuth.get<DashboardResponseI>(
+			`${this.BASE_URL}/dashboard/`
 		)
 		return response
 	}
