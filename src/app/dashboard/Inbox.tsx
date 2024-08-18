@@ -12,6 +12,7 @@ import {
 	AccordionSummary
 } from '@/components/dashboard-layout/sidebar/MyAccordion'
 import { EditTask } from './[workspace_id]/boards/[board_id]/task_info/EditTask'
+import { Loader } from '@/components/UI/Loader/Loader'
 
 const accordionItems = [
 	{ prop: 'not_started_tasks', title: 'Не начатые задачи' },
@@ -39,6 +40,7 @@ export function InBox() {
 		>
 			<CardHeader title='Входящие' />
 
+			{!dashboardData && <Loader />}
 			{dashboardData &&
 				accordionItems.map((item, i) => (
 					<Accordion
