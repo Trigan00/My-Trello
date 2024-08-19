@@ -10,7 +10,7 @@ import { MyDrawer } from './MyDrawer'
 import { MainListItems } from './MainListItems'
 import { NewWorkspace } from './NewWorkspace'
 import NextLink from 'next/link'
-
+import Image from 'next/image'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import { COLORS } from '@/constants/color.constants'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
@@ -46,7 +46,12 @@ export default function SideBar({ open, toggleDrawer }: ISideBar) {
 					href={DASHBOARD_PAGES.HOME}
 				>
 					<ListItemIcon sx={{ minWidth: 'auto' }}>
-						<InboxIcon />
+						<Image
+							src='/svg/inbox.svg'
+							alt={'inbox'}
+							width={20}
+							height={20}
+						/>
 					</ListItemIcon>
 					<Typography
 						fontSize={14}
