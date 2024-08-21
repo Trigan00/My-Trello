@@ -19,7 +19,7 @@ export type BoardMemberI = {
 	id: number
 	email: string
 	username: string
-	// role: string
+	role: string
 }
 
 export interface boardMembersResponseI {
