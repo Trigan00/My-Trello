@@ -79,7 +79,7 @@ export default function BoardLayout({
 	}
 
 	const default_route =
-		DASHBOARD_PAGES.HOME +
+		DASHBOARD_PAGES.DASHBOARD +
 		'/' +
 		params.workspace_id +
 		'/boards' +

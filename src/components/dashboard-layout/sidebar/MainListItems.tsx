@@ -108,7 +108,7 @@ export function MainListItems({ onClickHandler }: IMainListItems) {
 										sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
 										onClick={onClickHandler}
 										component={NextLink}
-										href={DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link}
+										href={DASHBOARD_PAGES.DASHBOARD + '/' + ws.id + wsp.link}
 									>
 										<ListItemIcon sx={{ minWidth: '0' }}>
 											<Image

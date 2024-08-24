@@ -22,12 +22,12 @@ import { EditPassword } from './ChangePassword'
 const MENU_OPTIONS = [
 	{
 		label: 'Главная',
-		href: DASHBOARD_PAGES.HOME
+		href: DASHBOARD_PAGES.DASHBOARD
 		// icon: 'eva:home-fill'
 	},
 	{
 		label: 'Тарифы',
-		href: `${DASHBOARD_PAGES.HOME}/pricing`
+		href: `${DASHBOARD_PAGES.DASHBOARD}/pricing`
 		// icon: 'eva:person-fill'
 	}
 ]

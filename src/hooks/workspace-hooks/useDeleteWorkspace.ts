@@ -17,7 +17,7 @@ export function useDeleteWorkspace() {
 				queryKey: ['workspaces']
 			})
 			toast.success(res.data.message)
-			push(DASHBOARD_PAGES.HOME)
+			push(DASHBOARD_PAGES.DASHBOARD)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})

@@ -32,7 +32,7 @@ export function Auth() {
 		onSuccess(res) {
 			!isLoginForm && toast.success(res.data.message)
 			// reset()
-			isLoginForm && push(DASHBOARD_PAGES.HOME)
+			isLoginForm && push(DASHBOARD_PAGES.DASHBOARD)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})

@@ -43,7 +43,7 @@ export default function SideBar({ open, toggleDrawer }: ISideBar) {
 					sx={{ mb: 1, p: '10px 0' }}
 					onClick={onClickHandler}
 					component={NextLink}
-					href={DASHBOARD_PAGES.HOME}
+					href={DASHBOARD_PAGES.DASHBOARD}
 				>
 					<ListItemIcon sx={{ minWidth: 'auto' }}>
 						<Image

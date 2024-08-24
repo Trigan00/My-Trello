@@ -15,30 +15,20 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 		const invite_token =
 			request.nextUrl.searchParams.get(EnumTokens.INVITE_TOKEN) || ''
 
-		// const tokenResponse = await getToken()
-		// const tokenResponseData = await tokenResponse?.json()
-		// console.log(tokenResponse.status)
-		// if (tokenResponse.status == 201) {
-		// 	const res = await addUserToWS(
-		// 		tokenResponseData.data.access,
-		// 		invite_token
-		// 	)
-		// 	return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
-
 		const res = await addUserToWS(accessToken || '', invite_token)
 		if (res.status == 201) {
-			return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
+			return NextResponse.redirect(new URL(DASHBOARD_PAGES.DASHBOARD, url))
 		} else if (res.status == 401) {
 			return NextResponse.redirect(
 				new URL(`/auth?invite_token=${invite_token}`, url) // это
 			)
 		} else {
-			return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
+			return NextResponse.redirect(new URL(DASHBOARD_PAGES.DASHBOARD, url))
 		}
 	}
 
 	if (isAuthPage && accessToken) {
-		return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
+		return NextResponse.redirect(new URL(DASHBOARD_PAGES.DASHBOARD, url))
 	}
 
 	if (isAuthPage) {

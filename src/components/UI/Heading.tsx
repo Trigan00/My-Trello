@@ -40,7 +40,9 @@ export function Heading() {
 						color={arr.length === 4 ? 'text.primary' : 'inherit'}
 						// color={arr.length === 4 ? 'white' : COLORS.border}
 						component={NextLink}
-						href={DASHBOARD_PAGES.HOME + '/' + params.workspace_id + '/boards'}
+						href={
+							DASHBOARD_PAGES.DASHBOARD + '/' + params.workspace_id + '/boards'
+						}
 					>
 						{workspace_title}
 					</Link>
@@ -51,7 +53,7 @@ export function Heading() {
 							// color={arr.length === 5 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
-								DASHBOARD_PAGES.HOME +
+								DASHBOARD_PAGES.DASHBOARD +
 								'/' +
 								params.workspace_id +
 								'/boards' +
@@ -69,7 +71,7 @@ export function Heading() {
 							// color={arr.length === 6 ? 'white' : COLORS.border}
 							component={NextLink}
 							href={
-								DASHBOARD_PAGES.HOME +
+								DASHBOARD_PAGES.DASHBOARD +
 								'/' +
 								params.workspace_id +
 								'/boards' +
