@@ -59,7 +59,7 @@ export default function SideBar({ open, toggleDrawer }: ISideBar) {
 						pl={1}
 						color={COLORS.textBlack}
 					>
-						{'Входящие'}
+						{'Дашборд'}
 					</Typography>
 				</ListItemButton>
 				<Divider />

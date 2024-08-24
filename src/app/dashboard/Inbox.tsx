@@ -38,7 +38,7 @@ export function InBox() {
 			variant='shadowed'
 			sx={{ p: 2 }}
 		>
-			<CardHeader title='Входящие' />
+			<CardHeader title='Дашборд' />
 
 			{!dashboardData && <Loader />}
 			{dashboardData &&

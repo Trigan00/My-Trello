@@ -173,18 +173,6 @@ export function EditTask({
 									type='text'
 									fullWidth
 								/>
-								{/* <TextField
-						value={description}
-						onChange={e => setDescription(e.target.value)}
-						size='small'
-						label='Описание'
-						variant='outlined'
-						type='text'
-						multiline
-						rows={4}
-						fullWidth
-						sx={{ mt: 2 }}
-					/> */}
 
 								{description && (
 									<Description

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { Box, Button, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
 import MyModal from '@/components/UI/MyModal'
 import { Dayjs } from 'dayjs'
@@ -64,7 +64,7 @@ export function KanbanTaskForm({
 			isModal={isModal}
 			setIsModal={setIsModal}
 			onClose={onClose}
-			maxWidth={800}
+			maxWidth={1000}
 		>
 			<Typography
 				sx={{
@@ -76,55 +76,67 @@ export function KanbanTaskForm({
 			>
 				Добавить задачу
 			</Typography>
-			<Stack spacing={2}>
-				<MyDate
-					value={startTime}
-					setValue={setStartTime}
-					label='Начало'
-				/>
-				<MyDate
-					value={endTime}
-					setValue={setEndTime}
-					label='Конец'
-				/>
 
-				<TaskDependenceSelect
-					board_id={board_id}
-					dependence={dependence}
-					setDependence={setDependence}
-				/>
+			<Grid
+				container
+				columnSpacing={3}
+			>
+				<Grid
+					item
+					xs={12}
+					md={8}
+				>
+					<Stack
+						spacing={2}
+						pt={'4px'}
+					>
+						<TextField
+							value={name}
+							onChange={e => setName(e.target.value)}
+							error={!!errMsg}
+							helperText={errMsg}
+							multiline
+							maxRows={3}
+							size='small'
+							label='Название'
+							variant='outlined'
+							type='text'
+							fullWidth
+						/>
 
-				<TextField
-					value={name}
-					onChange={e => setName(e.target.value)}
-					error={!!errMsg}
-					helperText={errMsg}
-					multiline
-					maxRows={3}
-					size='small'
-					label='Название'
-					variant='outlined'
-					type='text'
-					fullWidth
-				/>
-				{/* <TextField
-				value={description}
-				onChange={e => setDescription(e.target.value)}
-				size='small'
-				label='Описание'
-				variant='outlined'
-				type='text'
-				multiline
-				rows={5}
-				fullWidth
-				sx={{ mt: 2 }}
-			/> */}
-				<Description
-					description={description}
-					setDescription={setDescription}
-					holder='editor-new-task'
-				/>
-			</Stack>
+						<Description
+							description={description}
+							setDescription={setDescription}
+							holder='editor-new-task'
+						/>
+					</Stack>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					md={4}
+				>
+					<Stack spacing={2}>
+						<MyDate
+							value={startTime}
+							setValue={setStartTime}
+							label='Начало'
+						/>
+						<MyDate
+							value={endTime}
+							setValue={setEndTime}
+							label='Конец'
+						/>
+
+						<TaskDependenceSelect
+							board_id={board_id}
+							dependence={dependence}
+							setDependence={setDependence}
+						/>
+					</Stack>
+				</Grid>
+			</Grid>
+
 			<Box sx={{ mt: 3, float: 'right' }}>
 				{isPending ? (
 					<Loader />
