@@ -11,6 +11,7 @@ import { EditTask } from '../task_info/EditTask'
 import { useGantt } from '@/hooks/task-hooks/useGantt'
 import { useUpdateTask } from '@/hooks/task-hooks/useUpdateTask'
 import dayjs from 'dayjs'
+import { MyCard } from '@/components/UI/MyCard'
 
 export function GanttComponent({ board_id }: { board_id: number }) {
 	const [sortType, setSort] = useState<'default' | 'columns'>('columns')
@@ -80,8 +81,10 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 	}
 
 	return (
-		<Box
+		<MyCard
+			variant='outlined'
 			className='Wrapper'
+			margin={4}
 			p={4}
 		>
 			<ViewSwitcher
@@ -122,7 +125,7 @@ export function GanttComponent({ board_id }: { board_id: number }) {
 					setIsModal={setIsTask}
 				/>
 			)}
-		</Box>
+		</MyCard>
 	)
 }
 

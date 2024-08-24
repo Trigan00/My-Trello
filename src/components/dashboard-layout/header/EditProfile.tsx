@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import MyModal from '@/components/UI/MyModal'
-import { Button, IconButton, TextField, Typography } from '@mui/material'
+import { Button, IconButton, Stack, TextField, Typography } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Loader } from '@/components/UI/Loader/Loader'
 import { useEditProfile } from '@/hooks/profile-hooks/useEditProfile'
 import { IProfile } from '@/types/auth.types'
 import EditIcon from '@mui/icons-material/Edit'
+import TelegramIcon from '@mui/icons-material/Telegram'
 
 export function EditProfile({
 	telegram_url,
@@ -47,23 +48,36 @@ export function EditProfile({
 				setIsModal={setIsModal}
 				onClose={reset}
 			>
-				<Typography sx={{ fontWeight: '600', fontSize: '20px' }}>
-					Редактировать профиль
-				</Typography>
-				<TextField
-					{...register('username', {
-						required: 'Не может быть пустым'
-					})}
-					error={!!errors.username}
-					helperText={errors.username?.message}
-					size='small'
-					label='Имя пользователя'
-					variant='outlined'
-					type='text'
-					fullWidth
-					sx={{ mt: 3 }}
-				/>
-				<TextField
+				<Stack spacing={2}>
+					<Typography sx={{ fontWeight: '600', fontSize: '20px' }}>
+						Редактировать профиль
+					</Typography>
+					<TextField
+						{...register('username', {
+							required: 'Не может быть пустым'
+						})}
+						error={!!errors.username}
+						helperText={errors.username?.message}
+						size='small'
+						label='Имя пользователя'
+						variant='outlined'
+						type='text'
+						fullWidth
+					/>
+					<a
+						href='https://t.me/tackk_trackker_bot'
+						target='_blank'
+					>
+						<Button
+							variant='contained'
+							fullWidth
+							sx={{ color: 'white' }}
+							endIcon={<TelegramIcon />}
+						>
+							Уведомления
+						</Button>
+					</a>
+					{/* <TextField
 					{...register('telegram_url', {
 						required: 'Не может быть пустым'
 					})}
@@ -75,24 +89,24 @@ export function EditProfile({
 					type='text'
 					fullWidth
 					sx={{ mt: 3 }}
-				/>
-				{isPending ? (
-					<Loader />
-				) : (
-					<Button
-						sx={{
-							mt: 2,
-							color: 'white',
-							textTransform: 'inherit',
-							fontWeight: '400'
-						}}
-						variant='contained'
-						fullWidth
-						onClick={handleSubmit(onSubmit)}
-					>
-						Сохранить
-					</Button>
-				)}
+				/> */}
+					{isPending ? (
+						<Loader />
+					) : (
+						<Button
+							sx={{
+								color: 'white',
+								textTransform: 'inherit',
+								fontWeight: '400'
+							}}
+							variant='contained'
+							fullWidth
+							onClick={handleSubmit(onSubmit)}
+						>
+							Сохранить
+						</Button>
+					)}
+				</Stack>
 			</MyModal>
 		</>
 	)

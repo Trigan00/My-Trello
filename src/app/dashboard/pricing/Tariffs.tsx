@@ -58,34 +58,55 @@ export function Tariffs() {
 	}
 
 	return (
-		<>
-			<Box
-				sx={{
-					textAlign: 'center'
-				}}
+		<Stack spacing={3}>
+			<MyCard
+				variant='shadowed'
+				sx={{ p: 2 }}
 			>
-				<ToggleButtonGroup
-					color='primary'
-					value={priceVariant}
-					exclusive
-					onChange={handleChange}
-					aria-label='Price variant'
-					sx={{ my: 4, textTransform: 'lowercase' }}
+				<Typography
+					variant='h4'
+					fontWeight={500}
+					textAlign='center'
 				>
-					<ToggleButton
-						value='Annual'
-						sx={{ textTransform: 'initial' }}
+					Flexible pricing options
+				</Typography>
+				<Typography
+					variant='subtitle1'
+					textAlign='center'
+					mt={2}
+				>
+					We are founded by a leading academic and researcher in the field of
+					Industrial Systems Engineering. For entrepreneurs, startups and
+					freelancers. If you didn’t find what you needed, these could help!
+				</Typography>
+				<Box
+					sx={{
+						textAlign: 'center'
+					}}
+				>
+					<ToggleButtonGroup
+						color='primary'
+						value={priceVariant}
+						exclusive
+						onChange={handleChange}
+						aria-label='Price variant'
+						sx={{ my: 4, textTransform: 'lowercase' }}
 					>
-						Annual
-					</ToggleButton>
-					<ToggleButton
-						value='Monthly'
-						sx={{ textTransform: 'initial' }}
-					>
-						Monthly
-					</ToggleButton>
-				</ToggleButtonGroup>
-			</Box>
+						<ToggleButton
+							value='Annual'
+							sx={{ textTransform: 'initial' }}
+						>
+							Annual
+						</ToggleButton>
+						<ToggleButton
+							value='Monthly'
+							sx={{ textTransform: 'initial' }}
+						>
+							Monthly
+						</ToggleButton>
+					</ToggleButtonGroup>
+				</Box>
+			</MyCard>
 			<Box
 				sx={{
 					display: 'flex',
@@ -161,6 +182,6 @@ export function Tariffs() {
 					</MyCard>
 				))}
 			</Box>
-		</>
+		</Stack>
 	)
 }

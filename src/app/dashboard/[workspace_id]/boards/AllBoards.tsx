@@ -8,6 +8,7 @@ import { Loader } from '@/components/UI/Loader/Loader'
 import NextLink from 'next/link'
 import { useWorkspaces } from '@/hooks/workspace-hooks/useWorkspaces'
 import shortenText from '@/helpers/shortenText'
+import { MyCard } from '@/components/UI/MyCard'
 
 interface AllBoardsI {
 	workspace_id: number
@@ -42,13 +43,12 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 
 	return (
 		<Box sx={{ p: 4 }}>
-			<Box
+			<MyCard
+				variant='shadowed'
 				sx={{
+					p: 2,
 					display: 'flex',
-					justifyContent: {
-						xs: 'space-between',
-						md: 'flex-start'
-					},
+					justifyContent: 'space-between',
 					alignItems: 'center',
 					flexWrap: 'wrap',
 					gap: '8px'
@@ -57,7 +57,7 @@ export function AllBoards({ workspace_id }: AllBoardsI) {
 				<Heading />
 				{/* <Heading workspace={Workspaces?.find(ws => ws.id == workspace_id)} /> */}
 				<NewBoard ws_id={workspace_id} />
-			</Box>
+			</MyCard>
 			{isLoading && <Loader />}
 			{!isLoading && items && (
 				<Box

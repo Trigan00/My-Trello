@@ -25,7 +25,7 @@ export function Delete({ board_id, name, workspace_id }: DeleteI) {
 	const [isDelete, setIsDelete] = useState(false)
 	const [deleteCheckbox, setDeleteCheckbox] = useState(false)
 	const { deleteBoard, isDeletePending } = useDeleteBoard(() =>
-		push(DASHBOARD_PAGES.HOME + '/' + workspace_id + '/boards')
+		push(DASHBOARD_PAGES.DASHBOARD + '/' + workspace_id + '/boards')
 	)
 
 	const onDelete = () => deleteBoard(board_id)

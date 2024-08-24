@@ -29,18 +29,13 @@ const workSpacePages = [
 ]
 
 interface IMainListItems {
-	onClose: () => void
+	onClickHandler: () => void
 }
 
-export function MainListItems({ onClose }: IMainListItems) {
+export function MainListItems({ onClickHandler }: IMainListItems) {
 	const params = useParams<{ workspace_id: string }>()
 	const { items } = useWorkspaces()
-	const matches = useMedia(DIMENSIONS.MD)
 	const [expanded, setExpanded] = useState<string>(params.workspace_id)
-
-	const onClickHandler = () => {
-		matches && onClose()
-	}
 
 	return (
 		<React.Fragment>
@@ -113,7 +108,7 @@ export function MainListItems({ onClose }: IMainListItems) {
 										sx={{ py: '6px', px: '18px', borderRadius: '5px' }}
 										onClick={onClickHandler}
 										component={NextLink}
-										href={DASHBOARD_PAGES.HOME + '/' + ws.id + wsp.link}
+										href={DASHBOARD_PAGES.DASHBOARD + '/' + ws.id + wsp.link}
 									>
 										<ListItemIcon sx={{ minWidth: '0' }}>
 											<Image

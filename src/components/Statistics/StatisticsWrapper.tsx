@@ -7,10 +7,15 @@ import {
 	ToggleButton,
 	ToggleButtonGroup
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GeneralStatistics } from './GeneralStatistics'
 import { MembersStatistics } from './MembersStatistics'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
+import dayjs, { Dayjs } from 'dayjs'
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { MyCard } from '../UI/MyCard'
+import { usePathname } from 'next/navigation'
 
 interface StatisticsWrapperI {
 	id: number
@@ -18,6 +23,9 @@ interface StatisticsWrapperI {
 }
 
 export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
+	const path = usePathname()
+	const isBoard = path.includes('boards')
+	const [date, setDate] = useState<Dayjs>(dayjs())
 	const [isGeneral, setISGeneral] = useState(true)
 
 	const handleChange = (
@@ -28,13 +36,31 @@ export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 	}
 
 	const isAdmin = useIsAdmin()
+
+	useEffect(() => {
+		if (isBoard && !isAdmin) setISGeneral(false)
+	}, [isBoard, isAdmin])
+
 	return (
 		<Box sx={{ p: 4 }}>
-			<Box
+			<MyCard
+				variant='outlined'
+				p={2}
 				display='flex'
-				justifyContent='center'
+				justifyContent='space-between'
 			>
-				{isAdmin && (
+				<LocalizationProvider
+					dateAdapter={AdapterDayjs}
+					adapterLocale={'ru'}
+				>
+					<DatePicker
+						label={'месяц и год'}
+						views={['month', 'year']}
+						value={date}
+						onChange={newValue => setDate(newValue || dayjs())}
+					/>
+				</LocalizationProvider>
+				{isBoard && isAdmin && (
 					<ToggleButtonGroup
 						color='primary'
 						value={isGeneral}
@@ -56,16 +82,21 @@ export function StatisticsWrapper({ id, isWorkspace }: StatisticsWrapperI) {
 						</ToggleButton>
 					</ToggleButtonGroup>
 				)}
-			</Box>
-			{isGeneral && isAdmin ? (
+			</MyCard>
+
+			{/* {isGeneral && ((isBoard && isAdmin) || !isBoard) && ( */}
+			{isGeneral && (!isBoard || isAdmin) && (
 				<GeneralStatistics
 					id={id}
 					isWorkspace={isWorkspace}
+					date={date}
 				/>
-			) : (
+			)}
+			{!isGeneral && isBoard && (
 				<MembersStatistics
 					id={id}
 					isWorkspace={isWorkspace}
+					date={date}
 				/>
 			)}
 		</Box>

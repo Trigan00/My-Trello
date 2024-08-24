@@ -19,8 +19,9 @@ export const authService = {
 		} else {
 			response = await axiosClassic.post<IAuthResponse>(`/auth/${type}/`, data)
 		}
-		if (response.data.access && type === 'signin')
+		if (response.data.access && type === 'signin') {
 			saveTokenStorage(response.data.access)
+		}
 		return response
 	},
 

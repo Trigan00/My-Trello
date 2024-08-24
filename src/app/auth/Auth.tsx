@@ -2,26 +2,17 @@
 
 import { authService } from '@/services/auth.service'
 import { IAuthForm } from '@/types/auth.types'
-import {
-	Avatar,
-	Box,
-	Button,
-	Grid,
-	Link,
-	TextField,
-	Typography
-} from '@mui/material'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { Box, Link, Stack, TextField, Typography } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
-import NextLink from 'next/link'
 import { errorCatch } from '@/api/error'
-import { Loader } from '@/components/UI/Loader/Loader'
 import { EnumTokens } from '@/services/auth-token.service'
+import { SITE_NAME } from '@/constants/seo.constants'
+import { LoadingButton } from '@mui/lab'
 
 export function Auth() {
 	const searchParams = useSearchParams()
@@ -41,7 +32,7 @@ export function Auth() {
 		onSuccess(res) {
 			!isLoginForm && toast.success(res.data.message)
 			// reset()
-			isLoginForm && push(DASHBOARD_PAGES.HOME)
+			isLoginForm && push(DASHBOARD_PAGES.DASHBOARD)
 		},
 		onError: (error: any) => toast.error(errorCatch(error))
 	})
@@ -52,29 +43,34 @@ export function Auth() {
 
 	return (
 		<Box
-			sx={{
-				my: 8,
-				mx: 4,
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center'
-			}}
+			component='form'
+			onSubmit={handleSubmit(onSubmit)}
+			noValidate
 		>
-			<Avatar sx={{ m: 1, bgcolor: '#e10655' }}>
-				<LockOutlinedIcon />
-			</Avatar>
-			<Typography
-				component='h1'
-				variant='h5'
-			>
-				{isLoginForm ? 'Войти' : 'Регистрация'}
-			</Typography>
-			<Box
-				component='form'
-				onSubmit={handleSubmit(onSubmit)}
-				noValidate
-				sx={{ mt: 1, maxWidth: '505px' }}
-			>
+			<Stack spacing={3}>
+				<Typography
+					component='h1'
+					variant='h5'
+					fontWeight={'600'}
+				>
+					{isLoginForm ? 'Войти' : 'Регистрация'} в {SITE_NAME}
+				</Typography>
+
+				<Typography
+					variant='body2'
+					sx={{ mt: 2, mb: 5 }}
+				>
+					{isLoginForm ? 'Еще нет аккаунта?' : 'Уже есть аккаунт?'}
+					<Link
+						variant='subtitle2'
+						underline='hover'
+						onClick={() => setIsLoginForm(prev => !prev)}
+						sx={{ ml: 0.5, cursor: 'pointer' }}
+					>
+						{isLoginForm ? 'Зарегистроваться' : ' Тогда войдите'}
+					</Link>
+				</Typography>
+
 				<TextField
 					{...register('email', {
 						required: 'Не может быть пустым',
@@ -88,7 +84,6 @@ export function Auth() {
 					label='Email'
 					helperText={errors.email?.message}
 					variant='outlined'
-					margin='normal'
 					size='small'
 					fullWidth
 					required
@@ -102,7 +97,6 @@ export function Auth() {
 						label='Имя пользователя'
 						helperText={errors.username?.message}
 						variant='outlined'
-						margin='normal'
 						size='small'
 						fullWidth
 						required
@@ -126,54 +120,38 @@ export function Auth() {
 					label='Пароль'
 					helperText={errors.password?.message}
 					variant='outlined'
-					margin='normal'
 					size='small'
 					fullWidth
 					required
 				/>
 
-				{isPending ? (
-					<Loader /> //#TODO во время загрузки уменьшается окно
-				) : (
-					<Button
-						type='submit'
-						variant='contained'
-						fullWidth
-						sx={{
-							color: 'white'
-						}}
-					>
-						{isLoginForm ? 'Войти' : 'Зарегистроваться'}
-					</Button>
-				)}
+				<LoadingButton
+					loading={isPending}
+					type='submit'
+					variant='contained'
+					fullWidth
+					sx={{
+						color: 'white'
+					}}
+				>
+					{isLoginForm ? 'Войти' : 'Зарегистроваться'}
+				</LoadingButton>
 
-				<Grid container>
-					<Grid
-						item
-						xs
+				<Stack
+					direction='row'
+					alignItems='center'
+					justifyContent='flex-end'
+					sx={{ my: 3 }}
+				>
+					<Link
+						variant='subtitle2'
+						underline='hover'
+						href='/auth/recovery'
 					>
-						{isLoginForm && (
-							<NextLink
-								href='/auth/recovery'
-								className='Link'
-							>
-								Забыли пароль?
-							</NextLink>
-						)}
-					</Grid>
-					<Grid item>
-						<Link
-							variant='body2'
-							onClick={() => setIsLoginForm(prev => !prev)}
-							sx={{ cursor: 'pointer' }}
-						>
-							{isLoginForm
-								? 'Еще нет аккаунта? Зарегистроваться'
-								: 'Уже есть аккаунт? Тогда войдите'}
-						</Link>
-					</Grid>
-				</Grid>
-			</Box>
+						Забыли пароль?
+					</Link>
+				</Stack>
+			</Stack>
 		</Box>
 	)
 }

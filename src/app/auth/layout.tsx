@@ -1,7 +1,9 @@
 'use client'
 
+import { MyCard } from '@/components/UI/MyCard'
 import { SITE_NAME } from '@/constants/seo.constants'
-import { Grid, CssBaseline, Paper, Link, Typography } from '@mui/material'
+import bgGradient from '@/helpers/bgGardient'
+import { Link, Typography, alpha, Box, Stack, useTheme } from '@mui/material'
 
 function Copyright(props: any) {
 	return (
@@ -29,41 +31,40 @@ export default function AuthLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	const theme = useTheme()
+
 	return (
-		<Grid
-			container
+		<Box
 			component='main'
-			sx={{ height: '100vh' }}
+			sx={{
+				...bgGradient({
+					color: alpha(theme.palette.background.default, 0.9),
+					imgUrl: '/assets/overlay_4.jpg'
+				}),
+				height: '100vh'
+			}}
 		>
-			<CssBaseline />
-			<Grid
-				item
-				xs={false}
-				sm={4}
-				md={7}
-				sx={{
-					backgroundImage: 'url(/AuthFon.jpeg)',
-					backgroundRepeat: 'no-repeat',
-					backgroundColor: t =>
-						t.palette.mode === 'light'
-							? t.palette.grey[50]
-							: t.palette.grey[900],
-					backgroundSize: 'cover',
-					backgroundPosition: 'center'
-				}}
-			/>
-			<Grid
-				item
-				xs={12}
-				sm={8}
-				md={5}
-				component={Paper}
-				elevation={6}
-				square
+			<Stack
+				alignItems='center'
+				justifyContent='center'
+				sx={{ height: 1 }}
 			>
-				{children}
+				<MyCard
+					variant='shadowed'
+					sx={{
+						boxSizing: 'border-box',
+						p: {
+							xs: 3,
+							md: 5
+						},
+						width: '100%',
+						maxWidth: '505px'
+					}}
+				>
+					{children}
+				</MyCard>
 				<Copyright sx={{ mt: 3 }} />
-			</Grid>
-		</Grid>
+			</Stack>
+		</Box>
 	)
 }

@@ -45,7 +45,7 @@ export function MembersSelect({ board_id, workspace_id }: MembersSelectI) {
 				variant='subtitle1'
 				fontWeight={500}
 			>
-				Добавить участиника
+				Добавить участника
 			</Typography>
 			{roles && users ? (
 				<Box
@@ -67,7 +67,7 @@ export function MembersSelect({ board_id, workspace_id }: MembersSelectI) {
 							renderInput={params => (
 								<TextField
 									{...params}
-									label='Участинк'
+									label='Участник'
 								/>
 							)}
 							isOptionEqualToValue={(option, value) =>

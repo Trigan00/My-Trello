@@ -1,11 +1,16 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import { Loader } from '@/components/UI/Loader/Loader'
 import MyModal from '@/components/UI/MyModal'
 import { Dayjs } from 'dayjs'
 import MyDate from '@/components/dashboard-layout/MyDate'
 import { useCreateTask } from '@/hooks/task-hooks/useCreateTask'
 import TaskDependenceSelect from '@/components/dashboard-layout/TaskDependenceSelect'
+import dynamic from 'next/dynamic'
+import { OutputData } from '@editorjs/editorjs'
+const Description = dynamic(() => import('./task_info/Description'), {
+	ssr: false
+})
 
 interface KanbanTaskFormI {
 	board_id: number
@@ -22,7 +27,7 @@ export function KanbanTaskForm({
 }: KanbanTaskFormI) {
 	const [dependence, setDependence] = useState<number[]>([])
 	const [name, setName] = useState('')
-	const [description, setDescription] = useState<string>('')
+	const [description, setDescription] = useState<OutputData | undefined>()
 	const [errMsg, setErrMsg] = useState('')
 	const [startTime, setStartTime] = useState<Dayjs | null>(null)
 	const [endTime, setEndTime] = useState<Dayjs | null>(null)
@@ -36,7 +41,7 @@ export function KanbanTaskForm({
 		if (!name.trim()) return setErrMsg('Не может быть пустым')
 		createTask({
 			name,
-			description: description ? description : null,
+			description: description ? JSON.stringify(description) : null,
 			column_id,
 			start: startTime?.format() || null,
 			end: endTime?.format() || null,
@@ -50,7 +55,7 @@ export function KanbanTaskForm({
 		setStartTime(null)
 		setEndTime(null)
 		setName('')
-		setDescription('')
+		setDescription(undefined)
 		setDependence([])
 	}
 
@@ -59,7 +64,7 @@ export function KanbanTaskForm({
 			isModal={isModal}
 			setIsModal={setIsModal}
 			onClose={onClose}
-			maxWidth={600}
+			maxWidth={1000}
 		>
 			<Typography
 				sx={{
@@ -72,56 +77,66 @@ export function KanbanTaskForm({
 				Добавить задачу
 			</Typography>
 
-			<Box
-				display='flex'
-				justifyContent='space-between'
-				flexWrap='wrap'
-				gap={2}
+			<Grid
+				container
+				columnSpacing={3}
 			>
-				<MyDate
-					value={startTime}
-					setValue={setStartTime}
-					label='Начало'
-				/>
-				<MyDate
-					value={endTime}
-					setValue={setEndTime}
-					label='Конец'
-				/>
-			</Box>
+				<Grid
+					item
+					xs={12}
+					md={8}
+				>
+					<Stack
+						spacing={2}
+						pt={'4px'}
+					>
+						<TextField
+							value={name}
+							onChange={e => setName(e.target.value)}
+							error={!!errMsg}
+							helperText={errMsg}
+							multiline
+							maxRows={3}
+							size='small'
+							label='Название'
+							variant='outlined'
+							type='text'
+							fullWidth
+						/>
 
-			<TaskDependenceSelect
-				board_id={board_id}
-				dependence={dependence}
-				setDependence={setDependence}
-			/>
+						<Description
+							description={description}
+							setDescription={setDescription}
+							holder='editor-new-task'
+						/>
+					</Stack>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					md={4}
+				>
+					<Stack spacing={2}>
+						<MyDate
+							value={startTime}
+							setValue={setStartTime}
+							label='Начало'
+						/>
+						<MyDate
+							value={endTime}
+							setValue={setEndTime}
+							label='Конец'
+						/>
 
-			<TextField
-				value={name}
-				onChange={e => setName(e.target.value)}
-				error={!!errMsg}
-				helperText={errMsg}
-				multiline
-				maxRows={3}
-				size='small'
-				label='Название'
-				variant='outlined'
-				type='text'
-				fullWidth
-				sx={{ mt: 2 }}
-			/>
-			<TextField
-				value={description}
-				onChange={e => setDescription(e.target.value)}
-				size='small'
-				label='Описание'
-				variant='outlined'
-				type='text'
-				multiline
-				rows={5}
-				fullWidth
-				sx={{ mt: 2 }}
-			/>
+						<TaskDependenceSelect
+							board_id={board_id}
+							dependence={dependence}
+							setDependence={setDependence}
+						/>
+					</Stack>
+				</Grid>
+			</Grid>
+
 			<Box sx={{ mt: 3, float: 'right' }}>
 				{isPending ? (
 					<Loader />

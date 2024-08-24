@@ -14,6 +14,7 @@ import {
 	Stack
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import DeleteModal from '@/components/dashboard-layout/DeleteModal'
 
 interface MemberListItemProps {
 	member: BoardMemberI
@@ -29,9 +30,10 @@ export default function MemberListItem({
 	const { updateRole } = useUpdateBoardMemberRole(board_id, () =>
 		setUserRole(member.role)
 	)
-	const { deleteBoardMember } = useDeleteBoardMember()
+	const { deleteBoardMember, isDeleteMemberPending } = useDeleteBoardMember()
 
 	const [userRole, setUserRole] = useState<string>(member.role)
+	const [isDelete, setIsDelete] = useState(false)
 
 	const updateRoleHandler = (role: string) => {
 		updateRole({ user_id: member.id, role })
@@ -40,7 +42,7 @@ export default function MemberListItem({
 	const removeUser = () => deleteBoardMember({ user_id: member.id })
 
 	return (
-		<ListItem sx={{ pl: 0, display: 'flex', justifyContent: 'space-between' }}>
+		<ListItem sx={{ px: 0, display: 'flex', justifyContent: 'space-between' }}>
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
 				<ListItemAvatar>
 					<Avatar
@@ -71,10 +73,19 @@ export default function MemberListItem({
 					roles={roles}
 					onClickFn={updateRoleHandler}
 				/>
-				<IconButton onClick={() => removeUser()}>
+				<IconButton onClick={() => setIsDelete(true)}>
 					<DeleteIcon />
 				</IconButton>
 			</Stack>
+			<DeleteModal
+				isModal={isDelete}
+				setIsModal={setIsDelete}
+				deleteFunction={removeUser}
+				isLoading={isDeleteMemberPending}
+				title='Удалить пользователя?'
+				subtitle={`Пользователь «${member.username}» будет удален.`}
+				confirmation='Удалить пользователя.'
+			/>
 		</ListItem>
 	)
 }

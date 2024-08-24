@@ -74,23 +74,16 @@ export function Comments({ task_id }: CommentsI) {
 
 	return (
 		<>
-			<Typography
-				variant='h6'
-				fontWeight='600'
-			>
-				Комментарии
-			</Typography>
 			<Box
 				display='flex'
 				alignItems='center'
 				gap={1}
-				marginY={2}
 			>
 				<TextField
 					value={comment}
 					onChange={e => setComment(e.target.value)}
 					size='small'
-					label='Комментарий'
+					label='Комментировать'
 					variant='outlined'
 					type='text'
 					fullWidth

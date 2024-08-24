@@ -50,7 +50,7 @@ export default function NotFound(): React.JSX.Element {
 
 				<Button
 					component={RouterLink}
-					href={DASHBOARD_PAGES.HOME}
+					href={DASHBOARD_PAGES.DASHBOARD}
 					startIcon={<WestIcon />}
 					variant='contained'
 					sx={{

@@ -61,7 +61,7 @@ export function Header({ toggleDrawer }: IHeader) {
 							cursor: 'pointer'
 						}}
 						component={NextLink}
-						href={DASHBOARD_PAGES.HOME}
+						href={DASHBOARD_PAGES.DASHBOARD}
 					>
 						{SITE_NAME}
 					</Typography>

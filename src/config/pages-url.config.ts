@@ -1,7 +1,7 @@
 class DASHBOARD {
 	private root = '/dashboard'
 
-	HOME = this.root
+	DASHBOARD = this.root
 	// BOARDS = `${this.root}/boards`
 	// STATISTICS = `${this.root}/statistics`
 	// MEMBERS = `${this.root}/members`

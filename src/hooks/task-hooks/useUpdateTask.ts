@@ -27,6 +27,9 @@ export function useUpdateTask(
 			queryClient.invalidateQueries({
 				queryKey: ['gantt']
 			})
+			queryClient.invalidateQueries({
+				queryKey: ['dashboard']
+			})
 			onSuccessFunc && onSuccessFunc()
 			sessionStorage.removeItem('TasksState')
 		},
