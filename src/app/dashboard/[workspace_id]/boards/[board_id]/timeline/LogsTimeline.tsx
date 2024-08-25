@@ -67,10 +67,10 @@ export default function LogsTimeline({ board_id }: { board_id: number }) {
 	}
 
 	return (
-		<Box sx={{ p: 3 }}>
+		<Box sx={{ p: 4 }}>
 			<MyCard
 				variant='shadowed'
-				sx={{ width: 'fit-content' }}
+				sx={{ width: '100%' }}
 			>
 				<CardHeader title='Журнал событий' />
 				{!logs ? (
