@@ -100,6 +100,7 @@ export function EditTask({
 				dependencies_id: dependence
 			}
 		})
+		setIsModal(false)
 	}
 
 	const addUserHandler = (member: BoardMemberI | undefined) =>

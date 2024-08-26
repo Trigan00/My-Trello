@@ -43,11 +43,11 @@ export default function IncomeAreaChart({
 			theme.palette.error.main
 		],
 		xaxis: {
-			categories: 31,
-			// categories: stat.linear_series[0].data.reduce(
-			// 	(acc: number) => acc + 1,
-			// 	0
-			// ),
+			// categories: 31,
+			categories: stat.linear_series[0].data.reduce(
+				(acc: number) => acc + 1,
+				0
+			),
 			axisBorder: {
 				show: true,
 				color: line
