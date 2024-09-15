@@ -2,6 +2,7 @@
 
 import Head from 'next/head'
 import Script from 'next/script'
+import Image from 'next/image'
 
 import './css/bootstrap-grid.min.css'
 import './css/bootstrap-reboot.min.css'
@@ -399,7 +400,7 @@ export default function Home() {
 										© 2024 Trackker. Все права защищены.
 									</p>
 								</div>
-								<img alt='logo' style="right: 0;bottom: 0; position: absolute; width: 15%;" src={String(logo)}/>
+								<Image alt='logo' style="right: 0;bottom: 0; position: absolute; width: 15%;" src={String(logo)}/>
 							</div>
 						</div>
 					</section>
