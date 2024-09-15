@@ -14,6 +14,7 @@ import './css/style_1.css'
 import './css/styles.css'
 
 export default function Home() {
+	const logo = require('./images/fasie.png');
 	return (
 		<>
 			<Head>
@@ -195,34 +196,12 @@ export default function Home() {
 									<div className='mbr-section-btn'>
 										<a
 											className='btn btn-white-outline display-7'
-											href='https://trackker.ru'
+											href='https://trackker.ru/auth'
 										>
 											Начать работу
 										</a>
 									</div>
 								</div>
-							</div>
-						</div>
-					</section>
-					<section
-						data-bs-version='5.1'
-						className='gallery10 cid-um6VgOMoHc'
-						id='features-69-um6VgOMoHc'
-					>
-						<div className='container-fluid'>
-							<div className='loop-container'>
-								<div
-									className='item display-1'
-									data-linewords='Канбан * Гант * Уведомления в телеге * Установка задач из голосовых *'
-									data-direction={-1}
-									data-speed='0.1'
-								/>
-								<div
-									className='item display-1'
-									data-linewords='Канбан * Гант * Уведомления в телеге * Установка задач из голосовых *'
-									data-direction={-1}
-									data-speed='0.1'
-								/>
 							</div>
 						</div>
 					</section>
@@ -420,6 +399,7 @@ export default function Home() {
 										© 2024 Trackker. Все права защищены.
 									</p>
 								</div>
+								<img alt='logo' style="right: 0;bottom: 0; position: absolute; width: 15%;" src={String(logo)}/>
 							</div>
 						</div>
 					</section>
