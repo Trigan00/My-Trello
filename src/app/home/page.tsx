@@ -15,7 +15,6 @@ import './css/style_1.css'
 import './css/styles.css'
 
 export default function Home() {
-	const logo = require('./images/fasie.png');
 	return (
 		<>
 			<Head>
@@ -400,8 +399,22 @@ export default function Home() {
 										© 2024 Trackker. Все права защищены.
 									</p>
 								</div>
-								<Image alt='logo' style="right: 0;bottom: 0; position: absolute; width: 15%;" src={String(logo)}/>
 							</div>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'right',
+								marginRight: '10px'
+							}}
+						>
+							<Image
+								src='/assets/fasie.png'
+								alt='logo'
+								style={{ width: '200px' }}
+								width={200}
+								height={100}
+							/>
 						</div>
 					</section>
 				</>
