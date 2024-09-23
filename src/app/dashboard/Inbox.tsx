@@ -15,7 +15,7 @@ import { EditTask } from './[workspace_id]/boards/[board_id]/task_info/EditTask'
 import { Loader } from '@/components/UI/Loader/Loader'
 
 const accordionItems = [
-	{ prop: 'not_started_tasks', title: 'Не начатые задачи' },
+	{ prop: 'not_started_tasks', title: 'Планируется' },
 	{ prop: 'at_work_data', title: 'В работе' },
 	{ prop: 'recently_completed', title: 'Недавно завершенные' }
 ]
