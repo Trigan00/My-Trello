@@ -55,7 +55,7 @@ export function Users({ workspace_id }: UsersI) {
 					color={COLORS.textGrey}
 					fontSize={14}
 				>
-					Управление учатсниками
+					Управление участниками
 				</Typography>
 			</Box>
 			<Divider />
@@ -98,7 +98,7 @@ export function Users({ workspace_id }: UsersI) {
 				}}
 			>
 				<Typography fontSize={14}>
-					Ссылка для приглашения новых учатсников
+					Ссылка для приглашения новых участников
 				</Typography>
 				<Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
 					{link ? (
